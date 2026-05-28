@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big Bend — Historical Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --sand:       #d4b896;
+  --ochre:      #c4882a;
+  --rust:       #9b4a1e;
+  --charcoal:   #1a1510;
+  --dark-brown: #221910;
+  --mid-brown:  #4a3520;
+  --dim-brown:  #2e2216;
+  --light-sand: #f0e4d0;
+  --cream:      #faf5ec;
+
+  --c-military:   #4a7c40;
+  --c-native:     #b05030;
+  --c-trade:      #c08020;
+  --c-settlement: #3060a0;
+  --c-natural:    #507050;
+}
+
+html, body {
+  height: 100%;
+  background: var(--charcoal);
+  color: var(--light-sand);
+  font-family: 'Courier Prime', monospace;
+  overflow: hidden;
+}
+
+/* ── LAYOUT ─────────────────────────────────────────── */
+#app {
+  display: grid;
+  grid-template-rows: 56px 1fr;
+  grid-template-columns: 280px 1fr;
+  height: 100vh;
+}
+
+/* ── HEADER ──────────────────────────────────────────── */
+#header {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--mid-brown);
+  background: var(--dark-brown);
+}
+
+#header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  color: var(--sand);
+  white-space: nowrap;
+}
+
+#header h1 em {
+  color: var(--ochre);
+  font-style: italic;
+}
+
+#header-sub {
+  font-size: 0.62rem;
+  color: var(--mid-brown);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+#event-count {
+  margin-left: auto;
+  font-size: 0.65rem;
+  color: var(--mid-brown);
+  letter-spacing: 0.1em;
+}
+
+/* ── LEFT PANEL ──────────────────────────────────────── */
+#panel {
+  grid-column: 1;
+  grid-row: 2;
+  background: var(--dim-brown);
+  border-right: 1px solid var(--mid-brown);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panel-section {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--mid-brown);
+}
+
+.section-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ochre);
+  margin-bottom: 10px;
+}
+
+/* ── TIME CONTROLS ───────────────────────────────────── */
+#year-display {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: var(--sand);
+  text-align: center;
+  margin-bottom: 10px;
+  letter-spacing: 0.03em;
+}
+
+#year-display span { color: var(--mid-brown); font-size: 1rem; margin: 0 6px; }
+
+.slider-wrap {
+  position: relative;
+  height: 28px;
+  margin-bottom: 4px;
+}
+
+.track {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0; right: 0;
+  height: 3px;
+  background: var(--mid-brown);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+#track-fill {
+  position: absolute;
+  height: 100%;
+  background: var(--ochre);
+  border-radius: 2px;
+  transition: left 0.1s, width 0.1s;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  pointer-events: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--ochre);
+  border: 2px solid var(--dark-brown);
+  cursor: pointer;
+  pointer-events: all;
+  transition: background 0.15s, transform 0.1s;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  background: var(--sand);
+  transform: scale(1.15);
+}
+
+input[type=range]::-webkit-slider-runnable-track { background: transparent; }
+
+.timeline-ends {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  color: var(--mid-brown);
+  margin-top: 2px;
+}
+
+/* ── SPAN BUTTONS ────────────────────────────────────── */
+.btn-row {
+  display: flex;
+  gap: 5px;
+}
+
+.sbtn {
+  flex: 1;
+  padding: 4px 0;
+  background: transparent;
+  border: 1px solid var(--mid-brown);
+  color: var(--sand);
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.12s;
+  border-radius: 2px;
+}
+
+.sbtn:hover { border-color: var(--ochre); color: var(--ochre); }
+.sbtn.active { background: var(--mid-brown); border-color: var(--ochre); color: var(--ochre); }
+
+/* ── QUICK JUMPS ─────────────────────────────────────── */
+.jump-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--mid-brown);
+  color: var(--sand);
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.65rem;
+  padding: 6px 2px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: color 0.1s;
+}
+
+.jump-btn:hover { color: var(--ochre); }
+.jump-btn:last-child { border-bottom: none; }
+
+/* ── LAYER TOGGLES ───────────────────────────────────── */
+.layer-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  cursor: pointer;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--light-sand);
+  transition: opacity 0.12s;
+  user-select: none;
+}
+
+.layer-row.off { opacity: 0.35; }
+
+.layer-row input { display: none; }
+
+.ldot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── EVENT LIST ──────────────────────────────────────── */
+#event-list-wrap {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+#event-list-wrap::-webkit-scrollbar { width: 4px; }
+#event-list-wrap::-webkit-scrollbar-track { background: transparent; }
+#event-list-wrap::-webkit-scrollbar-thumb { background: var(--mid-brown); border-radius: 2px; }
+
+.ev-item {
+  padding: 9px 16px;
+  border-bottom: 1px solid rgba(74,53,32,0.5);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.ev-item:hover { background: rgba(74,53,32,0.4); }
+.ev-item.active { background: rgba(74,53,32,0.7); border-left: 2px solid var(--ochre); padding-left: 14px; }
+
+.ev-cat {
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.ev-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.78rem;
+  color: var(--sand);
+  line-height: 1.3;
+}
+
+.ev-meta {
+  font-size: 0.6rem;
+  color: var(--mid-brown);
+  margin-top: 2px;
+}
+
+#list-empty {
+  padding: 20px 16px;
+  font-size: 0.65rem;
+  color: var(--mid-brown);
+  line-height: 1.6;
+}
+
+/* ── MAP AREA ────────────────────────────────────────── */
+#map-wrap {
+  grid-column: 2;
+  grid-row: 2;
+  position: relative;
+  overflow: hidden;
+}
+
+#map-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── DETAIL CARD ─────────────────────────────────────── */
+#detail-card {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 320px;
+  background: rgba(34,25,16,0.94);
+  border: 1px solid var(--mid-brown);
+  border-left: 3px solid var(--ochre);
+  padding: 14px 16px;
+  display: none;
+  backdrop-filter: blur(4px);
+}
+
+#detail-card.visible { display: block; }
+
+#dc-year {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ochre);
+  margin-bottom: 4px;
+}
+
+#dc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--sand);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+#dc-body {
+  font-size: 0.68rem;
+  color: var(--light-sand);
+  line-height: 1.65;
+  opacity: 0.88;
+}
+
+#dc-loc {
+  font-size: 0.6rem;
+  color: var(--mid-brown);
+  margin-top: 8px;
+  letter-spacing: 0.06em;
+}
+
+#dc-close {
+  position: absolute;
+  top: 8px; right: 10px;
+  background: none;
+  border: none;
+  color: var(--mid-brown);
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.1s;
+}
+
+#dc-close:hover { color: var(--sand); }
+
+/* ── PERIOD BANNER ───────────────────────────────────── */
+#period-banner {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  max-width: 280px;
+  background: rgba(34,25,16,0.88);
+  border: 1px solid var(--mid-brown);
+  padding: 10px 14px;
+  display: none;
+}
+
+#period-banner.visible { display: block; }
+
+#pb-range {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--ochre);
+  margin-bottom: 3px;
+}
+
+#pb-count {
+  font-size: 0.68rem;
+  color: var(--sand);
+}
+
+/* ── LEGEND ──────────────────────────────────────────── */
+#legend {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(34,25,16,0.88);
+  border: 1px solid var(--mid-brown);
+  padding: 10px 12px;
+}
+
+.leg-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 5px;
+  font-size: 0.6rem;
+  color: var(--sand);
+  letter-spacing: 0.06em;
+}
+
+.leg-item:last-child { margin-bottom: 0; }
+
+.leg-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── NO-DATA NOTICE ──────────────────────────────────── */
+#no-data-notice {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  display: none;
+}
+
+#no-data-notice.visible { display: block; }
+
+#no-data-notice p {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--mid-brown);
+}
+
+#no-data-notice small {
+  font-size: 0.62rem;
+  color: var(--mid-brown);
+  opacity: 0.6;
+  letter-spacing: 0.1em;
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- HEADER -->
+  <header id="header">
+    <div>
+      <h1>Big Bend — <em>Historical Atlas</em></h1>
+    </div>
+    <div id="header-sub">Trans-Pecos &amp; Northern Chihuahua · 1700–1940</div>
+    <div id="event-count"></div>
+  </header>
+
+  <!-- LEFT PANEL -->
+  <nav id="panel">
+
+    <!-- TIME -->
+    <div class="panel-section">
+      <div class="section-label">Period</div>
+      <div id="year-display">
+        <span id="yd-start">1845</span>
+        <span>–</span>
+        <span id="yd-end">1860</span>
+      </div>
+      <div class="slider-wrap">
+        <div class="track"><div id="track-fill"></div></div>
+        <input type="range" id="sl-start" min="1700" max="1925" step="5" value="1845">
+        <input type="range" id="sl-end"   min="1700" max="1940" step="5" value="1860">
+      </div>
+      <div class="timeline-ends"><span>1700</span><span>1940</span></div>
+    </div>
+
+    <!-- SPAN -->
+    <div class="panel-section">
+      <div class="section-label">Window</div>
+      <div class="btn-row">
+        <button class="sbtn" data-span="5">5 yr</button>
+        <button class="sbtn active" data-span="10">10 yr</button>
+        <button class="sbtn" data-span="20">20 yr</button>
+        <button class="sbtn" data-span="25">25 yr</button>
+        <button class="sbtn" data-span="50">50 yr</button>
+      </div>
+    </div>
+
+    <!-- QUICK JUMPS -->
+    <div class="panel-section">
+      <div class="section-label">Quick jumps</div>
+      <button class="jump-btn" data-s="1670" data-e="1700">1670–1700 · Jumano / Spanish contact</button>
+      <button class="jump-btn" data-s="1700" data-e="1750">1700–1750 · Apache expansion</button>
+      <button class="jump-btn" data-s="1750" data-e="1800">1750–1800 · Presidio era</button>
+      <button class="jump-btn" data-s="1820" data-e="1850">1820–1850 · Mexican frontier</button>
+      <button class="jump-btn" data-s="1845" data-e="1865">1845–1865 · US boundary / Civil War</button>
+      <button class="jump-btn" data-s="1865" data-e="1885">1865–1885 · Buffalo Soldiers / end of raids</button>
+      <button class="jump-btn" data-s="1880" data-e="1900">1880–1900 · Railroad / settlement</button>
+      <button class="jump-btn" data-s="1900" data-e="1925">1900–1925 · Revolution era</button>
+    </div>
+
+    <!-- LAYERS -->
+    <div class="panel-section">
+      <div class="section-label">Layers</div>
+      <label class="layer-row" data-layer="military">
+        <input type="checkbox" checked>
+        <span class="ldot" style="background:var(--c-military)"></span>
+        Military / Conflict
+      </label>
+      <label class="layer-row" data-layer="native">
+        <input type="checkbox" checked>
+        <span class="ldot" style="background:var(--c-native)"></span>
+        Native Nations
+      </label>
+      <label class="layer-row" data-layer="trade">
+        <input type="checkbox" checked>
+        <span class="ldot" style="background:var(--c-trade)"></span>
+        Trade / Routes
+      </label>
+      <label class="layer-row" data-layer="settlement">
+        <input type="checkbox" checked>
+        <span class="ldot" style="background:var(--c-settlement)"></span>
+        Settlements
+      </label>
+      <label class="layer-row" data-layer="natural">
+        <input type="checkbox" checked>
+        <span class="ldot" style="background:var(--c-natural)"></span>
+        Geography / Resources
+      </label>
+    </div>
+
+    <!-- EVENT LIST -->
+    <div style="padding:8px 16px 6px; border-bottom:1px solid var(--mid-brown);">
+      <div class="section-label" style="margin-bottom:0">Events in view</div>
+    </div>
+    <div id="event-list-wrap">
+      <div id="list-empty">Move the slider to a period with events, or widen the window.</div>
+    </div>
+
+  </nav>
+
+  <!-- MAP -->
+  <main id="map-wrap">
+    <canvas id="map-canvas"></canvas>
+
+    <!-- DETAIL CARD -->
+    <div id="detail-card">
+      <button id="dc-close" title="Close">×</button>
+      <div id="dc-year"></div>
+      <div id="dc-title"></div>
+      <div id="dc-body"></div>
+      <div id="dc-loc"></div>
+    </div>
+
+    <!-- PERIOD BANNER -->
+    <div id="period-banner">
+      <div id="pb-range"></div>
+      <div id="pb-count"></div>
+    </div>
+
+    <!-- LEGEND -->
+    <div id="legend">
+      <div class="leg-item"><span class="leg-dot" style="background:var(--c-military)"></span>Military / Conflict</div>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--c-native)"></span>Native Nations</div>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--c-trade)"></span>Trade / Routes</div>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--c-settlement)"></span>Settlements</div>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--c-natural)"></span>Geography / Resources</div>
+    </div>
+
+    <!-- NO DATA -->
+    <div id="no-data-notice">
+      <p>No events in this period</p>
+      <small>Try widening the window or shifting the range</small>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// CONFIG
+// ─────────────────────────────────────────────────────────────
+const BOUNDS = { latMin:27.5, latMax:32.5, lonMin:-106.5, lonMax:-99.0 };
+
+const CAT_COLORS = {
+  military:   '#4a7c40',
+  native:     '#b05030',
+  trade:      '#c08020',
+  settlement: '#3060a0',
+  natural:    '#507050'
+};
+
+// Geographic features
+const RIO_GRANDE = [
+  [-106.5,31.8],[-106.2,31.7],[-106.0,31.5],[-105.8,31.3],
+  [-105.4,30.9],[-105.2,30.6],[-104.8,30.2],[-104.4,29.9],
+  [-104.2,29.6],[-103.9,29.3],[-103.5,29.1],[-103.2,29.0],
+  [-102.8,29.2],[-102.5,29.6],[-102.1,29.8],[-101.5,29.7],
+  [-101.0,29.6],[-100.5,29.4],[-100.1,29.1],[-99.5,28.8],[-99.0,28.6]
+];
+const RIO_CONCHOS = [
+  [-105.8,28.2],[-105.5,28.6],[-105.2,28.9],[-104.9,29.2],[-104.6,29.4],[-104.4,29.6]
+];
+const PECOS = [
+  [-104.5,32.3],[-104.4,32.0],[-104.3,31.5],[-104.1,31.0],
+  [-103.8,30.5],[-103.5,30.0],[-103.2,29.5],[-102.8,29.2]
+];
+const MOUNTAINS = [
+  {name:'Chisos',       lon:-103.3, lat:29.3,  r:0.38},
+  {name:'Davis Mtns',   lon:-103.9, lat:30.7,  r:0.52},
+  {name:'Chinati',      lon:-104.5, lat:29.9,  r:0.32},
+  {name:'Sierra del Carmen', lon:-102.9, lat:29.0, r:0.36},
+  {name:'Bofecillos',   lon:-104.1, lat:29.5,  r:0.20},
+  {name:'Glass Mtns',   lon:-103.0, lat:30.4,  r:0.28},
+  {name:'Guadalupe',    lon:-104.85,lat:31.9,  r:0.26},
+  {name:'Sierra Madre foothills', lon:-105.9, lat:28.4, r:0.52}
+];
+const PLACES = [
+  {name:'El Paso / Juárez',   lon:-106.45, lat:31.76},
+  {name:'Presidio / Ojinaga', lon:-104.42, lat:29.57},
+  {name:'Marfa',              lon:-104.02, lat:30.31},
+  {name:'Alpine',             lon:-103.66, lat:30.36},
+  {name:'Langtry',            lon:-101.55, lat:29.80},
+  {name:'Boquillas',          lon:-102.84, lat:29.19},
+  {name:'Terlingua',          lon:-103.6,  lat:29.32},
+  {name:'Chihuahua City',     lon:-106.08, lat:28.63},
+  {name:'Fort Davis',         lon:-103.9,  lat:30.59}
+];
+
+// ─────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────
+let allEvents   = [];
+let viewEvents  = [];
+let selectedEv  = null;
+let hoveredEv   = null;
+let activeLayers = { military:true, native:true, trade:true, settlement:true, natural:true };
+let span        = 10;
+
+const canvas = document.getElementById('map-canvas');
+const ctx    = canvas.getContext('2d');
+
+// ─────────────────────────────────────────────────────────────
+// COORDINATE HELPERS
+// ─────────────────────────────────────────────────────────────
+function ll2c(lon, lat) {
+  const x = ((lon - BOUNDS.lonMin) / (BOUNDS.lonMax - BOUNDS.lonMin)) * canvas.width;
+  const y = ((BOUNDS.latMax - lat) / (BOUNDS.latMax - BOUNDS.latMin)) * canvas.height;
+  return {x, y};
+}
+
+function c2ll(cx, cy) {
+  const lon = BOUNDS.lonMin + (cx / canvas.width)  * (BOUNDS.lonMax - BOUNDS.lonMin);
+  const lat = BOUNDS.latMax - (cy / canvas.height) * (BOUNDS.latMax - BOUNDS.latMin);
+  return {lon, lat};
+}
+
+// ─────────────────────────────────────────────────────────────
+// DATA LOADING
+// ─────────────────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const resp = await fetch('bigbend-events.json');
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+    allEvents = data.events || [];
+    document.getElementById('event-count').textContent =
+      `${allEvents.length} events in dataset`;
+    filterAndRender();
+  } catch(err) {
+    console.error('Could not load bigbend-events.json:', err);
+    document.getElementById('event-count').textContent =
+      'Could not load bigbend-events.json — make sure both files are in the same folder.';
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// FILTER
+// ─────────────────────────────────────────────────────────────
+function filterAndRender() {
+  const s = parseInt(document.getElementById('sl-start').value);
+  const e = parseInt(document.getElementById('sl-end').value);
+
+  viewEvents = allEvents.filter(ev =>
+    ev.year >= s && ev.year <= e && activeLayers[ev.category]
+  );
+
+  // Period banner
+  const banner = document.getElementById('period-banner');
+  const visibleAll = allEvents.filter(ev => ev.year >= s && ev.year <= e);
+  if (visibleAll.length > 0) {
+    banner.classList.add('visible');
+    document.getElementById('pb-range').textContent = `${s} – ${e}`;
+    document.getElementById('pb-count').textContent =
+      `${visibleAll.length} event${visibleAll.length !== 1 ? 's' : ''} · ${viewEvents.length} visible with current layers`;
+  } else {
+    banner.classList.remove('visible');
+  }
+
+  // No-data notice
+  const notice = document.getElementById('no-data-notice');
+  notice.classList.toggle('visible', visibleAll.length === 0);
+
+  buildEventList(s, e);
+  draw();
+}
+
+// ─────────────────────────────────────────────────────────────
+// SIDEBAR LIST
+// ─────────────────────────────────────────────────────────────
+function buildEventList(s, e) {
+  const wrap  = document.getElementById('event-list-wrap');
+  const empty = document.getElementById('list-empty');
+  const inRange = allEvents
+    .filter(ev => ev.year >= s && ev.year <= e)
+    .sort((a,b) => a.year - b.year);
+
+  if (inRange.length === 0) {
+    empty.style.display = 'block';
+    // Remove old items
+    wrap.querySelectorAll('.ev-item').forEach(el => el.remove());
+    return;
+  }
+  empty.style.display = 'none';
+  wrap.querySelectorAll('.ev-item').forEach(el => el.remove());
+
+  inRange.forEach(ev => {
+    const el = document.createElement('div');
+    el.className = 'ev-item';
+    el.dataset.id = ev.id;
+    if (selectedEv && selectedEv.id === ev.id) el.classList.add('active');
+
+    const catColor = CAT_COLORS[ev.category] || '#888';
+    el.innerHTML = `
+      <div class="ev-cat" style="color:${catColor}">${ev.category}</div>
+      <div class="ev-title">${ev.title}</div>
+      <div class="ev-meta">${ev.year} · ${ev.locationName}</div>
+    `;
+    el.addEventListener('click', () => selectEvent(ev));
+    wrap.appendChild(el);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// SELECT EVENT
+// ─────────────────────────────────────────────────────────────
+function selectEvent(ev) {
+  selectedEv = ev;
+
+  // Update card
+  const card = document.getElementById('detail-card');
+  card.classList.add('visible');
+  document.getElementById('dc-year').textContent  = `c. ${ev.year}`;
+  document.getElementById('dc-title').textContent = ev.title;
+  document.getElementById('dc-body').textContent  = ev.description;
+  document.getElementById('dc-loc').textContent   = ev.locationName;
+  card.style.borderLeftColor = CAT_COLORS[ev.category] || 'var(--ochre)';
+
+  // Highlight list item
+  document.querySelectorAll('.ev-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.id === ev.id);
+  });
+
+  // Scroll list item into view
+  const listEl = document.querySelector(`.ev-item[data-id="${ev.id}"]`);
+  if (listEl) listEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
+
+  draw();
+}
+
+document.getElementById('dc-close').addEventListener('click', () => {
+  selectedEv = null;
+  document.getElementById('detail-card').classList.remove('visible');
+  document.querySelectorAll('.ev-item').forEach(el => el.classList.remove('active'));
+  draw();
+});
+
+// ─────────────────────────────────────────────────────────────
+// CANVAS DRAWING
+// ─────────────────────────────────────────────────────────────
+function resizeCanvas() {
+  const wrap = document.getElementById('map-wrap');
+  canvas.width  = wrap.clientWidth;
+  canvas.height = wrap.clientHeight;
+  draw();
+}
+
+function drawPolyline(pts, color, lw) {
+  if (!pts.length) return;
+  ctx.beginPath();
+  const s = ll2c(pts[0][0], pts[0][1]);
+  ctx.moveTo(s.x, s.y);
+  for (let i = 1; i < pts.length; i++) {
+    const p = ll2c(pts[i][0], pts[i][1]);
+    ctx.lineTo(p.x, p.y);
+  }
+  ctx.strokeStyle = color;
+  ctx.lineWidth   = lw;
+  ctx.stroke();
+}
+
+function draw() {
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  // Background
+  ctx.fillStyle = '#0f0c08';
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle grain
+  for (let i = 0; i < 700; i++) {
+    ctx.fillStyle = `rgba(${120+Math.random()*40},${90+Math.random()*30},${40+Math.random()*20},${Math.random()*0.07})`;
+    ctx.fillRect(Math.random()*W, Math.random()*H, 1.5, 1.5);
+  }
+
+  // Mountains
+  MOUNTAINS.forEach(m => {
+    const c  = ll2c(m.lon, m.lat);
+    const rx = (m.r / (BOUNDS.lonMax - BOUNDS.lonMin)) * W;
+    const ry = (m.r / (BOUNDS.latMax - BOUNDS.latMin)) * H;
+    const g  = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, Math.max(rx,ry));
+    g.addColorStop(0, 'rgba(70,52,25,0.35)');
+    g.addColorStop(1, 'rgba(70,52,25,0)');
+    ctx.save();
+    ctx.beginPath();
+    ctx.ellipse(c.x, c.y, rx, ry, 0, 0, Math.PI*2);
+    ctx.fillStyle = g;
+    ctx.fill();
+    ctx.font = '8px Courier Prime, monospace';
+    ctx.fillStyle = 'rgba(160,125,70,0.4)';
+    ctx.textAlign = 'center';
+    ctx.fillText(m.name.toUpperCase(), c.x, c.y + ry * 0.4 + 5);
+    ctx.restore();
+  });
+
+  // Rivers
+  drawPolyline(RIO_GRANDE,   'rgba(70,110,170,0.6)', 2);
+  drawPolyline(RIO_CONCHOS,  'rgba(70,110,170,0.35)', 1);
+  drawPolyline(PECOS,        'rgba(70,110,170,0.3)', 1);
+
+  // River label
+  const rlc = ll2c(RIO_GRANDE[7][0], RIO_GRANDE[7][1]);
+  ctx.save();
+  ctx.font = '8px Courier Prime, monospace';
+  ctx.fillStyle = 'rgba(70,110,170,0.45)';
+  ctx.fillText('Río Grande / Río Bravo', rlc.x + 4, rlc.y - 5);
+  ctx.restore();
+
+  // Region labels
+  const txPos = ll2c(-102.5, 31.1);
+  const mxPos = ll2c(-104.8, 28.4);
+  ctx.save();
+  ctx.textAlign = 'center';
+  ctx.font = '600 13px Courier Prime, monospace';
+  ctx.fillStyle = 'rgba(200,175,130,0.09)';
+  ctx.fillText('T E X A S',    txPos.x, txPos.y);
+  ctx.fillText('C H I H U A H U A', mxPos.x, mxPos.y);
+  ctx.restore();
+
+  // Place markers
+  PLACES.forEach(p => {
+    const c = ll2c(p.lon, p.lat);
+    ctx.save();
+    ctx.beginPath(); ctx.arc(c.x, c.y, 1.8, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(200,175,130,0.35)'; ctx.fill();
+    ctx.font = '7.5px Courier Prime, monospace';
+    ctx.fillStyle = 'rgba(200,175,130,0.3)';
+    ctx.textAlign = 'left';
+    ctx.fillText(p.name, c.x + 4, c.y + 3);
+    ctx.restore();
+  });
+
+  // Events
+  viewEvents.forEach(ev => {
+    const c   = ll2c(ev.lon, ev.lat);
+    const col = CAT_COLORS[ev.category] || '#aaa';
+    const isH = hoveredEv  && hoveredEv.id  === ev.id;
+    const isS = selectedEv && selectedEv.id === ev.id;
+    const r   = (isH || isS) ? 8 : 5;
+
+    ctx.save();
+
+    // Outer glow for selected/hovered
+    if (isH || isS) {
+      ctx.beginPath(); ctx.arc(c.x, c.y, 18, 0, Math.PI*2);
+      ctx.fillStyle = col + '28'; ctx.fill();
+    }
+
+    // Ring
+    ctx.beginPath(); ctx.arc(c.x, c.y, r, 0, Math.PI*2);
+    ctx.strokeStyle = col;
+    ctx.lineWidth   = (isH||isS) ? 2 : 1;
+    ctx.globalAlpha = (isH||isS) ? 1 : 0.82;
+    ctx.stroke();
+
+    // Fill
+    ctx.beginPath(); ctx.arc(c.x, c.y, r - 2, 0, Math.PI*2);
+    ctx.fillStyle   = col;
+    ctx.globalAlpha = (isH||isS) ? 0.9 : 0.4;
+    ctx.fill();
+
+    // Year label on hover/select
+    if (isH || isS) {
+      ctx.globalAlpha = 1;
+      ctx.font        = 'bold 9px Courier Prime, monospace';
+      ctx.fillStyle   = '#e8dfc8';
+      ctx.textAlign   = 'center';
+      ctx.fillText(ev.year, c.x, c.y - 13);
+    }
+
+    ctx.restore();
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// MOUSE INTERACTION
+// ─────────────────────────────────────────────────────────────
+function eventsAtPoint(px, py) {
+  // Scale from CSS pixels to canvas pixels
+  const scaleX = canvas.width  / canvas.getBoundingClientRect().width;
+  const scaleY = canvas.height / canvas.getBoundingClientRect().height;
+  const cx = px * scaleX, cy = py * scaleY;
+
+  for (const ev of viewEvents) {
+    const c = ll2c(ev.lon, ev.lat);
+    if (Math.sqrt((cx - c.x)**2 + (cy - c.y)**2) < 14) return ev;
+  }
+  return null;
+}
+
+canvas.addEventListener('mousemove', e => {
+  const r    = canvas.getBoundingClientRect();
+  const found = eventsAtPoint(e.clientX - r.left, e.clientY - r.top);
+  if (found !== hoveredEv) { hoveredEv = found; draw(); }
+  canvas.style.cursor = found ? 'pointer' : 'default';
+});
+
+canvas.addEventListener('mouseleave', () => {
+  hoveredEv = null; draw();
+  canvas.style.cursor = 'default';
+});
+
+canvas.addEventListener('click', e => {
+  const r     = canvas.getBoundingClientRect();
+  const found = eventsAtPoint(e.clientX - r.left, e.clientY - r.top);
+  if (found) {
+    selectEvent(found);
+  } else {
+    selectedEv = null;
+    document.getElementById('detail-card').classList.remove('visible');
+    document.querySelectorAll('.ev-item').forEach(el => el.classList.remove('active'));
+    draw();
+  }
+});
+
+// ─────────────────────────────────────────────────────────────
+// SLIDER CONTROLS
+// ─────────────────────────────────────────────────────────────
+const slStart = document.getElementById('sl-start');
+const slEnd   = document.getElementById('sl-end');
+
+function updateSliderDisplay() {
+  const s = parseInt(slStart.value);
+  const e = parseInt(slEnd.value);
+  document.getElementById('yd-start').textContent = s;
+  document.getElementById('yd-end').textContent   = e;
+
+  const pct1 = (s - 1700) / (1940 - 1700) * 100;
+  const pct2 = (e - 1700) / (1940 - 1700) * 100;
+  const fill = document.getElementById('track-fill');
+  fill.style.left  = pct1 + '%';
+  fill.style.width = (pct2 - pct1) + '%';
+}
+
+slStart.addEventListener('input', () => {
+  let s = parseInt(slStart.value);
+  let e = s + span;
+  if (e > 1940) { e = 1940; s = e - span; slStart.value = s; }
+  slEnd.value = e;
+  updateSliderDisplay();
+  filterAndRender();
+});
+
+slEnd.addEventListener('input', () => {
+  let e = parseInt(slEnd.value);
+  let s = e - span;
+  if (s < 1700) { s = 1700; e = s + span; slEnd.value = e; }
+  slStart.value = s;
+  updateSliderDisplay();
+  filterAndRender();
+});
+
+// Span buttons
+document.querySelectorAll('.sbtn[data-span]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sbtn[data-span]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    span = parseInt(btn.dataset.span);
+    let s = parseInt(slStart.value);
+    let e = s + span;
+    if (e > 1940) { e = 1940; s = e - span; slStart.value = s; }
+    slEnd.value = e;
+    updateSliderDisplay();
+    filterAndRender();
+  });
+});
+
+// Quick jump buttons
+document.querySelectorAll('.jump-btn[data-s]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const s = parseInt(btn.dataset.s);
+    const e = parseInt(btn.dataset.e);
+    span = e - s;
+    document.querySelectorAll('.sbtn[data-span]').forEach(b => b.classList.remove('active'));
+    const match = document.querySelector(`.sbtn[data-span="${span}"]`);
+    if (match) match.classList.add('active');
+    slStart.value = s;
+    slEnd.value   = e;
+    updateSliderDisplay();
+    filterAndRender();
+  });
+});
+
+// Layer toggles
+document.querySelectorAll('.layer-row[data-layer]').forEach(row => {
+  const cb    = row.querySelector('input');
+  const layer = row.dataset.layer;
+  cb.addEventListener('change', () => {
+    activeLayers[layer] = cb.checked;
+    row.classList.toggle('off', !cb.checked);
+    filterAndRender();
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+updateSliderDisplay();
+loadData();
+</script>
+</body>
+</html>

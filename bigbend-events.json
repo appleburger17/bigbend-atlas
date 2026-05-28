@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "title": "Big Bend / Northern Chihuahua Historical Atlas",
+    "description": "Curated historical events for the Trans-Pecos and Chihuahuan Desert borderlands.",
+    "bounds": {
+      "latMin": 27.5,
+      "latMax": 32.5,
+      "lonMin": -106.5,
+      "lonMax": -99.0
+    },
+    "categories": {
+      "military":    { "label": "Military / Conflict",     "color": "#4a7c40" },
+      "native":      { "label": "Native Nations",          "color": "#b05030" },
+      "trade":       { "label": "Trade / Routes",          "color": "#c08020" },
+      "settlement":  { "label": "Settlements",             "color": "#3060a0" },
+      "natural":     { "label": "Geography / Resources",   "color": "#507050" }
+    }
+  },
+  "events": [
+
+    {
+      "id": "jumano-la-junta-1680",
+      "year": 1680,
+      "title": "Jumano trade hub at La Junta de los Ríos",
+      "description": "The confluence of the Río Conchos and Río Grande at present-day Presidio/Ojinaga was a major Jumano trading center. Spanish missionaries described thriving villages here, with Jumano traders moving goods across the Chihuahuan Desert as far as the Gulf Coast and New Mexico.",
+      "category": "native",
+      "locationName": "La Junta de los Ríos (Presidio/Ojinaga area)",
+      "lon": -104.4,
+      "lat": 29.57
+    },
+
+    {
+      "id": "camino-real-1680",
+      "year": 1680,
+      "title": "El Camino Real de Tierra Adentro in active use",
+      "description": "The royal road connecting Mexico City to Santa Fe passed through El Paso del Norte, serving as the primary artery of Spanish colonial commerce. Silver, livestock, and trade goods moved north; missionaries, soldiers, and colonists moved both directions along this corridor.",
+      "category": "trade",
+      "locationName": "El Paso del Norte (El Paso / Juárez)",
+      "lon": -106.45,
+      "lat": 31.75
+    },
+
+    {
+      "id": "pueblo-revolt-refugees-1680",
+      "year": 1680,
+      "title": "Pueblo Revolt refugees at El Paso del Norte",
+      "description": "The Pueblo Revolt drove Spanish colonists and Christianized Pueblo Indians south to El Paso del Norte, swelling the population of the pass. The event reinforced the strategic importance of the El Paso corridor and shaped the character of the settlement for generations.",
+      "category": "settlement",
+      "locationName": "El Paso del Norte",
+      "lon": -106.42,
+      "lat": 31.77
+    },
+
+    {
+      "id": "apache-expansion-1720",
+      "year": 1720,
+      "title": "Mescalero Apache establish range across Trans-Pecos",
+      "description": "Pushed south by Comanche expansion onto the southern Plains, Mescalero Apache bands consolidated their territory across the Davis Mountains, the Guadalupe escarpment, and into northern Chihuahua. This range would define the Apache presence in the region for the next 150 years.",
+      "category": "native",
+      "locationName": "Davis Mountains / Trans-Pecos",
+      "lon": -103.9,
+      "lat": 30.7
+    },
+
+    {
+      "id": "chisos-apache-1730",
+      "year": 1730,
+      "title": "Chisos Apache bands in the bend country",
+      "description": "Spanish records note distinct Chisos Apache groups occupying the mountain range that now bears their name. These bands raided Spanish settlements in Chihuahua while retreating into the remote canyons of the river bend, a geography that frustrated Spanish punitive expeditions.",
+      "category": "native",
+      "locationName": "Chisos Mountains",
+      "lon": -103.3,
+      "lat": 29.3
+    },
+
+    {
+      "id": "presidio-del-norte-1760",
+      "year": 1760,
+      "title": "Presidio del Norte established at La Junta",
+      "description": "Spanish colonial authorities established a military garrison at La Junta de los Ríos to defend against Apache raids and protect the river crossing. The presidio anchored Spanish presence in the Big Bend corridor and became the nucleus of what is now Ojinaga, Chihuahua.",
+      "category": "military",
+      "locationName": "Presidio del Norte (Ojinaga, Chihuahua)",
+      "lon": -104.42,
+      "lat": 29.56
+    },
+
+    {
+      "id": "comanche-war-trail-1780",
+      "year": 1780,
+      "title": "Comanche War Trail crosses the river at Presidio",
+      "description": "Comanche raiding parties from the southern Plains established regular routes south into Chihuahua and Coahuila. One major corridor crossed the Rio Grande near present-day Presidio, passing through the Chihuahuan Desert toward interior Mexico. These raids devastated northern Mexican settlements for decades.",
+      "category": "native",
+      "locationName": "Presidio crossing / Comanche Trail",
+      "lon": -104.38,
+      "lat": 29.6
+    },
+
+    {
+      "id": "chihuahua-silver-trade-1800",
+      "year": 1800,
+      "title": "Chihuahua City as regional silver capital",
+      "description": "Chihuahua City flourished as one of the wealthiest cities in northern New Spain, driven by silver mining in the Sierra Madre and trade along the Camino Real. Its merchants controlled commerce across the entire desert north, including the Big Bend corridor.",
+      "category": "trade",
+      "locationName": "Chihuahua City",
+      "lon": -106.08,
+      "lat": 28.63
+    },
+
+    {
+      "id": "mexican-independence-1821",
+      "year": 1821,
+      "title": "Mexican independence reshapes the northern frontier",
+      "description": "Mexico's independence from Spain ended the presidio system's funding and left northern frontier garrisons weakened. Apache and Comanche raiding intensified across Chihuahua and Coahuila through the 1820s–40s as the new republic struggled to project military power into the far north.",
+      "category": "military",
+      "locationName": "Northern Chihuahua frontier",
+      "lon": -105.2,
+      "lat": 29.8
+    },
+
+    {
+      "id": "scalp-hunters-1837",
+      "year": 1837,
+      "title": "Chihuahua state scalp bounty program",
+      "description": "Facing catastrophic Apache raiding, Chihuahua state offered cash bounties for Apache scalps — 100 pesos per warrior, 50 per woman. The program attracted American and Anglo scalp hunters including James Kirker, whose depredations eventually killed non-combatants and friendly Indians indiscriminately.",
+      "category": "military",
+      "locationName": "Chihuahua / northern frontier",
+      "lon": -105.5,
+      "lat": 29.3
+    },
+
+    {
+      "id": "us-mexico-war-boundary-1848",
+      "year": 1848,
+      "title": "Treaty of Guadalupe Hidalgo draws the river as border",
+      "description": "The Treaty ending the Mexican-American War established the Rio Grande as the international boundary from El Paso to the Gulf. This transformed a broad cultural and trade corridor into a contested political line, dividing communities, disrupting traditional movement patterns, and beginning a new era of boundary disputes.",
+      "category": "military",
+      "locationName": "Rio Grande / Rio Bravo",
+      "lon": -103.8,
+      "lat": 29.5
+    },
+
+    {
+      "id": "boundary-survey-1852",
+      "year": 1852,
+      "title": "US–Mexico Boundary Survey through Big Bend",
+      "description": "The Joint Boundary Commission surveyed the new international line along the Rio Grande. Survey parties documented the geology, flora, and terrain of the Big Bend for the first time in American scientific literature. Their reports highlighted the region's remoteness and the near-impossibility of defending such a boundary.",
+      "category": "military",
+      "locationName": "Big Bend / Rio Grande survey corridor",
+      "lon": -103.5,
+      "lat": 29.2
+    },
+
+    {
+      "id": "fort-davis-established-1854",
+      "year": 1854,
+      "title": "Fort Davis established to protect the San Antonio–El Paso road",
+      "description": "The Army established Fort Davis in Limpia Canyon to protect the mail and emigrant route between San Antonio and El Paso from Apache attacks. The fort sat in the heart of Mescalero Apache territory and would be a central node in the region's military history for the next four decades.",
+      "category": "military",
+      "locationName": "Fort Davis (Davis Mountains)",
+      "lon": -103.9,
+      "lat": 30.59
+    },
+
+    {
+      "id": "san-antonio-el-paso-road-1854",
+      "year": 1854,
+      "title": "San Antonio–El Paso road opens Trans-Pecos to Anglo travel",
+      "description": "The overland mail and emigrant road across the Trans-Pecos became the primary Anglo route to California and El Paso following the Mexican-American War. Stage stations were established at water sources — Barrel Springs, Van Horn Wells — across a route the Mescalero had long used and contested.",
+      "category": "trade",
+      "locationName": "Trans-Pecos corridor",
+      "lon": -104.5,
+      "lat": 30.5
+    },
+
+    {
+      "id": "camel-corps-1857",
+      "year": 1857,
+      "title": "US Army Camel Corps experiments in the Trans-Pecos",
+      "description": "The Army imported camels from the Middle East to test their suitability for desert transport in the American Southwest. Lt. Edward Beale led expeditions through the Trans-Pecos and toward El Paso. The experiment produced useful data on desert routes but was abandoned with the onset of the Civil War.",
+      "category": "military",
+      "locationName": "Trans-Pecos / Fort Davis area",
+      "lon": -104.1,
+      "lat": 30.4
+    },
+
+    {
+      "id": "fort-davis-abandoned-civil-war-1861",
+      "year": 1861,
+      "title": "Fort Davis abandoned at Civil War outbreak",
+      "description": "Federal troops evacuated Fort Davis in April 1861 as Texas seceded. Confederate forces briefly occupied the post before withdrawing. For the duration of the war the Trans-Pecos was without U.S. military presence, and Apache raiding increased significantly across the region.",
+      "category": "military",
+      "locationName": "Fort Davis",
+      "lon": -103.9,
+      "lat": 30.59
+    },
+
+    {
+      "id": "buffalo-soldiers-fort-davis-1867",
+      "year": 1867,
+      "title": "Buffalo Soldiers re-garrison Fort Davis",
+      "description": "The 9th and 10th Cavalry — Black regiments the Comanche and Apache called Buffalo Soldiers — regarrisoned Fort Davis after the Civil War. Over the next two decades they conducted the majority of military operations against Apache bands in the Trans-Pecos and fought in the Red River War against Comanche on the southern Plains.",
+      "category": "military",
+      "locationName": "Fort Davis",
+      "lon": -103.9,
+      "lat": 30.59
+    },
+
+    {
+      "id": "mescalero-raids-1870s",
+      "year": 1872,
+      "title": "Mescalero Apache raiding peaks in Trans-Pecos",
+      "description": "Through the early 1870s Mescalero bands under leaders including Nicolás and Natzili continued raiding ranches and travelers along the San Antonio–El Paso road. Army campaigns out of Fort Davis pushed bands toward the Sacramento Mountains and Guadalupe Mountains, but the rugged Big Bend canyon country remained effectively Apache territory.",
+      "category": "native",
+      "locationName": "Trans-Pecos / Chisos / Guadalupe range",
+      "lon": -104.2,
+      "lat": 30.1
+    },
+
+    {
+      "id": "comanche-red-river-war-1874",
+      "year": 1874,
+      "title": "Red River War breaks Comanche power on southern Plains",
+      "description": "Col. Ranald Mackenzie's campaign into Palo Duro Canyon destroyed the Comanche horse herd and winter supplies in 1874, effectively ending Comanche dominance on the southern Plains. Surviving bands were confined to Indian Territory. The raiding corridor south through the Trans-Pecos into Mexico collapsed within a decade.",
+      "category": "military",
+      "locationName": "Southern Plains / Trans-Pecos corridor",
+      "lon": -102.5,
+      "lat": 31.5
+    },
+
+    {
+      "id": "cattle-drives-pecos-1875",
+      "year": 1875,
+      "title": "Cattle drives begin moving through the Pecos corridor",
+      "description": "As Comanche raiding diminished, ranchers began pushing longhorn herds north from the Rio Grande through the Pecos Valley toward markets in New Mexico and Kansas. The Pecos River became a critical watering and routing corridor, and the demand for grazing land accelerated Anglo settlement of the Trans-Pecos.",
+      "category": "trade",
+      "locationName": "Pecos River corridor",
+      "lon": -103.5,
+      "lat": 30.8
+    },
+
+    {
+      "id": "chinati-hot-springs-1880",
+      "year": 1880,
+      "title": "Chinati Hot Springs known to Apache and early settlers",
+      "description": "The thermal springs along Alamito Creek near the Chinati Mountains were used by Apache bands and documented by Army surveyors. As Apache presence diminished in the late 1870s, the springs attracted early Anglo settlers. The site became a modest ranching and mineral-bath destination by the 1890s.",
+      "category": "natural",
+      "locationName": "Chinati Hot Springs / Alamito Creek",
+      "lon": -104.47,
+      "lat": 29.94
+    },
+
+    {
+      "id": "sp-railroad-1881",
+      "year": 1881,
+      "title": "Southern Pacific Railroad reaches El Paso",
+      "description": "The Southern Pacific's transcontinental line reached El Paso in 1881, connecting the region to national markets for the first time. The railroad transformed the economics of the Trans-Pecos, making large-scale ranching viable and triggering land speculation. Towns along the rail line grew rapidly while those off it stagnated.",
+      "category": "trade",
+      "locationName": "El Paso / Trans-Pecos rail corridor",
+      "lon": -106.3,
+      "lat": 31.7
+    },
+
+    {
+      "id": "marfa-founded-1882",
+      "year": 1882,
+      "title": "Marfa established as railroad water stop",
+      "description": "The Southern Pacific established a water stop and section house at Marfa in 1882, naming the station after a character in a Dostoyevsky novel. The town grew as a ranching supply center and became the seat of Presidio County. Its high-desert location and mild climate would later make it notable in other ways.",
+      "category": "settlement",
+      "locationName": "Marfa, Texas",
+      "lon": -104.02,
+      "lat": 30.31
+    },
+
+    {
+      "id": "alpine-founded-1882",
+      "year": 1882,
+      "title": "Alpine platted as railroad town",
+      "description": "Platted as Murphyville along the Southern Pacific line and later renamed Alpine, the town became the commercial hub of Brewster County — the largest county in Texas. Its position between the Davis Mountains and the Big Bend made it the practical gateway to the interior of the Trans-Pecos.",
+      "category": "settlement",
+      "locationName": "Alpine, Texas",
+      "lon": -103.66,
+      "lat": 30.36
+    },
+
+    {
+      "id": "victorio-campaign-1880",
+      "year": 1880,
+      "title": "Victorio's War — final Apache resistance in the region",
+      "description": "Warm Springs Apache leader Victorio led a mobile resistance campaign across the Trans-Pecos and into Chihuahua, raiding ranches and eluding Army columns through 1880. He was killed by Mexican forces at Tres Castillos in Chihuahua in October 1880, effectively ending organized Apache military resistance in the region.",
+      "category": "military",
+      "locationName": "Trans-Pecos / Tres Castillos, Chihuahua",
+      "lon": -104.8,
+      "lat": 29.6
+    },
+
+    {
+      "id": "big-bend-ranching-1885",
+      "year": 1885,
+      "title": "Open-range ranching spreads across Brewster County",
+      "description": "With Apache resistance broken and the railroad in place, large cattle ranches spread across Brewster County through the mid-1880s. Operations including the Kokernot and later Gage ranches ran tens of thousands of cattle across the grasslands and volcanic mountains. Overgrazing would degrade much of this range within two decades.",
+      "category": "settlement",
+      "locationName": "Brewster County / Marathon area",
+      "lon": -103.2,
+      "lat": 30.2
+    },
+
+    {
+      "id": "quicksilver-terlingua-1890",
+      "year": 1890,
+      "title": "Quicksilver (mercury) mining begins at Terlingua",
+      "description": "Cinnabar deposits near Terlingua Creek were developed into one of the most productive quicksilver mines in the United States. The Chisos Mining Company brought hundreds of workers — mostly Mexican and Mexican-American — to the remote desert. Mercury from Terlingua was used to process silver and gold ore across the Americas.",
+      "category": "natural",
+      "locationName": "Terlingua, Texas",
+      "lon": -103.6,
+      "lat": 29.32
+    },
+
+    {
+      "id": "judge-roy-bean-langtry-1890",
+      "year": 1890,
+      "title": "Judge Roy Bean holds court at Langtry",
+      "description": "Self-appointed justice of the peace Roy Bean operated his saloon and courtroom at Langtry on the southern edge of the Pecos River canyon, calling himself the Law West of the Pecos. His combination of showmanship and rough justice made him a symbol of the frontier character of the lower Trans-Pecos in the railroad era.",
+      "category": "settlement",
+      "locationName": "Langtry, Texas",
+      "lon": -101.55,
+      "lat": 29.8
+    },
+
+    {
+      "id": "mexican-revolution-border-1910",
+      "year": 1910,
+      "title": "Mexican Revolution destabilizes the border",
+      "description": "The outbreak of revolution in Mexico in 1910 sent shockwaves through the borderlands. Refugees crossed into Texas, revolutionary factions raided border towns, and the Rio Grande became a volatile boundary. Presidio, Candelaria, and Boquillas all experienced cross-border violence or displacement through the 1910s.",
+      "category": "military",
+      "locationName": "Big Bend border / Presidio–Boquillas corridor",
+      "lon": -103.8,
+      "lat": 29.4
+    },
+
+    {
+      "id": "boquillas-raid-1916",
+      "year": 1916,
+      "title": "Boquillas and Glenn Springs raids",
+      "description": "In May 1916, a band of Mexican raiders attacked the small communities of Boquillas and Glenn Springs on the Texas side of the river, killing several people and briefly kidnapping American civilians. The raids prompted a U.S. Army punitive expedition into Mexico and accelerated the construction of a military presence along the Big Bend border.",
+      "category": "military",
+      "locationName": "Boquillas / Glenn Springs, Big Bend",
+      "lon": -102.95,
+      "lat": 29.18
+    },
+
+    {
+      "id": "big-bend-state-park-proposed-1933",
+      "year": 1933,
+      "title": "Big Bend proposed as national park",
+      "description": "Texas legislators and conservationists began formal efforts to establish a national park in the Big Bend in the 1930s. The Texas state legislature created a state park in 1933 as a precursor, acquiring land through the 1930s. Big Bend National Park was formally established by Congress in 1944, preserving nearly 800,000 acres of Chihuahuan Desert.",
+      "category": "natural",
+      "locationName": "Big Bend / Chisos Basin",
+      "lon": -103.25,
+      "lat": 29.27
+    }
+
+  ]
+}
