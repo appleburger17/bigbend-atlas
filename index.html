@@ -88,21 +88,22 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
 }
 #det-card::-webkit-scrollbar{width:3px}
 #det-card::-webkit-scrollbar-thumb{background:var(--mid)}
-/* Content inner wrapper — this is what animates */
+/* Content inner wrapper — keyframe animations only, no transition */
 #det-inner{
   padding:16px 18px;
-  transition:opacity 0.18s ease, transform 0.18s ease;
 }
 #det-inner.fade-out{
-  opacity:0;
-  transform:translateY(-8px);
-  pointer-events:none;
+  animation:detFadeOut 0.16s ease forwards;
 }
 #det-inner.fade-in{
   animation:detFadeIn 0.2s ease forwards;
 }
+@keyframes detFadeOut{
+  from{opacity:1;transform:translateY(0)}
+  to{opacity:0;transform:translateY(-6px)}
+}
 @keyframes detFadeIn{
-  from{opacity:0;transform:translateY(8px)}
+  from{opacity:0;transform:translateY(6px)}
   to{opacity:1;transform:translateY(0)}
 }
 .dc-x{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--mid);font-size:1.3rem;cursor:pointer;line-height:1}
@@ -210,14 +211,15 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
     </div>
     <div class="ps">
       <div class="sl">Quick jumps</div>
-      <button class="jb" data-s="1670" data-e="1700">1670&#8211;1700 &middot; Jumano / Spanish contact</button>
-      <button class="jb" data-s="1700" data-e="1750">1700&#8211;1750 &middot; Apache expansion</button>
-      <button class="jb" data-s="1750" data-e="1800">1750&#8211;1800 &middot; Presidio era</button>
-      <button class="jb" data-s="1820" data-e="1850">1820&#8211;1850 &middot; Mexican frontier</button>
-      <button class="jb" data-s="1845" data-e="1865">1845&#8211;1865 &middot; US boundary / Civil War</button>
-      <button class="jb" data-s="1865" data-e="1885">1865&#8211;1885 &middot; Buffalo Soldiers / Apache wars end</button>
-      <button class="jb" data-s="1880" data-e="1900">1880&#8211;1900 &middot; Railroad / settlement</button>
-      <button class="jb" data-s="1900" data-e="1925">1900&#8211;1925 &middot; Revolution era</button>
+      <button class="jb" data-s="1670" data-e="1710">1670&#8211;1710 &middot; Spanish missions &amp; Jumano</button>
+      <button class="jb" data-s="1710" data-e="1770">1710&#8211;1770 &middot; Apache expansion</button>
+      <button class="jb" data-s="1770" data-e="1825">1770&#8211;1825 &middot; Presidio era &amp; independence</button>
+      <button class="jb" data-s="1825" data-e="1860">1825&#8211;1860 &middot; Mexican frontier &amp; US arrival</button>
+      <button class="jb" data-s="1855" data-e="1875">1855&#8211;1875 &middot; Civil War &amp; Buffalo Soldiers</button>
+      <button class="jb" data-s="1875" data-e="1900">1875&#8211;1900 &middot; Railroad &amp; settlement era</button>
+      <button class="jb" data-s="1900" data-e="1920">1900&#8211;1920 &middot; Revolution &amp; border violence</button>
+      <button class="jb" data-s="1920" data-e="1950">1920&#8211;1950 &middot; Depression, mining &amp; park creation</button>
+      <button class="jb" data-s="1950" data-e="2025">1950&#8211;2025 &middot; Modern era</button>
     </div>
     <div class="ps">
       <div class="sl">Event layers</div>
@@ -298,7 +300,8 @@ var GL={overlay:true,labels:true};
 var SP=10,SQ='';
 var VX=0,VY=0,VS=1,VS_MIN=0.5,VS_MAX=20;
 var IP=false,PS={x:0,y:0},VS0={x:0,y:0},PD=null,TT=0;
-// single card, no slot tracking needed
+// single card, cancellable animation timer
+var detTimer=null;
 var tileImg={};   // cached Image objects keyed by "z/x/y"
 
 var CV=document.getElementById('mc'),CX=CV.getContext('2d'),MW=document.getElementById('mw');
@@ -592,35 +595,33 @@ function buildCard(el,ev,col){
   }
 }
 
+var detTimer=null; // cancellable timer for card animation
+
 function selEv(ev,direction){
   SE=ev;
   var col=CC[ev.category]||'var(--ochre)';
   var wrap=document.getElementById('det-wrap');
   var card=document.getElementById('det-card');
   var inner=document.getElementById('det-inner');
-  var isFirstOpen=!wrap.classList.contains('on');
-
+  if(detTimer){clearTimeout(detTimer);detTimer=null;}
   card.style.borderLeftColor=col;
-
-  if(isFirstOpen){
-    // First open — build content and show with no animation
+  wrap.classList.add('on');
+  var wasOpen=inner.innerHTML.length>0;
+  if(!wasOpen){
     buildCard(inner,ev,col);
     inner.classList.remove('fade-out','fade-in');
-    wrap.classList.add('on');
     card.scrollTop=0;
   } else {
-    // Already open — fade out current content, swap, fade in new
+    inner.classList.remove('fade-in');
     inner.classList.add('fade-out');
-    setTimeout(function(){
+    detTimer=setTimeout(function(){
+      detTimer=null;
       buildCard(inner,ev,col);
       inner.classList.remove('fade-out');
       inner.classList.add('fade-in');
       card.scrollTop=0;
-      // Clean up animation class after it completes
-      setTimeout(function(){inner.classList.remove('fade-in');},220);
-    },180);
+    },160);
   }
-
   document.querySelectorAll('.ev').forEach(function(x){x.classList.toggle('on',x.dataset.id===ev.id);});
   var le=document.querySelector('.ev[data-id="'+ev.id+'"]');
   if(le)le.scrollIntoView({behavior:'smooth',block:'nearest'});
@@ -639,14 +640,17 @@ function jmp(ev,direction){
 
 function deSel(){
   SE=null;
+  if(detTimer){clearTimeout(detTimer);detTimer=null;}
   var wrap=document.getElementById('det-wrap');
   var inner=document.getElementById('det-inner');
+  inner.classList.remove('fade-in');
   inner.classList.add('fade-out');
-  setTimeout(function(){
+  detTimer=setTimeout(function(){
+    detTimer=null;
     wrap.classList.remove('on');
-    inner.classList.remove('fade-out','fade-in');
+    inner.classList.remove('fade-out');
     inner.innerHTML='';
-  },200);
+  },180);
   document.querySelectorAll('.ev').forEach(function(x){x.classList.remove('on');});
   draw();
 }
