@@ -9,15 +9,29 @@
       "lonMax": -99.0
     },
     "categories": {
-      "military":    { "label": "Military / Conflict",     "color": "#4a7c40" },
-      "native":      { "label": "Native Nations",          "color": "#b05030" },
-      "trade":       { "label": "Trade / Routes",          "color": "#c08020" },
-      "settlement":  { "label": "Settlements",             "color": "#3060a0" },
-      "natural":     { "label": "Geography / Resources",   "color": "#507050" }
+      "military": {
+        "label": "Military / Conflict",
+        "color": "#4a7c40"
+      },
+      "native": {
+        "label": "Native Nations",
+        "color": "#b05030"
+      },
+      "trade": {
+        "label": "Trade / Routes",
+        "color": "#c08020"
+      },
+      "settlement": {
+        "label": "Settlements",
+        "color": "#3060a0"
+      },
+      "natural": {
+        "label": "Geography / Resources",
+        "color": "#507050"
+      }
     }
   },
   "events": [
-
     {
       "id": "jumano-la-junta-1680",
       "year": 1680,
@@ -26,9 +40,12 @@
       "category": "native",
       "locationName": "La Junta de los Ríos (Presidio/Ojinaga area)",
       "lon": -104.4,
-      "lat": 29.57
+      "lat": 29.57,
+      "related": [
+        "camino-real-1680",
+        "presidio-del-norte-1760"
+      ]
     },
-
     {
       "id": "camino-real-1680",
       "year": 1680,
@@ -37,9 +54,13 @@
       "category": "trade",
       "locationName": "El Paso del Norte (El Paso / Juárez)",
       "lon": -106.45,
-      "lat": 31.75
+      "lat": 31.75,
+      "related": [
+        "pueblo-revolt-refugees-1680",
+        "chihuahua-silver-trade-1800",
+        "san-antonio-el-paso-road-1854"
+      ]
     },
-
     {
       "id": "pueblo-revolt-refugees-1680",
       "year": 1680,
@@ -48,9 +69,12 @@
       "category": "settlement",
       "locationName": "El Paso del Norte",
       "lon": -106.42,
-      "lat": 31.77
+      "lat": 31.77,
+      "related": [
+        "camino-real-1680",
+        "presidio-del-norte-1760"
+      ]
     },
-
     {
       "id": "apache-expansion-1720",
       "year": 1720,
@@ -59,9 +83,14 @@
       "category": "native",
       "locationName": "Davis Mountains / Trans-Pecos",
       "lon": -103.9,
-      "lat": 30.7
+      "lat": 30.7,
+      "related": [
+        "chisos-apache-1730",
+        "comanche-war-trail-1780",
+        "fort-davis-established-1854",
+        "mescalero-raids-1870s"
+      ]
     },
-
     {
       "id": "chisos-apache-1730",
       "year": 1730,
@@ -70,9 +99,13 @@
       "category": "native",
       "locationName": "Chisos Mountains",
       "lon": -103.3,
-      "lat": 29.3
+      "lat": 29.3,
+      "related": [
+        "apache-expansion-1720",
+        "presidio-del-norte-1760",
+        "scalp-hunters-1837"
+      ]
     },
-
     {
       "id": "presidio-del-norte-1760",
       "year": 1760,
@@ -81,9 +114,13 @@
       "category": "military",
       "locationName": "Presidio del Norte (Ojinaga, Chihuahua)",
       "lon": -104.42,
-      "lat": 29.56
+      "lat": 29.56,
+      "related": [
+        "jumano-la-junta-1680",
+        "chisos-apache-1730",
+        "mexican-independence-1821"
+      ]
     },
-
     {
       "id": "comanche-war-trail-1780",
       "year": 1780,
@@ -92,9 +129,13 @@
       "category": "native",
       "locationName": "Presidio crossing / Comanche Trail",
       "lon": -104.38,
-      "lat": 29.6
+      "lat": 29.6,
+      "related": [
+        "apache-expansion-1720",
+        "scalp-hunters-1837",
+        "comanche-red-river-war-1874"
+      ]
     },
-
     {
       "id": "chihuahua-silver-trade-1800",
       "year": 1800,
@@ -103,9 +144,13 @@
       "category": "trade",
       "locationName": "Chihuahua City",
       "lon": -106.08,
-      "lat": 28.63
+      "lat": 28.63,
+      "related": [
+        "camino-real-1680",
+        "mexican-independence-1821",
+        "sp-railroad-1881"
+      ]
     },
-
     {
       "id": "mexican-independence-1821",
       "year": 1821,
@@ -114,9 +159,13 @@
       "category": "military",
       "locationName": "Northern Chihuahua frontier",
       "lon": -105.2,
-      "lat": 29.8
+      "lat": 29.8,
+      "related": [
+        "presidio-del-norte-1760",
+        "scalp-hunters-1837",
+        "us-mexico-war-boundary-1848"
+      ]
     },
-
     {
       "id": "scalp-hunters-1837",
       "year": 1837,
@@ -125,9 +174,14 @@
       "category": "military",
       "locationName": "Chihuahua / northern frontier",
       "lon": -105.5,
-      "lat": 29.3
+      "lat": 29.3,
+      "related": [
+        "chisos-apache-1730",
+        "comanche-war-trail-1780",
+        "mexican-independence-1821",
+        "victorio-campaign-1880"
+      ]
     },
-
     {
       "id": "us-mexico-war-boundary-1848",
       "year": 1848,
@@ -136,9 +190,13 @@
       "category": "military",
       "locationName": "Rio Grande / Rio Bravo",
       "lon": -103.8,
-      "lat": 29.5
+      "lat": 29.5,
+      "related": [
+        "mexican-independence-1821",
+        "boundary-survey-1852",
+        "mexican-revolution-border-1910"
+      ]
     },
-
     {
       "id": "boundary-survey-1852",
       "year": 1852,
@@ -147,9 +205,12 @@
       "category": "military",
       "locationName": "Big Bend / Rio Grande survey corridor",
       "lon": -103.5,
-      "lat": 29.2
+      "lat": 29.2,
+      "related": [
+        "us-mexico-war-boundary-1848",
+        "fort-davis-established-1854"
+      ]
     },
-
     {
       "id": "fort-davis-established-1854",
       "year": 1854,
@@ -158,9 +219,14 @@
       "category": "military",
       "locationName": "Fort Davis (Davis Mountains)",
       "lon": -103.9,
-      "lat": 30.59
+      "lat": 30.59,
+      "related": [
+        "apache-expansion-1720",
+        "san-antonio-el-paso-road-1854",
+        "fort-davis-abandoned-civil-war-1861",
+        "buffalo-soldiers-fort-davis-1867"
+      ]
     },
-
     {
       "id": "san-antonio-el-paso-road-1854",
       "year": 1854,
@@ -169,9 +235,13 @@
       "category": "trade",
       "locationName": "Trans-Pecos corridor",
       "lon": -104.5,
-      "lat": 30.5
+      "lat": 30.5,
+      "related": [
+        "camino-real-1680",
+        "fort-davis-established-1854",
+        "sp-railroad-1881"
+      ]
     },
-
     {
       "id": "camel-corps-1857",
       "year": 1857,
@@ -180,9 +250,12 @@
       "category": "military",
       "locationName": "Trans-Pecos / Fort Davis area",
       "lon": -104.1,
-      "lat": 30.4
+      "lat": 30.4,
+      "related": [
+        "fort-davis-established-1854",
+        "fort-davis-abandoned-civil-war-1861"
+      ]
     },
-
     {
       "id": "fort-davis-abandoned-civil-war-1861",
       "year": 1861,
@@ -191,9 +264,13 @@
       "category": "military",
       "locationName": "Fort Davis",
       "lon": -103.9,
-      "lat": 30.59
+      "lat": 30.59,
+      "related": [
+        "fort-davis-established-1854",
+        "camel-corps-1857",
+        "buffalo-soldiers-fort-davis-1867"
+      ]
     },
-
     {
       "id": "buffalo-soldiers-fort-davis-1867",
       "year": 1867,
@@ -202,9 +279,14 @@
       "category": "military",
       "locationName": "Fort Davis",
       "lon": -103.9,
-      "lat": 30.59
+      "lat": 30.59,
+      "related": [
+        "fort-davis-abandoned-civil-war-1861",
+        "mescalero-raids-1870s",
+        "victorio-campaign-1880",
+        "comanche-red-river-war-1874"
+      ]
     },
-
     {
       "id": "mescalero-raids-1870s",
       "year": 1872,
@@ -213,9 +295,13 @@
       "category": "native",
       "locationName": "Trans-Pecos / Chisos / Guadalupe range",
       "lon": -104.2,
-      "lat": 30.1
+      "lat": 30.1,
+      "related": [
+        "apache-expansion-1720",
+        "buffalo-soldiers-fort-davis-1867",
+        "victorio-campaign-1880"
+      ]
     },
-
     {
       "id": "comanche-red-river-war-1874",
       "year": 1874,
@@ -224,9 +310,13 @@
       "category": "military",
       "locationName": "Southern Plains / Trans-Pecos corridor",
       "lon": -102.5,
-      "lat": 31.5
+      "lat": 31.5,
+      "related": [
+        "comanche-war-trail-1780",
+        "buffalo-soldiers-fort-davis-1867",
+        "cattle-drives-pecos-1875"
+      ]
     },
-
     {
       "id": "cattle-drives-pecos-1875",
       "year": 1875,
@@ -235,9 +325,13 @@
       "category": "trade",
       "locationName": "Pecos River corridor",
       "lon": -103.5,
-      "lat": 30.8
+      "lat": 30.8,
+      "related": [
+        "comanche-red-river-war-1874",
+        "big-bend-ranching-1885",
+        "judge-roy-bean-langtry-1890"
+      ]
     },
-
     {
       "id": "chinati-hot-springs-1880",
       "year": 1880,
@@ -246,42 +340,13 @@
       "category": "natural",
       "locationName": "Chinati Hot Springs / Alamito Creek",
       "lon": -104.47,
-      "lat": 29.94
+      "lat": 29.94,
+      "related": [
+        "apache-expansion-1720",
+        "victorio-campaign-1880",
+        "big-bend-ranching-1885"
+      ]
     },
-
-    {
-      "id": "sp-railroad-1881",
-      "year": 1881,
-      "title": "Southern Pacific Railroad reaches El Paso",
-      "description": "The Southern Pacific's transcontinental line reached El Paso in 1881, connecting the region to national markets for the first time. The railroad transformed the economics of the Trans-Pecos, making large-scale ranching viable and triggering land speculation. Towns along the rail line grew rapidly while those off it stagnated.",
-      "category": "trade",
-      "locationName": "El Paso / Trans-Pecos rail corridor",
-      "lon": -106.3,
-      "lat": 31.7
-    },
-
-    {
-      "id": "marfa-founded-1882",
-      "year": 1882,
-      "title": "Marfa established as railroad water stop",
-      "description": "The Southern Pacific established a water stop and section house at Marfa in 1882, naming the station after a character in a Dostoyevsky novel. The town grew as a ranching supply center and became the seat of Presidio County. Its high-desert location and mild climate would later make it notable in other ways.",
-      "category": "settlement",
-      "locationName": "Marfa, Texas",
-      "lon": -104.02,
-      "lat": 30.31
-    },
-
-    {
-      "id": "alpine-founded-1882",
-      "year": 1882,
-      "title": "Alpine platted as railroad town",
-      "description": "Platted as Murphyville along the Southern Pacific line and later renamed Alpine, the town became the commercial hub of Brewster County — the largest county in Texas. Its position between the Davis Mountains and the Big Bend made it the practical gateway to the interior of the Trans-Pecos.",
-      "category": "settlement",
-      "locationName": "Alpine, Texas",
-      "lon": -103.66,
-      "lat": 30.36
-    },
-
     {
       "id": "victorio-campaign-1880",
       "year": 1880,
@@ -290,9 +355,60 @@
       "category": "military",
       "locationName": "Trans-Pecos / Tres Castillos, Chihuahua",
       "lon": -104.8,
-      "lat": 29.6
+      "lat": 29.6,
+      "related": [
+        "scalp-hunters-1837",
+        "buffalo-soldiers-fort-davis-1867",
+        "mescalero-raids-1870s",
+        "chinati-hot-springs-1880"
+      ]
     },
-
+    {
+      "id": "sp-railroad-1881",
+      "year": 1881,
+      "title": "Southern Pacific Railroad reaches El Paso",
+      "description": "The Southern Pacific's transcontinental line reached El Paso in 1881, connecting the region to national markets for the first time. The railroad transformed the economics of the Trans-Pecos, making large-scale ranching viable and triggering land speculation. Towns along the rail line grew rapidly while those off it stagnated.",
+      "category": "trade",
+      "locationName": "El Paso / Trans-Pecos rail corridor",
+      "lon": -106.3,
+      "lat": 31.7,
+      "related": [
+        "san-antonio-el-paso-road-1854",
+        "marfa-founded-1882",
+        "alpine-founded-1882",
+        "chihuahua-silver-trade-1800"
+      ]
+    },
+    {
+      "id": "marfa-founded-1882",
+      "year": 1882,
+      "title": "Marfa established as railroad water stop",
+      "description": "The Southern Pacific established a water stop and section house at Marfa in 1882, naming the station after a character in a Dostoyevsky novel. The town grew as a ranching supply center and became the seat of Presidio County.",
+      "category": "settlement",
+      "locationName": "Marfa, Texas",
+      "lon": -104.02,
+      "lat": 30.31,
+      "related": [
+        "sp-railroad-1881",
+        "alpine-founded-1882",
+        "big-bend-ranching-1885"
+      ]
+    },
+    {
+      "id": "alpine-founded-1882",
+      "year": 1882,
+      "title": "Alpine platted as railroad town",
+      "description": "Platted as Murphyville along the Southern Pacific line and later renamed Alpine, the town became the commercial hub of Brewster County — the largest county in Texas. Its position between the Davis Mountains and the Big Bend made it the practical gateway to the interior of the Trans-Pecos.",
+      "category": "settlement",
+      "locationName": "Alpine, Texas",
+      "lon": -103.66,
+      "lat": 30.36,
+      "related": [
+        "sp-railroad-1881",
+        "marfa-founded-1882",
+        "big-bend-ranching-1885"
+      ]
+    },
     {
       "id": "big-bend-ranching-1885",
       "year": 1885,
@@ -301,20 +417,29 @@
       "category": "settlement",
       "locationName": "Brewster County / Marathon area",
       "lon": -103.2,
-      "lat": 30.2
+      "lat": 30.2,
+      "related": [
+        "cattle-drives-pecos-1875",
+        "marfa-founded-1882",
+        "alpine-founded-1882",
+        "quicksilver-terlingua-1890"
+      ]
     },
-
     {
       "id": "quicksilver-terlingua-1890",
       "year": 1890,
-      "title": "Quicksilver (mercury) mining begins at Terlingua",
+      "title": "Quicksilver mining begins at Terlingua",
       "description": "Cinnabar deposits near Terlingua Creek were developed into one of the most productive quicksilver mines in the United States. The Chisos Mining Company brought hundreds of workers — mostly Mexican and Mexican-American — to the remote desert. Mercury from Terlingua was used to process silver and gold ore across the Americas.",
       "category": "natural",
       "locationName": "Terlingua, Texas",
       "lon": -103.6,
-      "lat": 29.32
+      "lat": 29.32,
+      "related": [
+        "big-bend-ranching-1885",
+        "mexican-revolution-border-1910",
+        "big-bend-state-park-proposed-1933"
+      ]
     },
-
     {
       "id": "judge-roy-bean-langtry-1890",
       "year": 1890,
@@ -323,9 +448,12 @@
       "category": "settlement",
       "locationName": "Langtry, Texas",
       "lon": -101.55,
-      "lat": 29.8
+      "lat": 29.8,
+      "related": [
+        "cattle-drives-pecos-1875",
+        "big-bend-ranching-1885"
+      ]
     },
-
     {
       "id": "mexican-revolution-border-1910",
       "year": 1910,
@@ -334,9 +462,13 @@
       "category": "military",
       "locationName": "Big Bend border / Presidio–Boquillas corridor",
       "lon": -103.8,
-      "lat": 29.4
+      "lat": 29.4,
+      "related": [
+        "us-mexico-war-boundary-1848",
+        "boquillas-raid-1916",
+        "quicksilver-terlingua-1890"
+      ]
     },
-
     {
       "id": "boquillas-raid-1916",
       "year": 1916,
@@ -345,9 +477,12 @@
       "category": "military",
       "locationName": "Boquillas / Glenn Springs, Big Bend",
       "lon": -102.95,
-      "lat": 29.18
+      "lat": 29.18,
+      "related": [
+        "mexican-revolution-border-1910",
+        "big-bend-state-park-proposed-1933"
+      ]
     },
-
     {
       "id": "big-bend-state-park-proposed-1933",
       "year": 1933,
@@ -356,8 +491,11 @@
       "category": "natural",
       "locationName": "Big Bend / Chisos Basin",
       "lon": -103.25,
-      "lat": 29.27
+      "lat": 29.27,
+      "related": [
+        "quicksilver-terlingua-1890",
+        "boquillas-raid-1916"
+      ]
     }
-
   ]
 }

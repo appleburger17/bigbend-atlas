@@ -2,1053 +2,297 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Big Bend — Historical Atlas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Big Bend &#8212; Historical Atlas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-  --sand:       #d4b896;
-  --ochre:      #c4882a;
-  --rust:       #9b4a1e;
-  --charcoal:   #1a1510;
-  --dark-brown: #221910;
-  --mid-brown:  #4a3520;
-  --dim-brown:  #2e2216;
-  --light-sand: #f0e4d0;
-  --cream:      #faf5ec;
-
-  --c-military:   #4a7c40;
-  --c-native:     #b05030;
-  --c-trade:      #c08020;
-  --c-settlement: #3060a0;
-  --c-natural:    #507050;
-}
-
-html, body {
-  height: 100%;
-  background: var(--charcoal);
-  color: var(--light-sand);
-  font-family: 'Courier Prime', monospace;
-  overflow: hidden;
-}
-
-/* ── LAYOUT ─────────────────────────────────────────── */
-#app {
-  display: grid;
-  grid-template-rows: 56px 1fr;
-  grid-template-columns: 280px 1fr;
-  height: 100vh;
-}
-
-/* ── HEADER ──────────────────────────────────────────── */
-#header {
-  grid-column: 1 / 3;
-  grid-row: 1;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 0 20px;
-  border-bottom: 1px solid var(--mid-brown);
-  background: var(--dark-brown);
-}
-
-#header h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.25rem;
-  color: var(--sand);
-  white-space: nowrap;
-}
-
-#header h1 em {
-  color: var(--ochre);
-  font-style: italic;
-}
-
-#header-sub {
-  font-size: 0.62rem;
-  color: var(--mid-brown);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-#event-count {
-  margin-left: auto;
-  font-size: 0.65rem;
-  color: var(--mid-brown);
-  letter-spacing: 0.1em;
-}
-
-/* ── LEFT PANEL ──────────────────────────────────────── */
-#panel {
-  grid-column: 1;
-  grid-row: 2;
-  background: var(--dim-brown);
-  border-right: 1px solid var(--mid-brown);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.panel-section {
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--mid-brown);
-}
-
-.section-label {
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ochre);
-  margin-bottom: 10px;
-}
-
-/* ── TIME CONTROLS ───────────────────────────────────── */
-#year-display {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.6rem;
-  color: var(--sand);
-  text-align: center;
-  margin-bottom: 10px;
-  letter-spacing: 0.03em;
-}
-
-#year-display span { color: var(--mid-brown); font-size: 1rem; margin: 0 6px; }
-
-.slider-wrap {
-  position: relative;
-  height: 28px;
-  margin-bottom: 4px;
-}
-
-.track {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 0; right: 0;
-  height: 3px;
-  background: var(--mid-brown);
-  border-radius: 2px;
-  pointer-events: none;
-}
-
-#track-fill {
-  position: absolute;
-  height: 100%;
-  background: var(--ochre);
-  border-radius: 2px;
-  transition: left 0.1s, width 0.1s;
-}
-
-input[type=range] {
-  -webkit-appearance: none;
-  appearance: none;
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  pointer-events: none;
-}
-
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 16px; height: 16px;
-  border-radius: 50%;
-  background: var(--ochre);
-  border: 2px solid var(--dark-brown);
-  cursor: pointer;
-  pointer-events: all;
-  transition: background 0.15s, transform 0.1s;
-}
-
-input[type=range]::-webkit-slider-thumb:hover {
-  background: var(--sand);
-  transform: scale(1.15);
-}
-
-input[type=range]::-webkit-slider-runnable-track { background: transparent; }
-
-.timeline-ends {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.6rem;
-  color: var(--mid-brown);
-  margin-top: 2px;
-}
-
-/* ── SPAN BUTTONS ────────────────────────────────────── */
-.btn-row {
-  display: flex;
-  gap: 5px;
-}
-
-.sbtn {
-  flex: 1;
-  padding: 4px 0;
-  background: transparent;
-  border: 1px solid var(--mid-brown);
-  color: var(--sand);
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  transition: all 0.12s;
-  border-radius: 2px;
-}
-
-.sbtn:hover { border-color: var(--ochre); color: var(--ochre); }
-.sbtn.active { background: var(--mid-brown); border-color: var(--ochre); color: var(--ochre); }
-
-/* ── QUICK JUMPS ─────────────────────────────────────── */
-.jump-btn {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--mid-brown);
-  color: var(--sand);
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.65rem;
-  padding: 6px 2px;
-  cursor: pointer;
-  letter-spacing: 0.04em;
-  transition: color 0.1s;
-}
-
-.jump-btn:hover { color: var(--ochre); }
-.jump-btn:last-child { border-bottom: none; }
-
-/* ── LAYER TOGGLES ───────────────────────────────────── */
-.layer-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 0;
-  cursor: pointer;
-  font-size: 0.65rem;
-  letter-spacing: 0.06em;
-  color: var(--light-sand);
-  transition: opacity 0.12s;
-  user-select: none;
-}
-
-.layer-row.off { opacity: 0.35; }
-
-.layer-row input { display: none; }
-
-.ldot {
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-/* ── EVENT LIST ──────────────────────────────────────── */
-#event-list-wrap {
-  flex: 1;
-  overflow-y: auto;
-  padding: 0;
-}
-
-#event-list-wrap::-webkit-scrollbar { width: 4px; }
-#event-list-wrap::-webkit-scrollbar-track { background: transparent; }
-#event-list-wrap::-webkit-scrollbar-thumb { background: var(--mid-brown); border-radius: 2px; }
-
-.ev-item {
-  padding: 9px 16px;
-  border-bottom: 1px solid rgba(74,53,32,0.5);
-  cursor: pointer;
-  transition: background 0.1s;
-}
-
-.ev-item:hover { background: rgba(74,53,32,0.4); }
-.ev-item.active { background: rgba(74,53,32,0.7); border-left: 2px solid var(--ochre); padding-left: 14px; }
-
-.ev-cat {
-  font-size: 0.58rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 2px;
-}
-
-.ev-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 0.78rem;
-  color: var(--sand);
-  line-height: 1.3;
-}
-
-.ev-meta {
-  font-size: 0.6rem;
-  color: var(--mid-brown);
-  margin-top: 2px;
-}
-
-#list-empty {
-  padding: 20px 16px;
-  font-size: 0.65rem;
-  color: var(--mid-brown);
-  line-height: 1.6;
-}
-
-/* ── MAP AREA ────────────────────────────────────────── */
-#map-wrap {
-  grid-column: 2;
-  grid-row: 2;
-  position: relative;
-  overflow: hidden;
-}
-
-#map-canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* ── DETAIL CARD ─────────────────────────────────────── */
-#detail-card {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  width: 320px;
-  background: rgba(34,25,16,0.94);
-  border: 1px solid var(--mid-brown);
-  border-left: 3px solid var(--ochre);
-  padding: 14px 16px;
-  display: none;
-  backdrop-filter: blur(4px);
-}
-
-#detail-card.visible { display: block; }
-
-#dc-year {
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--ochre);
-  margin-bottom: 4px;
-}
-
-#dc-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1rem;
-  color: var(--sand);
-  line-height: 1.3;
-  margin-bottom: 8px;
-}
-
-#dc-body {
-  font-size: 0.68rem;
-  color: var(--light-sand);
-  line-height: 1.65;
-  opacity: 0.88;
-}
-
-#dc-loc {
-  font-size: 0.6rem;
-  color: var(--mid-brown);
-  margin-top: 8px;
-  letter-spacing: 0.06em;
-}
-
-#dc-close {
-  position: absolute;
-  top: 8px; right: 10px;
-  background: none;
-  border: none;
-  color: var(--mid-brown);
-  font-size: 1rem;
-  cursor: pointer;
-  line-height: 1;
-  transition: color 0.1s;
-}
-
-#dc-close:hover { color: var(--sand); }
-
-/* ── PERIOD BANNER ───────────────────────────────────── */
-#period-banner {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  max-width: 280px;
-  background: rgba(34,25,16,0.88);
-  border: 1px solid var(--mid-brown);
-  padding: 10px 14px;
-  display: none;
-}
-
-#period-banner.visible { display: block; }
-
-#pb-range {
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  color: var(--ochre);
-  margin-bottom: 3px;
-}
-
-#pb-count {
-  font-size: 0.68rem;
-  color: var(--sand);
-}
-
-/* ── LEGEND ──────────────────────────────────────────── */
-#legend {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background: rgba(34,25,16,0.88);
-  border: 1px solid var(--mid-brown);
-  padding: 10px 12px;
-}
-
-.leg-item {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin-bottom: 5px;
-  font-size: 0.6rem;
-  color: var(--sand);
-  letter-spacing: 0.06em;
-}
-
-.leg-item:last-child { margin-bottom: 0; }
-
-.leg-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-/* ── NO-DATA NOTICE ──────────────────────────────────── */
-#no-data-notice {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  pointer-events: none;
-  display: none;
-}
-
-#no-data-notice.visible { display: block; }
-
-#no-data-notice p {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 1rem;
-  color: var(--mid-brown);
-}
-
-#no-data-notice small {
-  font-size: 0.62rem;
-  color: var(--mid-brown);
-  opacity: 0.6;
-  letter-spacing: 0.1em;
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--sand:#d4b896;--ochre:#c4882a;--charcoal:#1a1510;--dark:#221910;--mid:#4a3520;--dim:#2e2216;--light:#f0e4d0;--c-mil:#4a7c40;--c-nat:#b05030;--c-trd:#c08020;--c-set:#3060a0;--c-geo:#507050;--pw:300px;--hh:52px}
+html,body{height:100%;background:var(--charcoal);color:var(--light);font-family:'Courier Prime',monospace;font-size:15px;overflow:hidden}
+#app{display:flex;flex-direction:column;height:100vh}
+#hdr{height:var(--hh);flex-shrink:0;display:flex;align-items:center;gap:16px;padding:0 16px;border-bottom:1px solid var(--mid);background:var(--dark);z-index:100}
+#hdr h1{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--sand);white-space:nowrap}
+#hdr h1 em{color:var(--ochre);font-style:italic}
+#hdr-sub{font-size:0.65rem;color:var(--mid);letter-spacing:0.14em;text-transform:uppercase}
+#hdr-act{margin-left:auto;display:flex;gap:8px;align-items:center}
+.hbtn{padding:6px 12px;background:transparent;border:1px solid var(--mid);color:var(--sand);font-family:'Courier Prime',monospace;font-size:0.7rem;letter-spacing:0.07em;cursor:pointer;border-radius:2px;transition:all 0.12s;white-space:nowrap}
+.hbtn:hover{border-color:var(--ochre);color:var(--ochre)}
+#body-row{flex:1;display:flex;overflow:hidden;position:relative}
+#panel{width:var(--pw);flex-shrink:0;background:var(--dim);border-right:1px solid var(--mid);display:flex;flex-direction:column;overflow:hidden;transition:transform 0.25s ease;z-index:50}
+.ps{padding:12px 14px;border-bottom:1px solid var(--mid)}
+.sl{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ochre);margin-bottom:8px}
+#srch-wrap{position:relative}
+#srch{width:100%;padding:7px 10px 7px 30px;background:rgba(74,53,32,0.3);border:1px solid var(--mid);color:var(--light);font-family:'Courier Prime',monospace;font-size:0.82rem;border-radius:2px;outline:none}
+#srch::placeholder{color:var(--mid)}
+#srch:focus{border-color:var(--ochre)}
+#srch-ico{position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:0.75rem;color:var(--mid);pointer-events:none}
+#srch-clr{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--mid);cursor:pointer;font-size:1rem;display:none;padding:0;line-height:1}
+#srch-clr:hover{color:var(--sand)}
+#yd{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--sand);text-align:center;margin-bottom:8px}
+#yd span{color:var(--mid);font-size:1rem;margin:0 5px}
+.sw{position:relative;height:28px;margin-bottom:4px}
+.tk{position:absolute;top:50%;transform:translateY(-50%);left:0;right:0;height:3px;background:var(--mid);border-radius:2px;pointer-events:none}
+#tf{position:absolute;height:100%;background:var(--ochre);border-radius:2px}
+input[type=range]{-webkit-appearance:none;appearance:none;position:absolute;width:100%;top:50%;transform:translateY(-50%);background:transparent;pointer-events:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:var(--ochre);border:2px solid var(--dark);cursor:pointer;pointer-events:all}
+input[type=range]::-webkit-slider-thumb:hover{background:var(--sand)}
+input[type=range]::-webkit-slider-runnable-track{background:transparent}
+.tl-e{display:flex;justify-content:space-between;font-size:0.65rem;color:var(--mid);margin-top:2px}
+.br{display:flex;gap:4px}
+.sb{flex:1;padding:6px 0;background:transparent;border:1px solid var(--mid);color:var(--sand);font-family:'Courier Prime',monospace;font-size:0.67rem;cursor:pointer;transition:all 0.12s;border-radius:2px}
+.sb:hover{border-color:var(--ochre);color:var(--ochre)}
+.sb.on{background:var(--mid);border-color:var(--ochre);color:var(--ochre)}
+.jb{display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(74,53,32,0.5);color:var(--sand);font-family:'Courier Prime',monospace;font-size:0.72rem;padding:7px 2px;cursor:pointer;transition:color 0.1s}
+.jb:hover{color:var(--ochre)}
+.jb:last-child{border-bottom:none}
+.lr{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer;font-size:0.75rem;color:var(--light);transition:opacity 0.12s;user-select:none}
+.lr.off{opacity:0.3}
+.lr input{display:none}
+.ld{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+#lh{padding:7px 14px;border-bottom:1px solid var(--mid);display:flex;align-items:center;justify-content:space-between}
+#lc{font-size:0.65rem;color:var(--mid)}
+#evl{flex:1;overflow-y:auto;overscroll-behavior:contain}
+#evl::-webkit-scrollbar{width:3px}
+#evl::-webkit-scrollbar-thumb{background:var(--mid);border-radius:2px}
+.ev{padding:10px 14px;border-bottom:1px solid rgba(74,53,32,0.4);cursor:pointer;transition:background 0.1s}
+.ev:hover{background:rgba(74,53,32,0.35)}
+.ev.on{background:rgba(74,53,32,0.6);border-left:2px solid var(--ochre);padding-left:12px}
+.ec{font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:2px}
+.et{font-family:'Playfair Display',serif;font-size:0.85rem;color:var(--sand);line-height:1.3}
+.em{font-size:0.68rem;color:var(--mid);margin-top:2px}
+#le{padding:14px;font-size:0.75rem;color:var(--mid);line-height:1.6}
+#mw{flex:1;position:relative;overflow:hidden;cursor:grab}
+#mw.pan{cursor:grabbing}
+#mc{display:block;position:absolute;top:0;left:0}
+#det{position:absolute;bottom:16px;left:16px;width:300px;max-width:calc(100vw - 32px);background:rgba(34,25,16,0.96);border:1px solid var(--mid);border-left:3px solid var(--ochre);padding:14px 16px;display:none;z-index:40;max-height:calc(100vh - 180px);overflow-y:auto}
+#det.on{display:block}
+#det::-webkit-scrollbar{width:3px}
+#det::-webkit-scrollbar-thumb{background:var(--mid)}
+#dc-x{position:absolute;top:8px;right:10px;background:none;border:none;color:var(--mid);font-size:1.2rem;cursor:pointer;line-height:1}
+#dc-x:hover{color:var(--sand)}
+#dc-yr{font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ochre);margin-bottom:4px}
+#dc-ti{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--sand);line-height:1.3;margin-bottom:8px}
+#dc-bd{font-size:0.76rem;color:var(--light);line-height:1.7;opacity:0.88}
+#dc-lo{font-size:0.66rem;color:var(--mid);margin-top:8px}
+#dc-rel{margin-top:12px;padding-top:10px;border-top:1px solid var(--mid)}
+#dc-rl{font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:6px}
+.rl{display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(74,53,32,0.4);color:var(--sand);font-family:'Courier Prime',monospace;font-size:0.72rem;padding:6px 0;cursor:pointer;transition:color 0.1s;line-height:1.4}
+.rl:last-child{border-bottom:none}
+.rl:hover{color:var(--ochre)}
+.ry{color:var(--mid);font-size:0.65rem}
+#pb{position:absolute;top:12px;right:12px;background:rgba(34,25,16,0.88);border:1px solid var(--mid);padding:8px 12px;display:none;z-index:30;pointer-events:none}
+#pb.on{display:block}
+#pbr{font-size:0.65rem;letter-spacing:0.13em;color:var(--ochre);margin-bottom:2px}
+#pbc{font-size:0.72rem;color:var(--sand)}
+#leg{position:absolute;bottom:16px;right:16px;background:rgba(34,25,16,0.88);border:1px solid var(--mid);padding:8px 12px;z-index:30}
+.lg{display:flex;align-items:center;gap:7px;margin-bottom:5px;font-size:0.67rem;color:var(--sand)}
+.lg:last-child{margin-bottom:0}
+.lgd{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+#nd{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;display:none;z-index:20}
+#nd.on{display:block}
+#nd p{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--mid)}
+#nd small{font-size:0.67rem;color:var(--mid);opacity:0.5;letter-spacing:0.1em}
+#zc{position:absolute;top:12px;left:12px;display:flex;flex-direction:column;gap:4px;z-index:30}
+.zb{width:34px;height:34px;background:rgba(34,25,16,0.88);border:1px solid var(--mid);color:var(--sand);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.12s;user-select:none;border-radius:2px}
+.zb:hover{border-color:var(--ochre);color:var(--ochre)}
+#pt{display:none;position:absolute;top:12px;left:12px;z-index:60;width:36px;height:36px;background:rgba(34,25,16,0.92);border:1px solid var(--mid);color:var(--sand);font-size:1rem;cursor:pointer;align-items:center;justify-content:center;border-radius:2px}
+#fbm{display:none;position:fixed;inset:0;background:rgba(14,10,6,0.85);z-index:200;align-items:center;justify-content:center;padding:20px}
+#fbm.on{display:flex}
+#fbb{background:var(--dark);border:1px solid var(--mid);padding:24px;width:100%;max-width:420px;position:relative}
+#fbt{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--sand);margin-bottom:6px}
+#fbs{font-size:0.72rem;color:var(--mid);margin-bottom:16px;line-height:1.5}
+#fbtx{width:100%;height:120px;padding:10px;background:rgba(74,53,32,0.25);border:1px solid var(--mid);color:var(--light);font-family:'Courier Prime',monospace;font-size:0.8rem;resize:none;outline:none;border-radius:2px;line-height:1.55}
+#fbtx:focus{border-color:var(--ochre)}
+#fba{display:flex;gap:8px;margin-top:12px;justify-content:flex-end}
+.fbb{padding:7px 16px;font-family:'Courier Prime',monospace;font-size:0.75rem;letter-spacing:0.07em;cursor:pointer;border-radius:2px;transition:all 0.12s}
+#fb-cn{background:transparent;border:1px solid var(--mid);color:var(--sand)}
+#fb-cn:hover{border-color:var(--ochre);color:var(--ochre)}
+#fb-sd{background:var(--ochre);border:1px solid var(--ochre);color:var(--charcoal);font-weight:700}
+#fb-sd:hover{background:var(--sand)}
+#fb-x{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--mid);font-size:1.1rem;cursor:pointer}
+#fb-x:hover{color:var(--sand)}
+#fb-ok{display:none;text-align:center;padding:20px 0}
+#fb-ok p{font-family:'Playfair Display',serif;font-style:italic;color:var(--sand);font-size:1rem}
+@media(max-width:700px){
+  :root{--pw:100vw;--hh:48px}
+  #panel{position:absolute;top:0;left:0;bottom:0;transform:translateX(-100%);box-shadow:4px 0 20px rgba(0,0,0,0.5)}
+  #panel.on{transform:translateX(0)}
+  #pt{display:flex}
+  #zc{left:54px}
+  #det{left:8px;right:8px;width:auto;bottom:12px}
+  #leg{display:none}
+  #pb{right:8px;top:8px;max-width:180px}
+  #hdr h1{font-size:1rem}
+  #hdr-sub{display:none}
 }
 </style>
 </head>
 <body>
-
 <div id="app">
-
-  <!-- HEADER -->
-  <header id="header">
-    <div>
-      <h1>Big Bend — <em>Historical Atlas</em></h1>
-    </div>
-    <div id="header-sub">Trans-Pecos &amp; Northern Chihuahua · 1700–1940</div>
-    <div id="event-count"></div>
-  </header>
-
-  <!-- LEFT PANEL -->
+<header id="hdr">
+  <div><h1>Big Bend &#8212; <em>Historical Atlas</em></h1><div id="hdr-sub">Trans-Pecos &amp; Northern Chihuahua &middot; 1680&#8211;1940</div></div>
+  <div id="hdr-act"><button class="hbtn" id="fb-btn">Feedback</button></div>
+</header>
+<div id="body-row">
+  <button id="pt" aria-label="Menu">&#9776;</button>
   <nav id="panel">
-
-    <!-- TIME -->
-    <div class="panel-section">
-      <div class="section-label">Period</div>
-      <div id="year-display">
-        <span id="yd-start">1845</span>
-        <span>–</span>
-        <span id="yd-end">1860</span>
-      </div>
-      <div class="slider-wrap">
-        <div class="track"><div id="track-fill"></div></div>
-        <input type="range" id="sl-start" min="1700" max="1925" step="5" value="1845">
-        <input type="range" id="sl-end"   min="1700" max="1940" step="5" value="1860">
-      </div>
-      <div class="timeline-ends"><span>1700</span><span>1940</span></div>
+    <div class="ps"><div class="sl">Search</div>
+      <div id="srch-wrap"><span id="srch-ico">&#8981;</span><input type="search" id="srch" placeholder="keyword, place, year&#8230;" autocomplete="off"><button id="srch-clr">&times;</button></div>
     </div>
-
-    <!-- SPAN -->
-    <div class="panel-section">
-      <div class="section-label">Window</div>
-      <div class="btn-row">
-        <button class="sbtn" data-span="5">5 yr</button>
-        <button class="sbtn active" data-span="10">10 yr</button>
-        <button class="sbtn" data-span="20">20 yr</button>
-        <button class="sbtn" data-span="25">25 yr</button>
-        <button class="sbtn" data-span="50">50 yr</button>
-      </div>
+    <div class="ps"><div class="sl">Period</div>
+      <div id="yd"><span id="yd-s">1845</span><span>&#8211;</span><span id="yd-e">1860</span></div>
+      <div class="sw"><div class="tk"><div id="tf"></div></div><input type="range" id="sl-s" min="1680" max="1925" step="5" value="1845"><input type="range" id="sl-e" min="1680" max="1940" step="5" value="1860"></div>
+      <div class="tl-e"><span>1680</span><span>1940</span></div>
     </div>
-
-    <!-- QUICK JUMPS -->
-    <div class="panel-section">
-      <div class="section-label">Quick jumps</div>
-      <button class="jump-btn" data-s="1670" data-e="1700">1670–1700 · Jumano / Spanish contact</button>
-      <button class="jump-btn" data-s="1700" data-e="1750">1700–1750 · Apache expansion</button>
-      <button class="jump-btn" data-s="1750" data-e="1800">1750–1800 · Presidio era</button>
-      <button class="jump-btn" data-s="1820" data-e="1850">1820–1850 · Mexican frontier</button>
-      <button class="jump-btn" data-s="1845" data-e="1865">1845–1865 · US boundary / Civil War</button>
-      <button class="jump-btn" data-s="1865" data-e="1885">1865–1885 · Buffalo Soldiers / end of raids</button>
-      <button class="jump-btn" data-s="1880" data-e="1900">1880–1900 · Railroad / settlement</button>
-      <button class="jump-btn" data-s="1900" data-e="1925">1900–1925 · Revolution era</button>
+    <div class="ps"><div class="sl">Window</div>
+      <div class="br"><button class="sb" data-span="5">5 yr</button><button class="sb on" data-span="10">10 yr</button><button class="sb" data-span="20">20 yr</button><button class="sb" data-span="25">25 yr</button><button class="sb" data-span="50">50 yr</button></div>
     </div>
-
-    <!-- LAYERS -->
-    <div class="panel-section">
-      <div class="section-label">Layers</div>
-      <label class="layer-row" data-layer="military">
-        <input type="checkbox" checked>
-        <span class="ldot" style="background:var(--c-military)"></span>
-        Military / Conflict
-      </label>
-      <label class="layer-row" data-layer="native">
-        <input type="checkbox" checked>
-        <span class="ldot" style="background:var(--c-native)"></span>
-        Native Nations
-      </label>
-      <label class="layer-row" data-layer="trade">
-        <input type="checkbox" checked>
-        <span class="ldot" style="background:var(--c-trade)"></span>
-        Trade / Routes
-      </label>
-      <label class="layer-row" data-layer="settlement">
-        <input type="checkbox" checked>
-        <span class="ldot" style="background:var(--c-settlement)"></span>
-        Settlements
-      </label>
-      <label class="layer-row" data-layer="natural">
-        <input type="checkbox" checked>
-        <span class="ldot" style="background:var(--c-natural)"></span>
-        Geography / Resources
-      </label>
+    <div class="ps"><div class="sl">Quick jumps</div>
+      <button class="jb" data-s="1670" data-e="1700">1670&#8211;1700 &middot; Jumano / Spanish contact</button>
+      <button class="jb" data-s="1700" data-e="1750">1700&#8211;1750 &middot; Apache expansion</button>
+      <button class="jb" data-s="1750" data-e="1800">1750&#8211;1800 &middot; Presidio era</button>
+      <button class="jb" data-s="1820" data-e="1850">1820&#8211;1850 &middot; Mexican frontier</button>
+      <button class="jb" data-s="1845" data-e="1865">1845&#8211;1865 &middot; US boundary / Civil War</button>
+      <button class="jb" data-s="1865" data-e="1885">1865&#8211;1885 &middot; Buffalo Soldiers / Apache wars end</button>
+      <button class="jb" data-s="1880" data-e="1900">1880&#8211;1900 &middot; Railroad / settlement</button>
+      <button class="jb" data-s="1900" data-e="1925">1900&#8211;1925 &middot; Revolution era</button>
     </div>
-
-    <!-- EVENT LIST -->
-    <div style="padding:8px 16px 6px; border-bottom:1px solid var(--mid-brown);">
-      <div class="section-label" style="margin-bottom:0">Events in view</div>
+    <div class="ps"><div class="sl">Layers</div>
+      <label class="lr" data-layer="military"><input type="checkbox" checked><span class="ld" style="background:var(--c-mil)"></span>Military / Conflict</label>
+      <label class="lr" data-layer="native"><input type="checkbox" checked><span class="ld" style="background:var(--c-nat)"></span>Native Nations</label>
+      <label class="lr" data-layer="trade"><input type="checkbox" checked><span class="ld" style="background:var(--c-trd)"></span>Trade / Routes</label>
+      <label class="lr" data-layer="settlement"><input type="checkbox" checked><span class="ld" style="background:var(--c-set)"></span>Settlements</label>
+      <label class="lr" data-layer="natural"><input type="checkbox" checked><span class="ld" style="background:var(--c-geo)"></span>Geography / Resources</label>
     </div>
-    <div id="event-list-wrap">
-      <div id="list-empty">Move the slider to a period with events, or widen the window.</div>
-    </div>
-
+    <div id="lh"><div class="sl" style="margin:0">Events in view</div><div id="lc"></div></div>
+    <div id="evl"><div id="le">Adjust the period to see events.</div></div>
   </nav>
-
-  <!-- MAP -->
-  <main id="map-wrap">
-    <canvas id="map-canvas"></canvas>
-
-    <!-- DETAIL CARD -->
-    <div id="detail-card">
-      <button id="dc-close" title="Close">×</button>
-      <div id="dc-year"></div>
-      <div id="dc-title"></div>
-      <div id="dc-body"></div>
-      <div id="dc-loc"></div>
+  <main id="mw">
+    <canvas id="mc"></canvas>
+    <div id="zc"><button class="zb" id="z+">+</button><button class="zb" id="z-">&#8722;</button><button class="zb" id="z0" style="font-size:0.72rem">&#8962;</button></div>
+    <div id="det"><button id="dc-x">&times;</button><div id="dc-yr"></div><div id="dc-ti"></div><div id="dc-bd"></div><div id="dc-lo"></div>
+      <div id="dc-rel"><div id="dc-rl">Related events</div><div id="dc-rll"></div></div>
     </div>
-
-    <!-- PERIOD BANNER -->
-    <div id="period-banner">
-      <div id="pb-range"></div>
-      <div id="pb-count"></div>
+    <div id="pb"><div id="pbr"></div><div id="pbc"></div></div>
+    <div id="leg">
+      <div class="lg"><span class="lgd" style="background:var(--c-mil)"></span>Military / Conflict</div>
+      <div class="lg"><span class="lgd" style="background:var(--c-nat)"></span>Native Nations</div>
+      <div class="lg"><span class="lgd" style="background:var(--c-trd)"></span>Trade / Routes</div>
+      <div class="lg"><span class="lgd" style="background:var(--c-set)"></span>Settlements</div>
+      <div class="lg"><span class="lgd" style="background:var(--c-geo)"></span>Geography / Resources</div>
     </div>
-
-    <!-- LEGEND -->
-    <div id="legend">
-      <div class="leg-item"><span class="leg-dot" style="background:var(--c-military)"></span>Military / Conflict</div>
-      <div class="leg-item"><span class="leg-dot" style="background:var(--c-native)"></span>Native Nations</div>
-      <div class="leg-item"><span class="leg-dot" style="background:var(--c-trade)"></span>Trade / Routes</div>
-      <div class="leg-item"><span class="leg-dot" style="background:var(--c-settlement)"></span>Settlements</div>
-      <div class="leg-item"><span class="leg-dot" style="background:var(--c-natural)"></span>Geography / Resources</div>
-    </div>
-
-    <!-- NO DATA -->
-    <div id="no-data-notice">
-      <p>No events in this period</p>
-      <small>Try widening the window or shifting the range</small>
-    </div>
-
+    <div id="nd"><p>No events in this period</p><small>Try widening the window or shifting the range</small></div>
   </main>
 </div>
-
+</div>
+<div id="fbm"><div id="fbb"><button id="fb-x">&times;</button><div id="fbt">Send Feedback</div><div id="fbs">Corrections, suggestions, or a story worth adding &#8212; all welcome.</div><textarea id="fbtx" placeholder="Your note&#8230;"></textarea><div id="fba"><button class="fbb" id="fb-cn">Cancel</button><button class="fbb" id="fb-sd">Send via email</button></div><div id="fb-ok"><p>Opening your email client&#8230;</p></div></div></div>
 <script>
-// ─────────────────────────────────────────────────────────────
-// CONFIG
-// ─────────────────────────────────────────────────────────────
-const BOUNDS = { latMin:27.5, latMax:32.5, lonMin:-106.5, lonMax:-99.0 };
-
-const CAT_COLORS = {
-  military:   '#4a7c40',
-  native:     '#b05030',
-  trade:      '#c08020',
-  settlement: '#3060a0',
-  natural:    '#507050'
-};
-
-// Geographic features
-const RIO_GRANDE = [
-  [-106.5,31.8],[-106.2,31.7],[-106.0,31.5],[-105.8,31.3],
-  [-105.4,30.9],[-105.2,30.6],[-104.8,30.2],[-104.4,29.9],
-  [-104.2,29.6],[-103.9,29.3],[-103.5,29.1],[-103.2,29.0],
-  [-102.8,29.2],[-102.5,29.6],[-102.1,29.8],[-101.5,29.7],
-  [-101.0,29.6],[-100.5,29.4],[-100.1,29.1],[-99.5,28.8],[-99.0,28.6]
-];
-const RIO_CONCHOS = [
-  [-105.8,28.2],[-105.5,28.6],[-105.2,28.9],[-104.9,29.2],[-104.6,29.4],[-104.4,29.6]
-];
-const PECOS = [
-  [-104.5,32.3],[-104.4,32.0],[-104.3,31.5],[-104.1,31.0],
-  [-103.8,30.5],[-103.5,30.0],[-103.2,29.5],[-102.8,29.2]
-];
-const MOUNTAINS = [
-  {name:'Chisos',       lon:-103.3, lat:29.3,  r:0.38},
-  {name:'Davis Mtns',   lon:-103.9, lat:30.7,  r:0.52},
-  {name:'Chinati',      lon:-104.5, lat:29.9,  r:0.32},
-  {name:'Sierra del Carmen', lon:-102.9, lat:29.0, r:0.36},
-  {name:'Bofecillos',   lon:-104.1, lat:29.5,  r:0.20},
-  {name:'Glass Mtns',   lon:-103.0, lat:30.4,  r:0.28},
-  {name:'Guadalupe',    lon:-104.85,lat:31.9,  r:0.26},
-  {name:'Sierra Madre foothills', lon:-105.9, lat:28.4, r:0.52}
-];
-const PLACES = [
-  {name:'El Paso / Juárez',   lon:-106.45, lat:31.76},
-  {name:'Presidio / Ojinaga', lon:-104.42, lat:29.57},
-  {name:'Marfa',              lon:-104.02, lat:30.31},
-  {name:'Alpine',             lon:-103.66, lat:30.36},
-  {name:'Langtry',            lon:-101.55, lat:29.80},
-  {name:'Boquillas',          lon:-102.84, lat:29.19},
-  {name:'Terlingua',          lon:-103.6,  lat:29.32},
-  {name:'Chihuahua City',     lon:-106.08, lat:28.63},
-  {name:'Fort Davis',         lon:-103.9,  lat:30.59}
-];
-
-// ─────────────────────────────────────────────────────────────
-// STATE
-// ─────────────────────────────────────────────────────────────
-let allEvents   = [];
-let viewEvents  = [];
-let selectedEv  = null;
-let hoveredEv   = null;
-let activeLayers = { military:true, native:true, trade:true, settlement:true, natural:true };
-let span        = 10;
-
-const canvas = document.getElementById('map-canvas');
-const ctx    = canvas.getContext('2d');
-
-// ─────────────────────────────────────────────────────────────
-// COORDINATE HELPERS
-// ─────────────────────────────────────────────────────────────
-function ll2c(lon, lat) {
-  const x = ((lon - BOUNDS.lonMin) / (BOUNDS.lonMax - BOUNDS.lonMin)) * canvas.width;
-  const y = ((BOUNDS.latMax - lat) / (BOUNDS.latMax - BOUNDS.latMin)) * canvas.height;
-  return {x, y};
+var FBE='your@email.com';
+var B={a:27.5,b:32.5,c:-106.5,d:-99.0};
+var CC={military:'#4a7c40',native:'#b05030',trade:'#c08020',settlement:'#3060a0',natural:'#507050'};
+var RG=[[-106.5,31.8],[-106.2,31.7],[-106.0,31.5],[-105.8,31.3],[-105.4,30.9],[-105.2,30.6],[-104.8,30.2],[-104.4,29.9],[-104.2,29.6],[-103.9,29.3],[-103.5,29.1],[-103.2,29.0],[-102.8,29.2],[-102.5,29.6],[-102.1,29.8],[-101.5,29.7],[-101.0,29.6],[-100.5,29.4],[-100.1,29.1],[-99.5,28.8],[-99.0,28.6]];
+var RC=[[-105.8,28.2],[-105.5,28.6],[-105.2,28.9],[-104.9,29.2],[-104.6,29.4],[-104.4,29.6]];
+var PV=[[-104.5,32.3],[-104.4,32.0],[-104.3,31.5],[-104.1,31.0],[-103.8,30.5],[-103.5,30.0],[-103.2,29.5],[-102.8,29.2]];
+var MT=[{n:'Chisos',x:-103.3,y:29.3,r:0.38},{n:'Davis Mtns',x:-103.9,y:30.7,r:0.52},{n:'Chinati',x:-104.5,y:29.9,r:0.32},{n:'Sierra del Carmen',x:-102.9,y:29.0,r:0.36},{n:'Bofecillos',x:-104.1,y:29.5,r:0.20},{n:'Glass Mtns',x:-103.0,y:30.4,r:0.28},{n:'Guadalupe',x:-104.85,y:31.9,r:0.26},{n:'Sierra Madre foothills',x:-105.9,y:28.4,r:0.52}];
+var PL=[{n:'El Paso / Juarez',x:-106.45,y:31.76},{n:'Presidio / Ojinaga',x:-104.42,y:29.57},{n:'Marfa',x:-104.02,y:30.31},{n:'Alpine',x:-103.66,y:30.36},{n:'Langtry',x:-101.55,y:29.80},{n:'Boquillas',x:-102.84,y:29.19},{n:'Terlingua',x:-103.6,y:29.32},{n:'Chihuahua City',x:-106.08,y:28.63},{n:'Fort Davis',x:-103.9,y:30.59}];
+var AE=[],VE=[],SE=null,HE=null,AL={military:true,native:true,trade:true,settlement:true,natural:true},SP=10,SQ='';
+var VX=0,VY=0,VS=1,IP=false,PS={x:0,y:0},VS0={x:0,y:0},PD=null,TT=0;
+var CV=document.getElementById('mc'),CX=CV.getContext('2d'),MW=document.getElementById('mw');
+function ll2b(lon,lat){return{x:((lon-B.c)/(B.d-B.c))*CV.width,y:((B.b-lat)/(B.b-B.a))*CV.height};}
+function ll2s(lon,lat){var b=ll2b(lon,lat);return{x:b.x*VS+VX,y:b.y*VS+VY};}
+function rsz(){var r=MW.getBoundingClientRect();CV.width=r.width;CV.height=r.height;draw();}
+function zAt(cx,cy,f){VX=cx-(cx-VX)*f;VY=cy-(cy-VY)*f;VS*=f;VS=Math.min(Math.max(VS,0.35),16);draw();}
+function zRst(){VX=0;VY=0;VS=1;draw();}
+document.getElementById('z+').addEventListener('click',function(){zAt(CV.width/2,CV.height/2,1.5);});
+document.getElementById('z-').addEventListener('click',function(){zAt(CV.width/2,CV.height/2,1/1.5);});
+document.getElementById('z0').addEventListener('click',zRst);
+MW.addEventListener('mousedown',function(e){if(e.button)return;IP=true;PS={x:e.clientX,y:e.clientY};VS0={x:VX,y:VY};MW.classList.add('pan');});
+window.addEventListener('mousemove',function(e){
+  if(!IP){var r=CV.getBoundingClientRect(),f=hit(e.clientX-r.left,e.clientY-r.top);if(f!==HE){HE=f;draw();}CV.style.cursor=f?'pointer':'grab';return;}
+  VX=VS0.x+(e.clientX-PS.x);VY=VS0.y+(e.clientY-PS.y);draw();
+});
+window.addEventListener('mouseup',function(e){
+  if(!IP)return;var mv=Math.abs(e.clientX-PS.x)+Math.abs(e.clientY-PS.y);IP=false;MW.classList.remove('pan');
+  if(mv<5){var r=CV.getBoundingClientRect(),f=hit(e.clientX-r.left,e.clientY-r.top);if(f)selEv(f);else deSel();}
+});
+MW.addEventListener('wheel',function(e){e.preventDefault();var r=CV.getBoundingClientRect();zAt(e.clientX-r.left,e.clientY-r.top,e.deltaY<0?1.15:1/1.15);},{passive:false});
+MW.addEventListener('touchstart',function(e){if(e.touches.length===1){IP=true;PS={x:e.touches[0].clientX,y:e.touches[0].clientY};VS0={x:VX,y:VY};TT=Date.now();PD=null;}else if(e.touches.length===2){IP=false;PD=td(e.touches);}},{passive:true});
+MW.addEventListener('touchmove',function(e){e.preventDefault();if(e.touches.length===1&&IP){VX=VS0.x+(e.touches[0].clientX-PS.x);VY=VS0.y+(e.touches[0].clientY-PS.y);draw();}else if(e.touches.length===2&&PD!==null){var nd=td(e.touches),f=nd/PD;PD=nd;var cx=(e.touches[0].clientX+e.touches[1].clientX)/2-CV.getBoundingClientRect().left,cy=(e.touches[0].clientY+e.touches[1].clientY)/2-CV.getBoundingClientRect().top;zAt(cx,cy,f);}},{passive:false});
+MW.addEventListener('touchend',function(e){var el=Date.now()-TT,dx=e.changedTouches[0].clientX-PS.x,dy=e.changedTouches[0].clientY-PS.y,mv=Math.abs(dx)+Math.abs(dy);IP=false;PD=null;if(e.touches.length===0&&el<300&&mv<12){var r=CV.getBoundingClientRect(),f=hit(e.changedTouches[0].clientX-r.left,e.changedTouches[0].clientY-r.top);if(f)selEv(f);else deSel();}},{passive:true});
+function td(t){var dx=t[0].clientX-t[1].clientX,dy=t[0].clientY-t[1].clientY;return Math.sqrt(dx*dx+dy*dy);}
+function hit(sx,sy){for(var i=0;i<VE.length;i++){var ev=VE[i],s=ll2s(ev.lon,ev.lat),r=Math.max(10,6*VS);if(Math.sqrt((sx-s.x)*(sx-s.x)+(sy-s.y)*(sy-s.y))<r)return ev;}return null;}
+async function loadData(){try{var rsp=await fetch('bigbend-events.json');if(!rsp.ok)throw new Error();var d=await rsp.json();AE=d.events||[];flt();}catch(e){document.getElementById('le').textContent='Could not load bigbend-events.json';}}
+function flt(){
+  var s=+document.getElementById('sl-s').value,e=+document.getElementById('sl-e').value,q=SQ.toLowerCase().trim();
+  var ir=AE.filter(function(ev){return ev.year>=s&&ev.year<=e;});
+  VE=ir.filter(function(ev){if(!AL[ev.category])return false;if(!q)return true;return ev.title.toLowerCase().includes(q)||ev.description.toLowerCase().includes(q)||ev.locationName.toLowerCase().includes(q)||(''+ev.year).includes(q);});
+  var pb=document.getElementById('pb');
+  if(ir.length){pb.classList.add('on');document.getElementById('pbr').textContent=s+' – '+e;document.getElementById('pbc').textContent=ir.length+' event'+(ir.length!==1?'s':'')+(VE.length<ir.length?' · '+VE.length+' visible':'');}
+  else pb.classList.remove('on');
+  document.getElementById('nd').classList.toggle('on',ir.length===0);
+  bldList(s,e,q);draw();
 }
-
-function c2ll(cx, cy) {
-  const lon = BOUNDS.lonMin + (cx / canvas.width)  * (BOUNDS.lonMax - BOUNDS.lonMin);
-  const lat = BOUNDS.latMax - (cy / canvas.height) * (BOUNDS.latMax - BOUNDS.latMin);
-  return {lon, lat};
+function bldList(s,e,q){
+  var el=document.getElementById('evl'),mt=document.getElementById('le');
+  el.querySelectorAll('.ev').forEach(function(x){x.remove();});
+  var ir=AE.filter(function(ev){return ev.year>=s&&ev.year<=e;}).filter(function(ev){if(!q)return true;return ev.title.toLowerCase().includes(q)||ev.description.toLowerCase().includes(q)||ev.locationName.toLowerCase().includes(q)||(''+ev.year).includes(q);}).sort(function(a,b){return a.year-b.year;});
+  document.getElementById('lc').textContent=ir.length?ir.length+' events':'';
+  mt.style.display=ir.length?'none':'block';
+  ir.forEach(function(ev){var x=document.createElement('div');x.className='ev';x.dataset.id=ev.id;if(SE&&SE.id===ev.id)x.classList.add('on');var c=CC[ev.category]||'#888';x.innerHTML='<div class="ec" style="color:'+c+'">'+ev.category+'</div><div class="et">'+ev.title+'</div><div class="em">'+ev.year+' · '+ev.locationName+'</div>';x.addEventListener('click',function(){selEv(ev);});el.appendChild(x);});
 }
-
-// ─────────────────────────────────────────────────────────────
-// DATA LOADING
-// ─────────────────────────────────────────────────────────────
-async function loadData() {
-  try {
-    const resp = await fetch('bigbend-events.json');
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const data = await resp.json();
-    allEvents = data.events || [];
-    document.getElementById('event-count').textContent =
-      `${allEvents.length} events in dataset`;
-    filterAndRender();
-  } catch(err) {
-    console.error('Could not load bigbend-events.json:', err);
-    document.getElementById('event-count').textContent =
-      'Could not load bigbend-events.json — make sure both files are in the same folder.';
-  }
-}
-
-// ─────────────────────────────────────────────────────────────
-// FILTER
-// ─────────────────────────────────────────────────────────────
-function filterAndRender() {
-  const s = parseInt(document.getElementById('sl-start').value);
-  const e = parseInt(document.getElementById('sl-end').value);
-
-  viewEvents = allEvents.filter(ev =>
-    ev.year >= s && ev.year <= e && activeLayers[ev.category]
-  );
-
-  // Period banner
-  const banner = document.getElementById('period-banner');
-  const visibleAll = allEvents.filter(ev => ev.year >= s && ev.year <= e);
-  if (visibleAll.length > 0) {
-    banner.classList.add('visible');
-    document.getElementById('pb-range').textContent = `${s} – ${e}`;
-    document.getElementById('pb-count').textContent =
-      `${visibleAll.length} event${visibleAll.length !== 1 ? 's' : ''} · ${viewEvents.length} visible with current layers`;
-  } else {
-    banner.classList.remove('visible');
-  }
-
-  // No-data notice
-  const notice = document.getElementById('no-data-notice');
-  notice.classList.toggle('visible', visibleAll.length === 0);
-
-  buildEventList(s, e);
+function selEv(ev){
+  SE=ev;var d=document.getElementById('det');d.classList.add('on');d.style.borderLeftColor=CC[ev.category]||'var(--ochre)';
+  document.getElementById('dc-yr').textContent='c. '+ev.year;
+  document.getElementById('dc-ti').textContent=ev.title;
+  document.getElementById('dc-bd').textContent=ev.description;
+  document.getElementById('dc-lo').textContent=ev.locationName;
+  var rw=document.getElementById('dc-rel'),rl=document.getElementById('dc-rll');rl.innerHTML='';
+  var rel=(ev.related||[]).map(function(id){return AE.find(function(e){return e.id===id;});}).filter(Boolean);
+  rw.style.display=rel.length?'block':'none';
+  rel.forEach(function(r){var b=document.createElement('button');b.className='rl';b.innerHTML='<span class="ry">'+r.year+' · </span>'+r.title;b.addEventListener('click',function(){jmp(r);});rl.appendChild(b);});
+  document.querySelectorAll('.ev').forEach(function(x){x.classList.toggle('on',x.dataset.id===ev.id);});
+  var le=document.querySelector('.ev[data-id="'+ev.id+'"]');if(le)le.scrollIntoView({behavior:'smooth',block:'nearest'});
   draw();
 }
-
-// ─────────────────────────────────────────────────────────────
-// SIDEBAR LIST
-// ─────────────────────────────────────────────────────────────
-function buildEventList(s, e) {
-  const wrap  = document.getElementById('event-list-wrap');
-  const empty = document.getElementById('list-empty');
-  const inRange = allEvents
-    .filter(ev => ev.year >= s && ev.year <= e)
-    .sort((a,b) => a.year - b.year);
-
-  if (inRange.length === 0) {
-    empty.style.display = 'block';
-    // Remove old items
-    wrap.querySelectorAll('.ev-item').forEach(el => el.remove());
-    return;
-  }
-  empty.style.display = 'none';
-  wrap.querySelectorAll('.ev-item').forEach(el => el.remove());
-
-  inRange.forEach(ev => {
-    const el = document.createElement('div');
-    el.className = 'ev-item';
-    el.dataset.id = ev.id;
-    if (selectedEv && selectedEv.id === ev.id) el.classList.add('active');
-
-    const catColor = CAT_COLORS[ev.category] || '#888';
-    el.innerHTML = `
-      <div class="ev-cat" style="color:${catColor}">${ev.category}</div>
-      <div class="ev-title">${ev.title}</div>
-      <div class="ev-meta">${ev.year} · ${ev.locationName}</div>
-    `;
-    el.addEventListener('click', () => selectEvent(ev));
-    wrap.appendChild(el);
-  });
+function jmp(ev){
+  var h=Math.floor(SP/2),s=ev.year-h,e=s+SP;if(e>1940){e=1940;s=e-SP;}if(s<1680){s=1680;e=s+SP;}
+  document.getElementById('sl-s').value=s;document.getElementById('sl-e').value=e;
+  updYD();flt();selEv(ev);document.getElementById('panel').classList.remove('on');
 }
-
-// ─────────────────────────────────────────────────────────────
-// SELECT EVENT
-// ─────────────────────────────────────────────────────────────
-function selectEvent(ev) {
-  selectedEv = ev;
-
-  // Update card
-  const card = document.getElementById('detail-card');
-  card.classList.add('visible');
-  document.getElementById('dc-year').textContent  = `c. ${ev.year}`;
-  document.getElementById('dc-title').textContent = ev.title;
-  document.getElementById('dc-body').textContent  = ev.description;
-  document.getElementById('dc-loc').textContent   = ev.locationName;
-  card.style.borderLeftColor = CAT_COLORS[ev.category] || 'var(--ochre)';
-
-  // Highlight list item
-  document.querySelectorAll('.ev-item').forEach(el => {
-    el.classList.toggle('active', el.dataset.id === ev.id);
-  });
-
-  // Scroll list item into view
-  const listEl = document.querySelector(`.ev-item[data-id="${ev.id}"]`);
-  if (listEl) listEl.scrollIntoView({ behavior:'smooth', block:'nearest' });
-
-  draw();
+function deSel(){SE=null;document.getElementById('det').classList.remove('on');document.querySelectorAll('.ev').forEach(function(x){x.classList.remove('on');});draw();}
+document.getElementById('dc-x').addEventListener('click',deSel);
+function draw(){
+  var W=CV.width,H=CV.height;CX.clearRect(0,0,W,H);CX.fillStyle='#0f0c08';CX.fillRect(0,0,W,H);
+  for(var i=0;i<350;i++){CX.fillStyle='rgba('+(110+Math.random()*40|0)+','+(80+Math.random()*30|0)+','+(35+Math.random()*20|0)+','+(Math.random()*0.055)+')';CX.fillRect(Math.random()*W,Math.random()*H,1.5,1.5);}
+  CX.save();CX.translate(VX,VY);CX.scale(VS,VS);
+  MT.forEach(function(m){var c=ll2b(m.x,m.y),rx=(m.r/(B.d-B.c))*W,ry=(m.r/(B.b-B.a))*H,g=CX.createRadialGradient(c.x,c.y,0,c.x,c.y,Math.max(rx,ry));g.addColorStop(0,'rgba(70,52,25,0.35)');g.addColorStop(1,'rgba(70,52,25,0)');CX.beginPath();CX.ellipse(c.x,c.y,rx,ry,0,0,Math.PI*2);CX.fillStyle=g;CX.fill();CX.font=(8/VS)+'px Courier Prime,monospace';CX.fillStyle='rgba(160,125,70,0.4)';CX.textAlign='center';CX.fillText(m.n.toUpperCase(),c.x,c.y+ry*0.4+5/VS);});
+  dln(RG,'rgba(70,110,170,0.6)',2/VS);dln(RC,'rgba(70,110,170,0.35)',1/VS);dln(PV,'rgba(70,110,170,0.3)',1/VS);
+  var rb=ll2b(RG[7][0],RG[7][1]);CX.font=(8/VS)+'px Courier Prime,monospace';CX.fillStyle='rgba(70,110,170,0.45)';CX.textAlign='left';CX.fillText('Rio Grande / Rio Bravo',rb.x+4/VS,rb.y-4/VS);
+  CX.textAlign='center';CX.font=(13/VS)+'px Courier Prime,monospace';CX.fillStyle='rgba(200,175,130,0.09)';var tx=ll2b(-102.5,31.1),mx=ll2b(-104.8,28.4);CX.fillText('T E X A S',tx.x,tx.y);CX.fillText('C H I H U A H U A',mx.x,mx.y);
+  PL.forEach(function(p){var c=ll2b(p.x,p.y);CX.beginPath();CX.arc(c.x,c.y,1.8/VS,0,Math.PI*2);CX.fillStyle='rgba(200,175,130,0.35)';CX.fill();CX.font=(7.5/VS)+'px Courier Prime,monospace';CX.fillStyle='rgba(200,175,130,0.3)';CX.textAlign='left';CX.fillText(p.n,c.x+4/VS,c.y+3/VS);});
+  VE.forEach(function(ev){var c=ll2b(ev.lon,ev.lat),col=CC[ev.category]||'#aaa',iH=HE&&HE.id===ev.id,iS=SE&&SE.id===ev.id,r=(iH||iS)?8/VS:5/VS;CX.save();if(iH||iS){CX.beginPath();CX.arc(c.x,c.y,18/VS,0,Math.PI*2);CX.fillStyle=col+'28';CX.fill();}CX.beginPath();CX.arc(c.x,c.y,r,0,Math.PI*2);CX.strokeStyle=col;CX.lineWidth=(iH||iS)?2/VS:1/VS;CX.globalAlpha=(iH||iS)?1:0.82;CX.stroke();CX.beginPath();CX.arc(c.x,c.y,r-2/VS,0,Math.PI*2);CX.fillStyle=col;CX.globalAlpha=(iH||iS)?0.9:0.45;CX.fill();if(iH||iS){CX.globalAlpha=1;CX.font='bold '+(9/VS)+'px Courier Prime,monospace';CX.fillStyle='#e8dfc8';CX.textAlign='center';CX.fillText(ev.year,c.x,c.y-12/VS);}CX.restore();});
+  CX.restore();
 }
-
-document.getElementById('dc-close').addEventListener('click', () => {
-  selectedEv = null;
-  document.getElementById('detail-card').classList.remove('visible');
-  document.querySelectorAll('.ev-item').forEach(el => el.classList.remove('active'));
-  draw();
-});
-
-// ─────────────────────────────────────────────────────────────
-// CANVAS DRAWING
-// ─────────────────────────────────────────────────────────────
-function resizeCanvas() {
-  const wrap = document.getElementById('map-wrap');
-  canvas.width  = wrap.clientWidth;
-  canvas.height = wrap.clientHeight;
-  draw();
-}
-
-function drawPolyline(pts, color, lw) {
-  if (!pts.length) return;
-  ctx.beginPath();
-  const s = ll2c(pts[0][0], pts[0][1]);
-  ctx.moveTo(s.x, s.y);
-  for (let i = 1; i < pts.length; i++) {
-    const p = ll2c(pts[i][0], pts[i][1]);
-    ctx.lineTo(p.x, p.y);
-  }
-  ctx.strokeStyle = color;
-  ctx.lineWidth   = lw;
-  ctx.stroke();
-}
-
-function draw() {
-  const W = canvas.width, H = canvas.height;
-  ctx.clearRect(0, 0, W, H);
-
-  // Background
-  ctx.fillStyle = '#0f0c08';
-  ctx.fillRect(0, 0, W, H);
-
-  // Subtle grain
-  for (let i = 0; i < 700; i++) {
-    ctx.fillStyle = `rgba(${120+Math.random()*40},${90+Math.random()*30},${40+Math.random()*20},${Math.random()*0.07})`;
-    ctx.fillRect(Math.random()*W, Math.random()*H, 1.5, 1.5);
-  }
-
-  // Mountains
-  MOUNTAINS.forEach(m => {
-    const c  = ll2c(m.lon, m.lat);
-    const rx = (m.r / (BOUNDS.lonMax - BOUNDS.lonMin)) * W;
-    const ry = (m.r / (BOUNDS.latMax - BOUNDS.latMin)) * H;
-    const g  = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, Math.max(rx,ry));
-    g.addColorStop(0, 'rgba(70,52,25,0.35)');
-    g.addColorStop(1, 'rgba(70,52,25,0)');
-    ctx.save();
-    ctx.beginPath();
-    ctx.ellipse(c.x, c.y, rx, ry, 0, 0, Math.PI*2);
-    ctx.fillStyle = g;
-    ctx.fill();
-    ctx.font = '8px Courier Prime, monospace';
-    ctx.fillStyle = 'rgba(160,125,70,0.4)';
-    ctx.textAlign = 'center';
-    ctx.fillText(m.name.toUpperCase(), c.x, c.y + ry * 0.4 + 5);
-    ctx.restore();
-  });
-
-  // Rivers
-  drawPolyline(RIO_GRANDE,   'rgba(70,110,170,0.6)', 2);
-  drawPolyline(RIO_CONCHOS,  'rgba(70,110,170,0.35)', 1);
-  drawPolyline(PECOS,        'rgba(70,110,170,0.3)', 1);
-
-  // River label
-  const rlc = ll2c(RIO_GRANDE[7][0], RIO_GRANDE[7][1]);
-  ctx.save();
-  ctx.font = '8px Courier Prime, monospace';
-  ctx.fillStyle = 'rgba(70,110,170,0.45)';
-  ctx.fillText('Río Grande / Río Bravo', rlc.x + 4, rlc.y - 5);
-  ctx.restore();
-
-  // Region labels
-  const txPos = ll2c(-102.5, 31.1);
-  const mxPos = ll2c(-104.8, 28.4);
-  ctx.save();
-  ctx.textAlign = 'center';
-  ctx.font = '600 13px Courier Prime, monospace';
-  ctx.fillStyle = 'rgba(200,175,130,0.09)';
-  ctx.fillText('T E X A S',    txPos.x, txPos.y);
-  ctx.fillText('C H I H U A H U A', mxPos.x, mxPos.y);
-  ctx.restore();
-
-  // Place markers
-  PLACES.forEach(p => {
-    const c = ll2c(p.lon, p.lat);
-    ctx.save();
-    ctx.beginPath(); ctx.arc(c.x, c.y, 1.8, 0, Math.PI*2);
-    ctx.fillStyle = 'rgba(200,175,130,0.35)'; ctx.fill();
-    ctx.font = '7.5px Courier Prime, monospace';
-    ctx.fillStyle = 'rgba(200,175,130,0.3)';
-    ctx.textAlign = 'left';
-    ctx.fillText(p.name, c.x + 4, c.y + 3);
-    ctx.restore();
-  });
-
-  // Events
-  viewEvents.forEach(ev => {
-    const c   = ll2c(ev.lon, ev.lat);
-    const col = CAT_COLORS[ev.category] || '#aaa';
-    const isH = hoveredEv  && hoveredEv.id  === ev.id;
-    const isS = selectedEv && selectedEv.id === ev.id;
-    const r   = (isH || isS) ? 8 : 5;
-
-    ctx.save();
-
-    // Outer glow for selected/hovered
-    if (isH || isS) {
-      ctx.beginPath(); ctx.arc(c.x, c.y, 18, 0, Math.PI*2);
-      ctx.fillStyle = col + '28'; ctx.fill();
-    }
-
-    // Ring
-    ctx.beginPath(); ctx.arc(c.x, c.y, r, 0, Math.PI*2);
-    ctx.strokeStyle = col;
-    ctx.lineWidth   = (isH||isS) ? 2 : 1;
-    ctx.globalAlpha = (isH||isS) ? 1 : 0.82;
-    ctx.stroke();
-
-    // Fill
-    ctx.beginPath(); ctx.arc(c.x, c.y, r - 2, 0, Math.PI*2);
-    ctx.fillStyle   = col;
-    ctx.globalAlpha = (isH||isS) ? 0.9 : 0.4;
-    ctx.fill();
-
-    // Year label on hover/select
-    if (isH || isS) {
-      ctx.globalAlpha = 1;
-      ctx.font        = 'bold 9px Courier Prime, monospace';
-      ctx.fillStyle   = '#e8dfc8';
-      ctx.textAlign   = 'center';
-      ctx.fillText(ev.year, c.x, c.y - 13);
-    }
-
-    ctx.restore();
-  });
-}
-
-// ─────────────────────────────────────────────────────────────
-// MOUSE INTERACTION
-// ─────────────────────────────────────────────────────────────
-function eventsAtPoint(px, py) {
-  // Scale from CSS pixels to canvas pixels
-  const scaleX = canvas.width  / canvas.getBoundingClientRect().width;
-  const scaleY = canvas.height / canvas.getBoundingClientRect().height;
-  const cx = px * scaleX, cy = py * scaleY;
-
-  for (const ev of viewEvents) {
-    const c = ll2c(ev.lon, ev.lat);
-    if (Math.sqrt((cx - c.x)**2 + (cy - c.y)**2) < 14) return ev;
-  }
-  return null;
-}
-
-canvas.addEventListener('mousemove', e => {
-  const r    = canvas.getBoundingClientRect();
-  const found = eventsAtPoint(e.clientX - r.left, e.clientY - r.top);
-  if (found !== hoveredEv) { hoveredEv = found; draw(); }
-  canvas.style.cursor = found ? 'pointer' : 'default';
-});
-
-canvas.addEventListener('mouseleave', () => {
-  hoveredEv = null; draw();
-  canvas.style.cursor = 'default';
-});
-
-canvas.addEventListener('click', e => {
-  const r     = canvas.getBoundingClientRect();
-  const found = eventsAtPoint(e.clientX - r.left, e.clientY - r.top);
-  if (found) {
-    selectEvent(found);
-  } else {
-    selectedEv = null;
-    document.getElementById('detail-card').classList.remove('visible');
-    document.querySelectorAll('.ev-item').forEach(el => el.classList.remove('active'));
-    draw();
-  }
-});
-
-// ─────────────────────────────────────────────────────────────
-// SLIDER CONTROLS
-// ─────────────────────────────────────────────────────────────
-const slStart = document.getElementById('sl-start');
-const slEnd   = document.getElementById('sl-end');
-
-function updateSliderDisplay() {
-  const s = parseInt(slStart.value);
-  const e = parseInt(slEnd.value);
-  document.getElementById('yd-start').textContent = s;
-  document.getElementById('yd-end').textContent   = e;
-
-  const pct1 = (s - 1700) / (1940 - 1700) * 100;
-  const pct2 = (e - 1700) / (1940 - 1700) * 100;
-  const fill = document.getElementById('track-fill');
-  fill.style.left  = pct1 + '%';
-  fill.style.width = (pct2 - pct1) + '%';
-}
-
-slStart.addEventListener('input', () => {
-  let s = parseInt(slStart.value);
-  let e = s + span;
-  if (e > 1940) { e = 1940; s = e - span; slStart.value = s; }
-  slEnd.value = e;
-  updateSliderDisplay();
-  filterAndRender();
-});
-
-slEnd.addEventListener('input', () => {
-  let e = parseInt(slEnd.value);
-  let s = e - span;
-  if (s < 1700) { s = 1700; e = s + span; slEnd.value = e; }
-  slStart.value = s;
-  updateSliderDisplay();
-  filterAndRender();
-});
-
-// Span buttons
-document.querySelectorAll('.sbtn[data-span]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.sbtn[data-span]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    span = parseInt(btn.dataset.span);
-    let s = parseInt(slStart.value);
-    let e = s + span;
-    if (e > 1940) { e = 1940; s = e - span; slStart.value = s; }
-    slEnd.value = e;
-    updateSliderDisplay();
-    filterAndRender();
-  });
-});
-
-// Quick jump buttons
-document.querySelectorAll('.jump-btn[data-s]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const s = parseInt(btn.dataset.s);
-    const e = parseInt(btn.dataset.e);
-    span = e - s;
-    document.querySelectorAll('.sbtn[data-span]').forEach(b => b.classList.remove('active'));
-    const match = document.querySelector(`.sbtn[data-span="${span}"]`);
-    if (match) match.classList.add('active');
-    slStart.value = s;
-    slEnd.value   = e;
-    updateSliderDisplay();
-    filterAndRender();
-  });
-});
-
-// Layer toggles
-document.querySelectorAll('.layer-row[data-layer]').forEach(row => {
-  const cb    = row.querySelector('input');
-  const layer = row.dataset.layer;
-  cb.addEventListener('change', () => {
-    activeLayers[layer] = cb.checked;
-    row.classList.toggle('off', !cb.checked);
-    filterAndRender();
-  });
-});
-
-// ─────────────────────────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────────────────────────
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-updateSliderDisplay();
-loadData();
+function dln(pts,col,lw){if(!pts.length)return;CX.beginPath();var s=ll2b(pts[0][0],pts[0][1]);CX.moveTo(s.x,s.y);pts.slice(1).forEach(function(p){var c=ll2b(p[0],p[1]);CX.lineTo(c.x,c.y);});CX.strokeStyle=col;CX.lineWidth=lw;CX.stroke();}
+var sr=document.getElementById('srch'),sc=document.getElementById('srch-clr');
+sr.addEventListener('input',function(){SQ=sr.value;sc.style.display=SQ?'block':'none';flt();});
+sc.addEventListener('click',function(){sr.value='';SQ='';sc.style.display='none';flt();});
+function updYD(){var s=+document.getElementById('sl-s').value,e=+document.getElementById('sl-e').value;document.getElementById('yd-s').textContent=s;document.getElementById('yd-e').textContent=e;var p1=(s-1680)/(1940-1680)*100,p2=(e-1680)/(1940-1680)*100;document.getElementById('tf').style.left=p1+'%';document.getElementById('tf').style.width=(p2-p1)+'%';}
+document.getElementById('sl-s').addEventListener('input',function(){var s=+this.value,e=s+SP;if(e>1940){e=1940;s=e-SP;this.value=s;}document.getElementById('sl-e').value=e;updYD();flt();});
+document.getElementById('sl-e').addEventListener('input',function(){var e=+this.value,s=e-SP;if(s<1680){s=1680;e=s+SP;this.value=e;}document.getElementById('sl-s').value=s;updYD();flt();});
+document.querySelectorAll('.sb[data-span]').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.sb[data-span]').forEach(function(x){x.classList.remove('on');});b.classList.add('on');SP=+b.dataset.span;var s=+document.getElementById('sl-s').value,e=s+SP;if(e>1940){e=1940;s=e-SP;document.getElementById('sl-s').value=s;}document.getElementById('sl-e').value=e;updYD();flt();});});
+document.querySelectorAll('.jb[data-s]').forEach(function(b){b.addEventListener('click',function(){var s=+b.dataset.s,e=+b.dataset.e;SP=e-s;document.querySelectorAll('.sb[data-span]').forEach(function(x){x.classList.remove('on');});var m=document.querySelector('.sb[data-span="'+SP+'"]');if(m)m.classList.add('on');document.getElementById('sl-s').value=s;document.getElementById('sl-e').value=e;updYD();flt();document.getElementById('panel').classList.remove('on');});});
+document.querySelectorAll('.lr[data-layer]').forEach(function(row){var cb=row.querySelector('input'),l=row.dataset.layer;cb.addEventListener('change',function(){AL[l]=cb.checked;row.classList.toggle('off',!cb.checked);flt();});});
+document.getElementById('pt').addEventListener('click',function(){document.getElementById('panel').classList.toggle('on');});
+MW.addEventListener('touchstart',function(){if(window.innerWidth<=700)document.getElementById('panel').classList.remove('on');},{passive:true});
+document.getElementById('fb-btn').addEventListener('click',function(){document.getElementById('fbm').classList.add('on');document.getElementById('fb-ok').style.display='none';document.getElementById('fbtx').value='';document.getElementById('fba').style.display='flex';});
+function cFb(){document.getElementById('fbm').classList.remove('on');}
+document.getElementById('fb-x').addEventListener('click',cFb);document.getElementById('fb-cn').addEventListener('click',cFb);
+document.getElementById('fbm').addEventListener('click',function(e){if(e.target===document.getElementById('fbm'))cFb();});
+document.getElementById('fb-sd').addEventListener('click',function(){var body=document.getElementById('fbtx').value.trim();if(!body)return;window.location.href='mailto:'+FBE+'?subject='+encodeURIComponent('Big Bend Atlas — Feedback')+'&body='+encodeURIComponent(body);document.getElementById('fba').style.display='none';document.getElementById('fb-ok').style.display='block';setTimeout(cFb,2500);});
+window.addEventListener('resize',rsz);updYD();rsz();loadData();
 </script>
 </body>
 </html>
