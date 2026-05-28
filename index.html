@@ -83,7 +83,8 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
   border:1px solid var(--mid);
   border-left:3px solid var(--ochre);
   max-height:70vh;
-  overflow-y:auto;
+  overflow-y:scroll;
+  -webkit-overflow-scrolling:touch;
   position:relative;
 }
 #det-card::-webkit-scrollbar{width:3px}
@@ -689,6 +690,10 @@ document.getElementById('fb-sd').addEventListener('click',function(){var body=do
 // ── INIT ──────────────────────────────────────────────────────
 window.addEventListener('resize',rsz);
 updYD();rsz();loadData();
+// Prevent map touch handlers from capturing scroll touches inside the detail card
+document.getElementById('det-wrap').addEventListener('touchstart',function(e){e.stopPropagation();},{passive:true});
+document.getElementById('det-wrap').addEventListener('touchmove',function(e){e.stopPropagation();},{passive:true});
+document.getElementById('det-wrap').addEventListener('touchend',function(e){e.stopPropagation();},{passive:true});
 </script>
 </body>
 </html>
