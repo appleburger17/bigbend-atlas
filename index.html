@@ -214,13 +214,17 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
     </div>
     <div id="det">
       <button id="dc-x">&times;</button>
+      <div id="dc-bef" style="display:none;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--mid)">
+        <div style="font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);margin-bottom:6px">&#8592; Earlier</div>
+        <div id="dc-bef-links"></div>
+      </div>
       <div id="dc-yr"></div>
       <div id="dc-ti"></div>
       <div id="dc-bd"></div>
       <div id="dc-lo"></div>
-      <div id="dc-rel">
-        <div id="dc-rl">Related events</div>
-        <div id="dc-rll"></div>
+      <div id="dc-aft" style="display:none;margin-top:14px;padding-top:12px;border-top:1px solid var(--mid)">
+        <div style="font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);margin-bottom:6px">Later &#8594;</div>
+        <div id="dc-aft-links"></div>
       </div>
     </div>
     <div id="pb"><div id="pbr"></div><div id="pbc"></div></div>
@@ -272,8 +276,21 @@ var IP=false, PS={x:0,y:0}, VS0={x:0,y:0}, PD=null, TT=0;
 var CV=document.getElementById('mc'), CX=CV.getContext('2d'), MW=document.getElementById('mw');
 
 // ── COORDINATES ───────────────────────────────────────────────
+// Map base dimensions — aspect-ratio-correct rendering
+// The geographic region is 7.5 lon wide x 5.0 lat tall = ratio 1.5:1 (landscape)
+// We fit this into whatever canvas shape, letterboxing as needed
+var MX=0, MY=0, MS=1; // map origin x, y, scale (pixels per degree)
+
+function calcMapFit(){
+  var lonSpan=B.d-B.c, latSpan=B.b-B.a;
+  var scaleW=CV.width/lonSpan, scaleH=CV.height/latSpan;
+  MS=Math.min(scaleW,scaleH); // fit by the constraining dimension
+  MX=(CV.width - lonSpan*MS)/2;  // center horizontally
+  MY=(CV.height - latSpan*MS)/2; // center vertically
+}
+
 function ll2b(lon,lat){
-  return {x:((lon-B.c)/(B.d-B.c))*CV.width, y:((B.b-lat)/(B.b-B.a))*CV.height};
+  return {x:MX+((lon-B.c)*MS), y:MY+((B.b-lat)*MS)};
 }
 function ll2s(lon,lat){
   var b=ll2b(lon,lat); return {x:b.x*VS+VX, y:b.y*VS+VY};
@@ -283,13 +300,12 @@ function ll2s(lon,lat){
 function rsz(){
   var r=MW.getBoundingClientRect();
   CV.width=r.width; CV.height=r.height;
-  // Clamp pan so map doesn't go out of bounds at scale=1
+  calcMapFit();
   clampVP();
   draw();
 }
 
 function clampVP(){
-  // At VS=1 the map fills exactly, so no panning allowed when zoomed out
   if(VS<=1){VX=0;VY=0;return;}
   // Allow panning up to map edges
   var maxX=0, minX=CV.width*(1-VS);
@@ -308,7 +324,7 @@ function zAt(cx,cy,f){
   clampVP();
   draw();
 }
-function zRst(){VX=0;VY=0;VS=1;draw();}
+function zRst(){VX=0;VY=0;VS=1;calcMapFit();draw();}
 
 document.getElementById('z+').addEventListener('click',function(){zAt(CV.width/2,CV.height/2,1.4);});
 document.getElementById('z-').addEventListener('click',function(){zAt(CV.width/2,CV.height/2,1/1.4);});
@@ -478,30 +494,47 @@ function selEv(ev){
   var d=document.getElementById('det');
   d.classList.add('on');
   d.style.borderLeftColor=CC[ev.category]||'var(--ochre)';
+
+  // Split related events: before (year < ev.year) and after/concurrent (year >= ev.year)
+  var related=(ev.related||[])
+    .map(function(id){return AE.find(function(e){return e.id===id;});})
+    .filter(Boolean);
+  var before=related.filter(function(r){return r.year < ev.year;}).sort(function(a,b){return b.year-a.year;});
+  var after=related.filter(function(r){return r.year >= ev.year;}).sort(function(a,b){return a.year-b.year;});
+
+  // Build before section
+  var bef=document.getElementById('dc-bef');
+  var befl=document.getElementById('dc-bef-links');
+  befl.innerHTML='';
+  if(before.length>0){
+    bef.style.display='block';
+    before.forEach(function(r){
+      var b=document.createElement('button');b.className='rl';
+      b.innerHTML='<span class="ry">'+r.year+' · </span>'+r.title;
+      b.addEventListener('click',function(){jmp(r);});
+      befl.appendChild(b);
+    });
+  } else { bef.style.display='none'; }
+
+  // Fill main content
   document.getElementById('dc-yr').textContent='c. '+ev.year;
   document.getElementById('dc-ti').textContent=ev.title;
   document.getElementById('dc-bd').textContent=ev.description;
   document.getElementById('dc-lo').textContent=ev.locationName;
 
-  // Related events
-  var rw=document.getElementById('dc-rel');
-  var rl=document.getElementById('dc-rll');
-  rl.innerHTML='';
-  var related=(ev.related||[])
-    .map(function(id){return AE.find(function(e){return e.id===id;});})
-    .filter(Boolean);
-  if(related.length>0){
-    rw.style.display='block';
-    related.forEach(function(r){
-      var b=document.createElement('button');
-      b.className='rl';
-      b.innerHTML='<span class="ry">'+r.year+' \u00b7 </span>'+r.title;
+  // Build after section
+  var aft=document.getElementById('dc-aft');
+  var aftl=document.getElementById('dc-aft-links');
+  aftl.innerHTML='';
+  if(after.length>0){
+    aft.style.display='block';
+    after.forEach(function(r){
+      var b=document.createElement('button');b.className='rl';
+      b.innerHTML='<span class="ry">'+r.year+' · </span>'+r.title;
       b.addEventListener('click',function(){jmp(r);});
-      rl.appendChild(b);
+      aftl.appendChild(b);
     });
-  } else {
-    rw.style.display='none';
-  }
+  } else { aft.style.display='none'; }
 
   document.querySelectorAll('.ev').forEach(function(x){x.classList.toggle('on',x.dataset.id===ev.id);});
   var le=document.querySelector('.ev[data-id="'+ev.id+'"]');
