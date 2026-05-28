@@ -136,10 +136,7 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
 #map-controls{position:absolute;top:12px;left:12px;display:flex;flex-direction:column;gap:4px;z-index:30}
 .zb{width:34px;height:34px;background:rgba(26,18,10,0.9);border:1px solid var(--mid);color:var(--sand);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.12s;user-select:none;border-radius:2px;font-family:'Courier Prime',monospace}
 .zb:hover{border-color:var(--ochre);color:var(--ochre)}
-#geo-panel{background:rgba(26,18,10,0.96);border:1px solid var(--mid);padding:10px 12px;display:none;min-width:170px}
-#geo-panel.on{display:block}
-.gl{display:flex;align-items:center;gap:8px;padding:4px 0;cursor:pointer;font-size:0.7rem;color:var(--sand);user-select:none;letter-spacing:0.04em}
-.gl input{width:13px;height:13px;accent-color:var(--ochre);cursor:pointer;flex-shrink:0}
+
 #pt{display:none;position:absolute;top:12px;left:12px;z-index:60;width:36px;height:36px;background:rgba(26,18,10,0.92);border:1px solid var(--mid);color:var(--sand);font-size:1rem;cursor:pointer;align-items:center;justify-content:center;border-radius:2px}
 #fbm{display:none;position:fixed;inset:0;background:rgba(14,10,6,0.87);z-index:200;align-items:center;justify-content:center;padding:20px}
 #fbm.on{display:flex}
@@ -240,12 +237,7 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
       <button class="zb" id="z+">+</button>
       <button class="zb" id="z-">&#8722;</button>
       <button class="zb" id="z0" style="font-size:0.72rem" title="Reset view">&#8962;</button>
-      <button class="zb" id="geo-toggle" title="Map style" style="font-size:0.8rem;margin-top:4px">&#9903;</button>
-      <div id="geo-panel">
-        <div style="font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ochre);margin-bottom:8px">Map overlay</div>
-        <label class="gl"><input type="checkbox" id="gl-overlay" checked>Dark overlay</label>
-        <label class="gl"><input type="checkbox" id="gl-labels" checked>Event year labels</label>
-      </div>
+
     </div>
     <div id="det-wrap">
       <div id="det-card">
@@ -298,7 +290,7 @@ var CC={military:'#4a7c40',native:'#b05030',trade:'#c08020',settlement:'#3060a0'
 
 var AE=[],VE=[],SE=null,HE=null;
 var AL={military:true,native:true,trade:true,settlement:true,natural:true};
-var GL={overlay:true,labels:true};
+
 var SP=10,SQ='';
 var VX=0,VY=0,VS=1,VS_MIN=0.5,VS_MAX=20;
 var IP=false,PS={x:0,y:0},VS0={x:0,y:0},PD=null,TT=0;
@@ -390,11 +382,7 @@ document.getElementById('z+').addEventListener('click',function(){zAt(CV.width/2
 document.getElementById('z-').addEventListener('click',function(){zAt(CV.width/2,CV.height/2,1/1.4);});
 document.getElementById('z0').addEventListener('click',zRst);
 
-// Geo panel
-document.getElementById('geo-toggle').addEventListener('click',function(e){e.stopPropagation();document.getElementById('geo-panel').classList.toggle('on');});
-document.addEventListener('click',function(){document.getElementById('geo-panel').classList.remove('on');});
-document.getElementById('geo-panel').addEventListener('click',function(e){e.stopPropagation();});
-['overlay','labels'].forEach(function(k){document.getElementById('gl-'+k).addEventListener('change',function(){GL[k]=this.checked;draw();});});
+
 
 // ── MOUSE ─────────────────────────────────────────────────────
 MW.addEventListener('mousedown',function(e){if(e.button)return;IP=true;PS={x:e.clientX,y:e.clientY};VS0={x:VX,y:VY};MW.classList.add('pan');});
@@ -490,11 +478,7 @@ function draw(){
   // Draw tiles
   drawTiles();
 
-  // Dark overlay to tone down OSM and unify aesthetic
-  if(GL.overlay){
-    CX.fillStyle='rgba(10,6,2,0.55)';
-    CX.fillRect(0,0,W,H);
-  }
+
 
   // Event markers
   VE.forEach(function(ev){
@@ -516,7 +500,7 @@ function draw(){
     CX.beginPath();CX.arc(c.x,c.y,r-2,0,Math.PI*2);
     CX.fillStyle=col;CX.globalAlpha=(iH||iS)?0.9:0.55;CX.fill();
     // Year label
-    if((iH||iS)&&GL.labels){
+    if(iH||iS){
       CX.globalAlpha=1;
       CX.font='bold 10px Courier Prime,monospace';
       CX.fillStyle='#f0e4d0';CX.textAlign='center';
