@@ -43,7 +43,8 @@
       "lat": 29.57,
       "related": [
         "camino-real-1680",
-        "presidio-del-norte-1760"
+        "presidio-del-norte-1760",
+        "mission-san-francisco-1684"
       ]
     },
     {
@@ -73,6 +74,48 @@
       "related": [
         "camino-real-1680",
         "presidio-del-norte-1760"
+      ]
+    },
+    {
+      "id": "mission-san-francisco-1684",
+      "year": 1684,
+      "title": "Mission San Francisco de los Julimes established",
+      "description": "Spanish missionaries established a chain of missions along the Río Conchos and at La Junta, attempting to convert and settle the Jumano and Julime peoples. The missions were frequently abandoned and re-established as Apache pressure intensified through the late 1600s.",
+      "category": "settlement",
+      "locationName": "La Junta / Río Conchos confluence, Chihuahua",
+      "lon": -104.38,
+      "lat": 29.52,
+      "related": [
+        "jumano-la-junta-1680",
+        "presidio-del-norte-1760"
+      ]
+    },
+    {
+      "id": "conchos-valley-missions-1690",
+      "year": 1690,
+      "title": "Jesuit missions along the Río Conchos",
+      "description": "Jesuit missionaries extended their network southward along the Río Conchos into the Sierra Tarahumara. The Tarahumara people resisted missionization repeatedly, staging major revolts in 1648 and 1690. The mission system fundamentally altered settlement patterns and land use across northern Chihuahua.",
+      "category": "settlement",
+      "locationName": "Río Conchos valley, Chihuahua",
+      "lon": -105.5,
+      "lat": 28.5,
+      "related": [
+        "tarahumara-revolt-1698",
+        "chihuahua-silver-trade-1800"
+      ]
+    },
+    {
+      "id": "tarahumara-revolt-1698",
+      "year": 1698,
+      "title": "Tarahumara revolt against Spanish missions",
+      "description": "The Tarahumara of the Sierra Madre staged a major uprising against Spanish missionary and mining encroachments, burning missions and killing priests. The revolt was suppressed by military force but Tarahumara communities in the high sierra maintained significant autonomy throughout the colonial period.",
+      "category": "military",
+      "locationName": "Sierra Tarahumara, western Chihuahua",
+      "lon": -106.2,
+      "lat": 27.8,
+      "related": [
+        "conchos-valley-missions-1690",
+        "chihuahua-silver-trade-1800"
       ]
     },
     {
@@ -107,6 +150,20 @@
       ]
     },
     {
+      "id": "parral-mining-1730",
+      "year": 1730,
+      "title": "Parral silver district drives Chihuahua economy",
+      "description": "The silver mining district around Hidalgo del Parral had been the economic engine of Chihuahua since the 1630s. By the 1730s it was one of the most productive mining regions in New Spain, drawing workers, merchants, and missionaries deep into the desert interior and funding the presidio system.",
+      "category": "natural",
+      "locationName": "Hidalgo del Parral, southern Chihuahua",
+      "lon": -105.65,
+      "lat": 26.93,
+      "related": [
+        "chihuahua-silver-trade-1800",
+        "camino-real-1680"
+      ]
+    },
+    {
       "id": "presidio-del-norte-1760",
       "year": 1760,
       "title": "Presidio del Norte established at La Junta",
@@ -118,6 +175,22 @@
       "related": [
         "jumano-la-junta-1680",
         "chisos-apache-1730",
+        "mexican-independence-1821",
+        "janos-presidio-1686"
+      ]
+    },
+    {
+      "id": "janos-presidio-1686",
+      "year": 1686,
+      "title": "Presidio of Janos anchors northwestern Chihuahua",
+      "description": "The Presidio of Janos, established in 1686 near the present Arizona-Chihuahua border, was the westernmost Spanish garrison defending northern Chihuahua from Apache raids. It would remain an active military post for nearly two centuries and was a frequent site of Apache peace negotiations and violent confrontations.",
+      "category": "military",
+      "locationName": "Janos, northwestern Chihuahua",
+      "lon": -108.2,
+      "lat": 30.88,
+      "related": [
+        "presidio-del-norte-1760",
+        "apache-expansion-1720",
         "mexican-independence-1821"
       ]
     },
@@ -148,7 +221,8 @@
       "related": [
         "camino-real-1680",
         "mexican-independence-1821",
-        "sp-railroad-1881"
+        "sp-railroad-1881",
+        "parral-mining-1730"
       ]
     },
     {
@@ -183,6 +257,35 @@
       ]
     },
     {
+      "id": "texas-republic-1836",
+      "year": 1836,
+      "title": "Republic of Texas claims Rio Grande as southern border",
+      "description": "Texas independence from Mexico in 1836 introduced a new political actor to the borderlands. The Republic of Texas claimed the Rio Grande as its southern and western boundary — a claim Mexico rejected. The contested boundary created legal ambiguity over the Trans-Pecos that was not resolved until the Treaty of Guadalupe Hidalgo in 1848.",
+      "category": "military",
+      "locationName": "Rio Grande / Trans-Pecos boundary",
+      "lon": -103.0,
+      "lat": 30.5,
+      "related": [
+        "us-mexico-war-boundary-1848",
+        "boundary-survey-1852"
+      ]
+    },
+    {
+      "id": "chihuahua-trail-1839",
+      "year": 1839,
+      "title": "Chihuahua Trail opens US-Mexico trade route",
+      "description": "American merchants began driving wagon trains from Missouri south through Santa Fe and into Chihuahua City, bypassing the old Camino Real. The Chihuahua Trail brought American manufactured goods into northern Mexico and returned with silver bullion, mules, and raw materials, establishing commercial ties that would outlast the political conflicts of the era.",
+      "category": "trade",
+      "locationName": "Chihuahua Trail / El Paso del Norte",
+      "lon": -106.3,
+      "lat": 31.6,
+      "related": [
+        "camino-real-1680",
+        "us-mexico-war-boundary-1848",
+        "san-antonio-el-paso-road-1854"
+      ]
+    },
+    {
       "id": "us-mexico-war-boundary-1848",
       "year": 1848,
       "title": "Treaty of Guadalupe Hidalgo draws the river as border",
@@ -194,7 +297,8 @@
       "related": [
         "mexican-independence-1821",
         "boundary-survey-1852",
-        "mexican-revolution-border-1910"
+        "mexican-revolution-border-1910",
+        "texas-republic-1836"
       ]
     },
     {
@@ -268,6 +372,20 @@
       "related": [
         "fort-davis-established-1854",
         "camel-corps-1857",
+        "buffalo-soldiers-fort-davis-1867"
+      ]
+    },
+    {
+      "id": "confederate-arizona-1861",
+      "year": 1861,
+      "title": "Confederate Territory of Arizona claims Trans-Pecos",
+      "description": "The Confederacy organized the Territory of Arizona in 1861, claiming the region south of the 34th parallel including El Paso and the Trans-Pecos. Confederate forces held El Paso briefly before being expelled by Union troops in 1862. The episode left the Trans-Pecos border communities bitterly divided.",
+      "category": "military",
+      "locationName": "El Paso / Trans-Pecos",
+      "lon": -105.8,
+      "lat": 31.2,
+      "related": [
+        "fort-davis-abandoned-civil-war-1861",
         "buffalo-soldiers-fort-davis-1867"
       ]
     },
@@ -360,7 +478,23 @@
         "scalp-hunters-1837",
         "buffalo-soldiers-fort-davis-1867",
         "mescalero-raids-1870s",
-        "chinati-hot-springs-1880"
+        "chinati-hot-springs-1880",
+        "tres-castillos-chihuahua-1880"
+      ]
+    },
+    {
+      "id": "tres-castillos-chihuahua-1880",
+      "year": 1880,
+      "title": "Battle of Tres Castillos — Victorio killed",
+      "description": "Chihuahuan state forces under Col. Joaquín Terrazas tracked Victorio's band to the rocky outcrops of Tres Castillos in October 1880 and killed 78 people including Victorio himself. The battle was a decisive moment for the Chihuahuan government and the Terrazas family, who would dominate the state for the next three decades.",
+      "category": "military",
+      "locationName": "Tres Castillos, central Chihuahua",
+      "lon": -105.15,
+      "lat": 29.72,
+      "related": [
+        "victorio-campaign-1880",
+        "terrazas-land-empire-1885",
+        "scalp-hunters-1837"
       ]
     },
     {
@@ -377,6 +511,22 @@
         "marfa-founded-1882",
         "alpine-founded-1882",
         "chihuahua-silver-trade-1800"
+      ]
+    },
+    {
+      "id": "mexican-central-railroad-1884",
+      "year": 1884,
+      "title": "Mexican Central Railroad reaches Chihuahua City",
+      "description": "The Mexican Central Railroad connected Mexico City to El Paso via Chihuahua City by 1884, linking the northern borderlands to the national economy for the first time. The railroad opened Chihuahua's resources to foreign investment and set the stage for the massive land consolidations of the Díaz era.",
+      "category": "trade",
+      "locationName": "Chihuahua City / rail corridor",
+      "lon": -106.1,
+      "lat": 28.8,
+      "related": [
+        "sp-railroad-1881",
+        "chihuahua-silver-trade-1800",
+        "terrazas-land-empire-1885",
+        "diaz-era-chihuahua-1890"
       ]
     },
     {
@@ -410,6 +560,21 @@
       ]
     },
     {
+      "id": "terrazas-land-empire-1885",
+      "year": 1885,
+      "title": "Terrazas family consolidates Chihuahuan land empire",
+      "description": "The Terrazas-Creel family, using political connections under President Díaz, accumulated over seven million acres of Chihuahuan land through the 1880s and 1890s — including vast stretches of the desert borderlands. This concentration of ownership displaced thousands of small ranchers and village communities and became a central grievance of the Mexican Revolution.",
+      "category": "settlement",
+      "locationName": "Northern Chihuahua / Terrazas haciendas",
+      "lon": -105.8,
+      "lat": 29.5,
+      "related": [
+        "tres-castillos-chihuahua-1880",
+        "diaz-era-chihuahua-1890",
+        "mexican-revolution-border-1910"
+      ]
+    },
+    {
       "id": "big-bend-ranching-1885",
       "year": 1885,
       "title": "Open-range ranching spreads across Brewster County",
@@ -426,6 +591,21 @@
       ]
     },
     {
+      "id": "diaz-era-chihuahua-1890",
+      "year": 1890,
+      "title": "Díaz-era foreign investment transforms Chihuahua",
+      "description": "Under Porfirio Díaz, American and British capital poured into Chihuahua — mining, timber, ranching, and railroads. The Hearst family acquired the massive Babícora hacienda in the Sierra Madre. This foreign investment modernized parts of the economy while deepening inequality and dispossessing rural communities who would fuel the Revolution.",
+      "category": "trade",
+      "locationName": "Chihuahua state / Sierra Madre",
+      "lon": -106.5,
+      "lat": 29.0,
+      "related": [
+        "terrazas-land-empire-1885",
+        "mexican-central-railroad-1884",
+        "mexican-revolution-border-1910"
+      ]
+    },
+    {
       "id": "quicksilver-terlingua-1890",
       "year": 1890,
       "title": "Quicksilver mining begins at Terlingua",
@@ -437,7 +617,8 @@
       "related": [
         "big-bend-ranching-1885",
         "mexican-revolution-border-1910",
-        "big-bend-state-park-proposed-1933"
+        "big-bend-national-park-1944",
+        "chisos-mining-closes-1942"
       ]
     },
     {
@@ -455,6 +636,21 @@
       ]
     },
     {
+      "id": "ojinaga-trade-1890",
+      "year": 1892,
+      "title": "Ojinaga grows as binational trading center",
+      "description": "The town of Ojinaga across the river from Presidio developed as a significant commercial hub linking the Chihuahuan interior to the Texas railroad at Marfa. Merchants, smugglers, and laborers moved freely across the shallow ford at Presidio, establishing the binational character that persists today.",
+      "category": "trade",
+      "locationName": "Ojinaga, Chihuahua / Presidio, Texas",
+      "lon": -104.4,
+      "lat": 29.57,
+      "related": [
+        "presidio-del-norte-1760",
+        "mexican-central-railroad-1884",
+        "mexican-revolution-border-1910"
+      ]
+    },
+    {
       "id": "mexican-revolution-border-1910",
       "year": 1910,
       "title": "Mexican Revolution destabilizes the border",
@@ -466,7 +662,40 @@
       "related": [
         "us-mexico-war-boundary-1848",
         "boquillas-raid-1916",
-        "quicksilver-terlingua-1890"
+        "quicksilver-terlingua-1890",
+        "terrazas-land-empire-1885",
+        "orozco-chihuahua-1912"
+      ]
+    },
+    {
+      "id": "orozco-chihuahua-1912",
+      "year": 1912,
+      "title": "Orozco rebellion convulses Chihuahua",
+      "description": "Pascual Orozco, a former Maderista general from Chihuahua, launched a counter-revolution against President Madero in 1912, initially seizing much of Chihuahua state. Federal forces under Victoriano Huerta suppressed the revolt, but the fighting devastated northern Chihuahua's ranching economy and pushed more refugees north across the river.",
+      "category": "military",
+      "locationName": "Chihuahua City / northern Chihuahua",
+      "lon": -106.1,
+      "lat": 28.9,
+      "related": [
+        "mexican-revolution-border-1910",
+        "villa-chihuahua-1913",
+        "boquillas-raid-1916"
+      ]
+    },
+    {
+      "id": "villa-chihuahua-1913",
+      "year": 1913,
+      "title": "Pancho Villa seizes Chihuahua City",
+      "description": "Francisco 'Pancho' Villa's División del Norte captured Chihuahua City in late 1913 and turned it into the base of operations for his powerful northern army. Villa confiscated the Terrazas haciendas and redistributed some land, making him a hero to many Chihuahuans while the borderlands braced for further upheaval.",
+      "category": "military",
+      "locationName": "Chihuahua City",
+      "lon": -106.08,
+      "lat": 28.63,
+      "related": [
+        "orozco-chihuahua-1912",
+        "terrazas-land-empire-1885",
+        "boquillas-raid-1916",
+        "columbus-raid-1916"
       ]
     },
     {
@@ -480,7 +709,37 @@
       "lat": 29.18,
       "related": [
         "mexican-revolution-border-1910",
-        "big-bend-state-park-proposed-1933"
+        "big-bend-state-park-proposed-1933",
+        "columbus-raid-1916"
+      ]
+    },
+    {
+      "id": "columbus-raid-1916",
+      "year": 1916,
+      "title": "Villa raids Columbus, New Mexico — Pershing pursues",
+      "description": "Pancho Villa's forces attacked Columbus, New Mexico in March 1916, killing 18 Americans. President Wilson ordered Gen. John Pershing to lead a punitive expedition into Chihuahua. Pershing's force of 10,000 troops spent eleven months in Chihuahua without catching Villa, straining US-Mexico relations and providing the Army with its last major pre-World War I campaign experience.",
+      "category": "military",
+      "locationName": "Columbus, NM / Chihuahua interior",
+      "lon": -107.6,
+      "lat": 31.8,
+      "related": [
+        "villa-chihuahua-1913",
+        "boquillas-raid-1916",
+        "mexican-revolution-border-1910"
+      ]
+    },
+    {
+      "id": "candelaria-flooding-1919",
+      "year": 1919,
+      "title": "Candelaria isolated by flooding and revolution",
+      "description": "The remote border community of Candelaria, upstream from Presidio, was repeatedly cut off during the revolutionary years by flooding, bandit raids, and the collapse of cross-border commerce. The community's isolation exemplified the hardship faced by small Trans-Pecos settlements caught between the upheaval in Mexico and the neglect of distant Texas authorities.",
+      "category": "settlement",
+      "locationName": "Candelaria, Texas",
+      "lon": -104.68,
+      "lat": 29.8,
+      "related": [
+        "mexican-revolution-border-1910",
+        "boquillas-raid-1916"
       ]
     },
     {
@@ -494,7 +753,140 @@
       "lat": 29.27,
       "related": [
         "quicksilver-terlingua-1890",
-        "boquillas-raid-1916"
+        "boquillas-raid-1916",
+        "big-bend-national-park-1944",
+        "ewing-thurmond-ranches-1930"
+      ]
+    },
+    {
+      "id": "ewing-thurmond-ranches-1930",
+      "year": 1930,
+      "title": "Last ranchers hold out in the Big Bend",
+      "description": "Through the 1920s and 1930s a handful of ranching families — the Ewingharts, Robisons, and others — continued running cattle in the remote canyons and desert basins of what would become the national park. The state's land acquisition for the park displaced these families, some of whom had been in the region for decades.",
+      "category": "settlement",
+      "locationName": "Big Bend basin / Castolon area",
+      "lon": -103.52,
+      "lat": 29.15,
+      "related": [
+        "big-bend-ranching-1885",
+        "big-bend-state-park-proposed-1933",
+        "big-bend-national-park-1944"
+      ]
+    },
+    {
+      "id": "chisos-mining-closes-1942",
+      "year": 1942,
+      "title": "Chisos Mining Company closes at Terlingua",
+      "description": "After fifty years of operation the Chisos Mining Company closed in 1942 as quicksilver prices collapsed and ore quality declined. The closure left Terlingua a ghost town almost overnight. The abandoned mine shafts, company store, and workers' quarters became one of the most evocative ghost towns in Texas.",
+      "category": "natural",
+      "locationName": "Terlingua, Texas",
+      "lon": -103.6,
+      "lat": 29.32,
+      "related": [
+        "quicksilver-terlingua-1890",
+        "big-bend-national-park-1944",
+        "terlingua-ghost-town-revival-1967"
+      ]
+    },
+    {
+      "id": "big-bend-national-park-1944",
+      "year": 1944,
+      "title": "Big Bend National Park established",
+      "description": "President Franklin Roosevelt signed legislation establishing Big Bend National Park on June 12, 1944, preserving 801,163 acres of Chihuahuan Desert, the Chisos Mountains, and Rio Grande canyons. Texas transferred the land it had acquired to the federal government. The park became one of the least visited and most remote in the national park system.",
+      "category": "natural",
+      "locationName": "Big Bend National Park",
+      "lon": -103.25,
+      "lat": 29.27,
+      "related": [
+        "big-bend-state-park-proposed-1933",
+        "chisos-mining-closes-1942",
+        "ewing-thurmond-ranches-1930",
+        "rio-grande-village-1952"
+      ]
+    },
+    {
+      "id": "rio-grande-village-1952",
+      "year": 1952,
+      "title": "Rio Grande Village developed inside the park",
+      "description": "The National Park Service developed Rio Grande Village near Boquillas Crossing as a visitor center and campground in the early 1950s. The development opened the eastern river corridor of the park to visitors and brought increased attention to the binational character of the landscape — directly across the river from Boquillas del Carmen, Coahuila.",
+      "category": "natural",
+      "locationName": "Rio Grande Village, Big Bend NP",
+      "lon": -102.96,
+      "lat": 29.18,
+      "related": [
+        "big-bend-national-park-1944",
+        "boquillas-crossing-closed-2002"
+      ]
+    },
+    {
+      "id": "terlingua-ghost-town-revival-1967",
+      "year": 1967,
+      "title": "Terlingua ghost town revives as chili championship site",
+      "description": "The first World's Championship Chili Cookoff was held in Terlingua in 1967, drawing national attention to the abandoned mining town. The event — born as a publicity stunt between two chili partisans — grew into an annual tradition and accidentally seeded Terlingua's revival as an off-grid artists' and adventurers' community.",
+      "category": "settlement",
+      "locationName": "Terlingua, Texas",
+      "lon": -103.6,
+      "lat": 29.32,
+      "related": [
+        "chisos-mining-closes-1942",
+        "big-bend-national-park-1944"
+      ]
+    },
+    {
+      "id": "boquillas-crossing-closed-2002",
+      "year": 2002,
+      "title": "Boquillas border crossing closed after 9/11",
+      "description": "The informal border crossing at Boquillas, used for generations by park visitors and Mexican villagers, was closed by the Department of Homeland Security in 2002 following the September 11 attacks. The closure devastated the village of Boquillas del Carmen across the river, cutting off its primary income source. The crossing reopened as an official port of entry in 2013.",
+      "category": "military",
+      "locationName": "Boquillas Crossing / Boquillas del Carmen",
+      "lon": -102.85,
+      "lat": 29.19,
+      "related": [
+        "rio-grande-village-1952",
+        "boquillas-crossing-reopened-2013",
+        "us-mexico-war-boundary-1848"
+      ]
+    },
+    {
+      "id": "boquillas-crossing-reopened-2013",
+      "year": 2013,
+      "title": "Boquillas port of entry reopens",
+      "description": "After eleven years of closure, the Boquillas port of entry reopened in 2013 as an official crossing, allowing park visitors to cross into Boquillas del Carmen by rowboat and visit the small Mexican village. The reopening was celebrated on both sides of the river and helped stabilize the village's economy.",
+      "category": "settlement",
+      "locationName": "Boquillas Crossing, Big Bend NP",
+      "lon": -102.85,
+      "lat": 29.19,
+      "related": [
+        "boquillas-crossing-closed-2002",
+        "rio-grande-village-1952"
+      ]
+    },
+    {
+      "id": "chihuahua-narco-era-2008",
+      "year": 2008,
+      "title": "Drug cartel violence reshapes the Chihuahua borderlands",
+      "description": "The conflict between the Sinaloa and Juárez cartels for control of drug trafficking routes erupted into open warfare across Chihuahua state beginning around 2008. Ciudad Juárez became one of the most violent cities in the world. The violence affected cross-border movement, tourism, and daily life throughout the borderlands and was felt in the remote communities along the Big Bend corridor.",
+      "category": "military",
+      "locationName": "Ciudad Juárez / Chihuahua borderlands",
+      "lon": -106.45,
+      "lat": 31.65,
+      "related": [
+        "us-mexico-war-boundary-1848",
+        "boquillas-crossing-closed-2002"
+      ]
+    },
+    {
+      "id": "marfa-arts-2000s",
+      "year": 2003,
+      "title": "Marfa emerges as international arts destination",
+      "description": "Donald Judd's permanent installation of large-scale art works at the Chinati Foundation, established in the 1980s, gradually transformed Marfa into an unlikely international arts destination. By the 2000s Marfa's combination of remoteness, Judd's legacy, and the high desert landscape had attracted writers, artists, and cultural institutions, creating tension between old ranching culture and new creative economy.",
+      "category": "settlement",
+      "locationName": "Marfa, Texas",
+      "lon": -104.02,
+      "lat": 30.31,
+      "related": [
+        "marfa-founded-1882",
+        "big-bend-national-park-1944"
       ]
     }
   ]

@@ -70,43 +70,41 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
 #mw.pan{cursor:grabbing}
 #mc{display:block;position:absolute;top:0;left:0}
 
-/* Detail card — vertical slide animation */
+/* Detail card — single persistent card, content fades in-place */
 #det-wrap{
   position:absolute;bottom:16px;left:16px;
   width:320px;max-width:calc(100vw - 32px);
   z-index:40;
-  /* clip so sliding card doesn't bleed outside */
-  overflow:hidden;
+  display:none;
 }
-.det-card{
+#det-wrap.on{ display:block; }
+#det-card{
   background:rgba(26,18,10,0.97);
   border:1px solid var(--mid);
   border-left:3px solid var(--ochre);
-  padding:16px 18px;
-  max-height:0;
-  overflow:hidden;
-  pointer-events:none;
-  /* vertical collapse/expand */
-  transition:max-height 0.32s ease, opacity 0.28s ease, transform 0.28s ease;
-  opacity:0;
-  transform:translateY(12px);
-}
-.det-card.on{
   max-height:70vh;
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:all;
   overflow-y:auto;
+  position:relative;
 }
-.det-card.closing{
-  max-height:0;
+#det-card::-webkit-scrollbar{width:3px}
+#det-card::-webkit-scrollbar-thumb{background:var(--mid)}
+/* Content inner wrapper — this is what animates */
+#det-inner{
+  padding:16px 18px;
+  transition:opacity 0.18s ease, transform 0.18s ease;
+}
+#det-inner.fade-out{
   opacity:0;
-  transform:translateY(-12px);
+  transform:translateY(-8px);
   pointer-events:none;
-  transition:max-height 0.22s ease, opacity 0.18s ease, transform 0.18s ease;
 }
-.det-card::-webkit-scrollbar{width:3px}
-.det-card::-webkit-scrollbar-thumb{background:var(--mid)}
+#det-inner.fade-in{
+  animation:detFadeIn 0.2s ease forwards;
+}
+@keyframes detFadeIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
 .dc-x{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--mid);font-size:1.3rem;cursor:pointer;line-height:1}
 .dc-x:hover{color:var(--sand)}
 .dc-yr{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ochre);margin-bottom:5px}
@@ -246,8 +244,9 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
       </div>
     </div>
     <div id="det-wrap">
-      <div class="det-card" id="det-a"></div>
-      <div class="det-card" id="det-b"></div>
+      <div id="det-card">
+        <div id="det-inner"></div>
+      </div>
     </div>
     <div id="pb"><div id="pbr"></div><div id="pbc"></div></div>
     <div id="leg">
@@ -276,7 +275,7 @@ var FBE='your@email.com';
 
 // ── TILE MAP ──────────────────────────────────────────────────
 // Slippy tile math (Web Mercator / EPSG:3857)
-var TILE_URL='https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+var TILE_URL='https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}';
 var tileCache={};
 
 function lon2tile(lon,z){return Math.floor((lon+180)/360*Math.pow(2,z));}
@@ -299,7 +298,7 @@ var GL={overlay:true,labels:true};
 var SP=10,SQ='';
 var VX=0,VY=0,VS=1,VS_MIN=0.5,VS_MAX=20;
 var IP=false,PS={x:0,y:0},VS0={x:0,y:0},PD=null,TT=0;
-var DET_ACTIVE='a';
+// single card, no slot tracking needed
 var tileImg={};   // cached Image objects keyed by "z/x/y"
 
 var CV=document.getElementById('mc'),CX=CV.getContext('2d'),MW=document.getElementById('mw');
@@ -424,7 +423,7 @@ function getTile(z,x,y){
   var key=z+'/'+x+'/'+y;
   if(tileImg[key])return tileImg[key];
   var img=new Image();
-  img.crossOrigin='anonymous';
+  // img.crossOrigin='anonymous'; // not needed for ESRI
   img.src=TILE_URL.replace('{z}',z).replace('{x}',x).replace('{y}',y);
   img.onload=function(){draw();};
   tileImg[key]=img;
@@ -571,7 +570,6 @@ function bldList(s,e,q,searchMode){
 // ── DETAIL CARD ───────────────────────────────────────────────
 function buildCard(el,ev,col){
   el.innerHTML='';
-  el.style.borderLeftColor=col;
   var xb=document.createElement('button');xb.className='dc-x';xb.innerHTML='&times;';xb.addEventListener('click',deSel);el.appendChild(xb);
   var related=(ev.related||[]).map(function(id){return AE.find(function(e){return e.id===id;});}).filter(Boolean);
   var before=related.filter(function(r){return r.year<ev.year;}).sort(function(a,b){return b.year-a.year;});
@@ -597,31 +595,30 @@ function buildCard(el,ev,col){
 function selEv(ev,direction){
   SE=ev;
   var col=CC[ev.category]||'var(--ochre)';
-  var cardA=document.getElementById('det-a'),cardB=document.getElementById('det-b');
-  var incoming=DET_ACTIVE==='a'?cardB:cardA;
-  var outgoing=DET_ACTIVE==='a'?cardA:cardB;
-  DET_ACTIVE=DET_ACTIVE==='a'?'b':'a';
+  var wrap=document.getElementById('det-wrap');
+  var card=document.getElementById('det-card');
+  var inner=document.getElementById('det-inner');
+  var isFirstOpen=!wrap.classList.contains('on');
 
-  buildCard(incoming,ev,col);
-
-  var isFirstOpen=!outgoing.classList.contains('on');
+  card.style.borderLeftColor=col;
 
   if(isFirstOpen){
-    // No animation — just open
-    incoming.classList.remove('closing');
-    incoming.classList.add('on');
+    // First open — build content and show with no animation
+    buildCard(inner,ev,col);
+    inner.classList.remove('fade-out','fade-in');
+    wrap.classList.add('on');
+    card.scrollTop=0;
   } else {
-    // Close outgoing (collapses up), then open incoming (expands down)
-    outgoing.classList.add('closing');
-    outgoing.classList.remove('on');
-    // Slight delay so outgoing starts closing before incoming opens
+    // Already open — fade out current content, swap, fade in new
+    inner.classList.add('fade-out');
     setTimeout(function(){
-      incoming.classList.remove('closing');
-      incoming.classList.add('on');
-    },120);
-    setTimeout(function(){
-      outgoing.classList.remove('closing');
-    },400);
+      buildCard(inner,ev,col);
+      inner.classList.remove('fade-out');
+      inner.classList.add('fade-in');
+      card.scrollTop=0;
+      // Clean up animation class after it completes
+      setTimeout(function(){inner.classList.remove('fade-in');},220);
+    },180);
   }
 
   document.querySelectorAll('.ev').forEach(function(x){x.classList.toggle('on',x.dataset.id===ev.id);});
@@ -642,13 +639,14 @@ function jmp(ev,direction){
 
 function deSel(){
   SE=null;
-  var cardA=document.getElementById('det-a'),cardB=document.getElementById('det-b');
-  [cardA,cardB].forEach(function(c){
-    if(c.classList.contains('on')){
-      c.classList.add('closing');c.classList.remove('on');
-      setTimeout(function(){c.classList.remove('closing');},400);
-    }
-  });
+  var wrap=document.getElementById('det-wrap');
+  var inner=document.getElementById('det-inner');
+  inner.classList.add('fade-out');
+  setTimeout(function(){
+    wrap.classList.remove('on');
+    inner.classList.remove('fade-out','fade-in');
+    inner.innerHTML='';
+  },200);
   document.querySelectorAll('.ev').forEach(function(x){x.classList.remove('on');});
   draw();
 }
