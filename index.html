@@ -157,7 +157,7 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
 #fb-ok p{font-family:'Playfair Display',serif;font-style:italic;color:var(--sand);font-size:1rem}
 @media(max-width:700px){
   :root{--pw:85vw;--hh:48px}
-  #panel{position:absolute;top:0;left:0;bottom:0;transform:translateX(-100%);transition:transform 0.25s ease;box-shadow:4px 0 24px rgba(0,0,0,0.6);overflow-y:scroll;-webkit-overflow-scrolling:touch;display:block}
+  #panel{position:absolute;top:0;left:0;bottom:0;transform:translateX(-100%);transition:transform 0.25s ease;box-shadow:4px 0 24px rgba(0,0,0,0.6);overflow-y:scroll;-webkit-overflow-scrolling:touch;display:block;padding-top:58px}
   #panel.on{transform:translateX(0)}
   #evl{overflow-y:visible;height:auto;flex:none}
   #pt{display:flex}
@@ -190,11 +190,11 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
     <div id="srch-banner">Showing all matches across full timeline</div>
     <div class="ps">
       <div class="sl">Period</div>
-      <div id="yd"><span id="yd-s">1845</span><span>&#8211;</span><span id="yd-e">1860</span></div>
+      <div id="yd"><span id="yd-s">1845</span><span>&#8211;</span><span id="yd-e">1895</span></div>
       <div class="sw">
         <div class="tk"><div id="tf"></div></div>
-        <input type="range" id="sl-s" min="1670" max="2015" step="5" value="1845">
-        <input type="range" id="sl-e" min="1670" max="2025" step="5" value="1860">
+        <input type="range" id="sl-s" min="1670" max="2025" step="5" value="1845">
+        <input type="range" id="sl-e" min="1670" max="2025" step="5" value="1895">
       </div>
       <div class="tl-e"><span>1670</span><span>2025</span></div>
     </div>
@@ -202,10 +202,10 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
       <div class="sl">Window</div>
       <div class="br">
         <button class="sb" data-span="5">5 yr</button>
-        <button class="sb on" data-span="10">10 yr</button>
+        <button class="sb" data-span="10">10 yr</button>
         <button class="sb" data-span="20">20 yr</button>
         <button class="sb" data-span="25">25 yr</button>
-        <button class="sb" data-span="50">50 yr</button>
+        <button class="sb on" data-span="50">50 yr</button>
       </div>
     </div>
     <div class="ps">
@@ -233,6 +233,12 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
   </nav>
   <main id="mw">
     <canvas id="mc"></canvas>
+    <div id="loading" style="position:absolute;inset:0;background:#1a1208;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:90;transition:opacity 0.4s ease">
+      <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#d4b896;margin-bottom:12px;letter-spacing:0.05em">Loading map&hellip;</div>
+      <div id="load-bar-wrap" style="width:160px;height:2px;background:#2e2216;border-radius:1px;overflow:hidden">
+        <div id="load-bar" style="height:100%;background:#c4882a;width:0%;transition:width 0.3s ease;border-radius:1px"></div>
+      </div>
+    </div>
     <div id="map-controls">
       <button class="zb" id="z+">+</button>
       <button class="zb" id="z-">&#8722;</button>
@@ -256,6 +262,54 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
   </main>
 </div>
 </div>
+
+<!-- WELCOME MODAL -->
+<div id="wlc" style="display:none;position:fixed;inset:0;background:rgba(10,7,4,0.82);z-index:300;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#221910;border:1px solid #4a3520;max-width:380px;width:100%;position:relative;padding:28px 24px 20px">
+    <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#d4b896;margin-bottom:4px">Big Bend — Historical Atlas</div>
+    <div style="font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:#4a3520;margin-bottom:20px">A few things to know</div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:22px">
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <div style="font-size:1.1rem;line-height:1;margin-top:2px;flex-shrink:0">&#9776;</div>
+        <div>
+          <div style="font-size:0.72rem;color:#d4b896;margin-bottom:3px;letter-spacing:0.04em">Open the menu</div>
+          <div style="font-size:0.7rem;color:#f0e4d0;opacity:0.7;line-height:1.6">Tap the &#9776; button (top left on mobile) to open the panel. From there you can set the time period, search, use quick jumps, and filter event types.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <div style="font-size:1.2rem;line-height:1;margin-top:2px;flex-shrink:0">&#8644;</div>
+        <div>
+          <div style="font-size:0.72rem;color:#d4b896;margin-bottom:3px;letter-spacing:0.04em">Set the time window</div>
+          <div style="font-size:0.7rem;color:#f0e4d0;opacity:0.7;line-height:1.6">Use the period slider and window buttons to focus on any stretch of history. Events on the map update as you move through time.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <div style="font-size:1.2rem;line-height:1;margin-top:2px;flex-shrink:0">&#8981;</div>
+        <div>
+          <div style="font-size:0.72rem;color:#d4b896;margin-bottom:3px;letter-spacing:0.04em">Search across the full timeline</div>
+          <div style="font-size:0.7rem;color:#f0e4d0;opacity:0.7;line-height:1.6">The search bar finds events across all periods, not just the current window. Useful for following a person, place, or theme.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <div style="font-size:1.2rem;line-height:1;margin-top:2px;flex-shrink:0">&#8627;</div>
+        <div>
+          <div style="font-size:0.72rem;color:#d4b896;margin-bottom:3px;letter-spacing:0.04em">Follow the thread</div>
+          <div style="font-size:0.7rem;color:#f0e4d0;opacity:0.7;line-height:1.6">Every event card shows related events earlier and later. Tap one to jump — the map recenters and the period updates around that moment.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.68rem;color:#4a3520;user-select:none">
+        <input type="checkbox" id="wlc-skip" style="accent-color:#c4882a;width:14px;height:14px">
+        Don't show again
+      </label>
+      <button id="wlc-ok" style="padding:8px 22px;background:#c4882a;border:none;color:#1a1510;font-family:'Courier Prime',monospace;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;cursor:pointer;border-radius:2px">Explore</button>
+    </div>
+  </div>
+</div>
+
 <div id="fbm">
   <div id="fbb">
     <button id="fb-x">&times;</button>
@@ -291,12 +345,27 @@ var CC={military:'#4a7c40',native:'#b05030',trade:'#c08020',settlement:'#3060a0'
 var AE=[],VE=[],SE=null,HE=null;
 var AL={military:true,native:true,trade:true,settlement:true,natural:true};
 
-var SP=10,SQ='';
+var SP=50,SQ='';
 var VX=0,VY=0,VS=1,VS_MIN=0.5,VS_MAX=20;
 var IP=false,PS={x:0,y:0},VS0={x:0,y:0},PD=null,TT=0;
 // single card, cancellable animation timer
 var detTimer=null;
 var tileImg={};   // cached Image objects keyed by "z/x/y"
+var tilesPending=0, tilesLoaded=0, loadingDone=false;
+
+function updateLoadBar(){
+  if(loadingDone) return;
+  var bar=document.getElementById('load-bar');
+  if(!bar) return;
+  var pct=tilesPending>0?Math.round(tilesLoaded/tilesPending*100):0;
+  bar.style.width=pct+'%';
+  if(tilesLoaded>0&&tilesLoaded>=tilesPending){
+    loadingDone=true;
+    var overlay=document.getElementById('loading');
+    overlay.style.opacity='0';
+    setTimeout(function(){overlay.style.display='none';},450);
+  }
+}
 
 var CV=document.getElementById('mc'),CX=CV.getContext('2d'),MW=document.getElementById('mw');
 
@@ -416,9 +485,10 @@ function getTile(z,x,y){
   var key=z+'/'+x+'/'+y;
   if(tileImg[key])return tileImg[key];
   var img=new Image();
-  // img.crossOrigin='anonymous'; // not needed for ESRI
+  tilesPending++;
   img.src=TILE_URL.replace('{z}',z).replace('{x}',x).replace('{y}',y);
-  img.onload=function(){draw();};
+  img.onload=function(){tilesLoaded++;updateLoadBar();draw();};
+  img.onerror=function(){tilesLoaded++;updateLoadBar();};
   tileImg[key]=img;
   return img;
 }
@@ -673,8 +743,26 @@ document.getElementById('fbm').addEventListener('click',function(e){if(e.target=
 document.getElementById('fb-sd').addEventListener('click',function(){var body=document.getElementById('fbtx').value.trim();if(!body)return;window.location.href='mailto:'+FBE+'?subject='+encodeURIComponent('Big Bend Atlas \u2014 Feedback')+'&body='+encodeURIComponent(body);document.getElementById('fba').style.display='none';document.getElementById('fb-ok').style.display='block';setTimeout(cFb,2500);});
 
 // ── INIT ──────────────────────────────────────────────────────
+// ── WELCOME MODAL ────────────────────────────────────────────
+function initWelcome(){
+  if(localStorage.getItem('bbatlas-welcomed')==='1') return;
+  var modal=document.getElementById('wlc');
+  modal.style.display='flex';
+  function dismiss(){
+    if(document.getElementById('wlc-skip').checked){
+      localStorage.setItem('bbatlas-welcomed','1');
+    }
+    modal.style.display='none';
+  }
+  document.getElementById('wlc-ok').addEventListener('click',dismiss);
+  // Tap backdrop to dismiss (without checking "don't show again")
+  modal.addEventListener('click',function(e){
+    if(e.target===modal) dismiss();
+  });
+}
+
 window.addEventListener('resize',rsz);
-updYD();rsz();loadData();
+updYD();rsz();loadData();initWelcome();
 // Prevent map touch handlers from capturing scroll touches inside the detail card
 document.getElementById('det-wrap').addEventListener('touchstart',function(e){e.stopPropagation();},{passive:true});
 document.getElementById('panel').addEventListener('touchstart',function(e){e.stopPropagation();},{passive:true});
