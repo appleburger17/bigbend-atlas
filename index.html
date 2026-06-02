@@ -139,7 +139,7 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
 #pb.on{display:block}
 #pbr{font-size:0.67rem;letter-spacing:0.13em;color:var(--panel-accent);margin-bottom:2px;font-weight:700}
 #pbc{font-size:0.73rem;color:var(--panel-text)}
-#leg{position:absolute;bottom:16px;right:16px;background:rgba(26,18,10,0.92);border:1px solid var(--mid);padding:8px 12px;z-index:30}
+#leg{position:absolute;bottom:16px;right:16px;background:rgba(248,243,236,0.95);border:1px solid var(--panel-border);padding:8px 12px;z-index:30;box-shadow:0 2px 8px rgba(0,0,0,0.12)}
 .lg{display:flex;align-items:center;gap:7px;margin-bottom:5px;font-size:0.7rem;color:var(--panel-text)}
 .lg:last-child{margin-bottom:0}
 .lgd{width:8px;height:8px;border-radius:50%;flex-shrink:0}
@@ -279,43 +279,43 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
 
 <!-- WELCOME MODAL -->
 <div id="wlc" style="display:none;position:fixed;inset:0;background:rgba(10,7,4,0.82);z-index:300;align-items:center;justify-content:center;padding:20px">
-  <div style="background:#221910;border:1px solid #4a3520;max-width:380px;width:100%;position:relative;padding:28px 24px 20px">
-    <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#d4b896;margin-bottom:4px">Big Bend — Historical Atlas</div>
-    <div style="font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:#4a3520;margin-bottom:20px">A few things to know</div>
+  <div style="background:#f5f0e8;border:1px solid #d8cdb8;max-width:380px;width:100%;position:relative;padding:28px 24px 20px">
+    <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#2a2018;margin-bottom:4px">Big Bend — Historical Atlas</div>
+    <div style="font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:#b87820;margin-bottom:20px;font-weight:700">A few things to know</div>
 
     <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:22px">
       <div style="display:flex;gap:14px;align-items:flex-start">
         <div style="font-size:1.1rem;line-height:1;margin-top:2px;flex-shrink:0">&#9776;</div>
         <div>
-          <div style="font-size:0.72rem;color:#d4b896;margin-bottom:3px;letter-spacing:0.04em">Use the menu</div>
-          <div id="wlc-menu-desc" style="font-size:0.7rem;color:#f0e4d0;opacity:0.7;line-height:1.6"></div>
+          <div style="font-size:0.72rem;color:#b87820;margin-bottom:3px;letter-spacing:0.04em;font-weight:700">Use the menu</div>
+          <div id="wlc-menu-desc" style="font-size:0.75rem;color:#3a3028;line-height:1.6"></div>
         </div>
       </div>
       <div style="display:flex;gap:14px;align-items:flex-start">
         <div style="font-size:1.2rem;line-height:1;margin-top:2px;flex-shrink:0">&#8644;</div>
         <div>
-          <div style="font-size:0.72rem;color:#d4b896;margin-bottom:3px;letter-spacing:0.04em">Set the time window</div>
-          <div style="font-size:0.7rem;color:#f0e4d0;opacity:0.7;line-height:1.6">Use the period slider and window buttons to focus on any stretch of history. Events on the map update as you move through time.</div>
+          <div style="font-size:0.72rem;color:#b87820;margin-bottom:3px;letter-spacing:0.04em;font-weight:700">Set the time window</div>
+          <div style="font-size:0.75rem;color:#3a3028;line-height:1.6">Use the period slider and window buttons to focus on any stretch of history. Events on the map update as you move through time.</div>
         </div>
       </div>
       <div style="display:flex;gap:14px;align-items:flex-start">
         <div style="font-size:1.2rem;line-height:1;margin-top:2px;flex-shrink:0">&#8981;</div>
         <div>
-          <div style="font-size:0.72rem;color:#d4b896;margin-bottom:3px;letter-spacing:0.04em">Search across the full timeline</div>
-          <div style="font-size:0.7rem;color:#f0e4d0;opacity:0.7;line-height:1.6">The search bar finds events across all periods, not just the current window. Useful for following a person, place, or theme.</div>
+          <div style="font-size:0.72rem;color:#b87820;margin-bottom:3px;letter-spacing:0.04em;font-weight:700">Search across the full timeline</div>
+          <div style="font-size:0.75rem;color:#3a3028;line-height:1.6">The search bar finds events across all periods, not just the current window. Useful for following a person, place, or theme.</div>
         </div>
       </div>
       <div style="display:flex;gap:14px;align-items:flex-start">
         <div style="font-size:1.2rem;line-height:1;margin-top:2px;flex-shrink:0">&#8627;</div>
         <div>
-          <div style="font-size:0.72rem;color:#d4b896;margin-bottom:3px;letter-spacing:0.04em">Follow the thread</div>
-          <div style="font-size:0.7rem;color:#f0e4d0;opacity:0.7;line-height:1.6">Every event card shows related events earlier and later. Tap one to jump — the map recenters and the period updates around that moment.</div>
+          <div style="font-size:0.72rem;color:#b87820;margin-bottom:3px;letter-spacing:0.04em;font-weight:700">Follow the thread</div>
+          <div style="font-size:0.75rem;color:#3a3028;line-height:1.6">Every event card shows related events earlier and later. Tap one to jump — the map recenters and the period updates around that moment.</div>
         </div>
       </div>
     </div>
 
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
-      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.68rem;color:#4a3520;user-select:none">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.68rem;color:#7a6a54;user-select:none">
         <input type="checkbox" id="wlc-skip" style="accent-color:#c4882a;width:14px;height:14px">
         Don't show again
       </label>
