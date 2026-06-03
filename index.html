@@ -731,8 +731,6 @@ function selEv(ev,direction){
     },160);
   }
   document.querySelectorAll('.ev').forEach(function(x){x.classList.toggle('on',x.dataset.id===ev.id);});
-  var le=document.querySelector('.ev[data-id="'+ev.id+'"]');
-  if(le)le.scrollIntoView({behavior:'smooth',block:'nearest'});
   draw();
 }
 
