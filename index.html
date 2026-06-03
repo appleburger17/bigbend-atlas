@@ -840,7 +840,19 @@ function jmp(ev,direction){
   document.getElementById('sl-s').value=s;document.getElementById('sl-e').value=e;
   updYD();flt();
   selEv(ev,direction);
+  centerOnEvent(ev);
   document.getElementById('panel').classList.remove('on');
+}
+
+function centerOnEvent(ev){
+  // Get the event's current world position and pan so it sits at canvas center
+  var w=ll2world(ev.lon,ev.lat);
+  var dpr=window.devicePixelRatio||1;
+  var W=CV.width/dpr, H=CV.height/dpr;
+  // Target: event world pos * VS + VX = W/2  =>  VX = W/2 - w.x * VS
+  VX=W/2 - w.x*VS;
+  VY=H/2 - w.y*VS;
+  draw();
 }
 
 function deSel(){
