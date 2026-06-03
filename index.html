@@ -62,10 +62,16 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
 .jb{display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid var(--panel-border);color:var(--panel-text);font-family:'Courier Prime',monospace;font-size:0.8rem;padding:8px 2px;cursor:pointer;transition:all 0.1s}
 .jb:hover{color:var(--panel-accent);padding-left:4px}
 .jb:last-child{border-bottom:none}
-.lr{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer;font-size:0.8rem;color:var(--panel-text);transition:opacity 0.12s;user-select:none}
-.lr.off{opacity:0.35}
+.lr{display:flex;align-items:center;gap:10px;padding:6px 10px;cursor:pointer;font-size:0.8rem;color:var(--panel-text);transition:all 0.15s;user-select:none;border-radius:4px;border:1px solid var(--panel-border);background:#fff;margin-bottom:4px}
+.lr:last-child{margin-bottom:0}
+.lr:hover{border-color:var(--panel-accent);background:var(--panel-hover)}
+.lr.off{opacity:1;background:var(--panel-hover);color:var(--panel-secondary);border-color:var(--panel-border)}
+.lr.off .ld{opacity:0.25}
+.lr.off .lr-label{text-decoration:line-through;opacity:0.5}
 .lr input{display:none}
-.ld{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.ld{width:11px;height:11px;border-radius:50%;flex-shrink:0;box-shadow:0 0 0 1px rgba(0,0,0,0.15)}
+.lr-check{margin-left:auto;font-size:0.7rem;color:var(--panel-accent);opacity:1;transition:opacity 0.15s}
+.lr.off .lr-check{opacity:0}
 #lh{padding:8px 16px;border-bottom:1px solid var(--panel-border);display:flex;align-items:center;justify-content:space-between;background:var(--panel-hover)}
 #lc{font-size:0.7rem;color:var(--panel-secondary)}
 #evl{flex:1;overflow-y:scroll;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:var(--panel-bg)}
@@ -135,10 +141,10 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
 .rl:hover{color:var(--panel-accent)}
 .ry{color:var(--panel-secondary);font-size:0.72rem}
 
-#pb{position:absolute;top:12px;right:12px;background:rgba(26,18,10,0.92);border:1px solid var(--mid);padding:8px 12px;display:none;z-index:30;pointer-events:none}
+#pb{position:absolute;top:12px;right:12px;background:rgba(248,243,236,0.95);border:1px solid var(--panel-border);padding:8px 12px;display:none;z-index:30;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,0.12);min-width:140px}
 #pb.on{display:block}
-#pbr{font-size:0.67rem;letter-spacing:0.13em;color:var(--panel-accent);margin-bottom:2px;font-weight:700}
-#pbc{font-size:0.73rem;color:var(--panel-text)}
+#pbr{font-size:0.67rem;letter-spacing:0.13em;color:var(--panel-accent);margin-bottom:2px;font-weight:700;white-space:nowrap}
+#pbc{font-size:0.73rem;color:var(--panel-text);white-space:nowrap}
 #leg{position:absolute;bottom:16px;right:16px;background:rgba(248,243,236,0.95);border:1px solid var(--panel-border);padding:8px 12px;z-index:30;box-shadow:0 2px 8px rgba(0,0,0,0.12)}
 .lg{display:flex;align-items:center;gap:7px;margin-bottom:5px;font-size:0.7rem;color:var(--panel-text)}
 .lg:last-child{margin-bottom:0}
@@ -236,11 +242,11 @@ input[type=range]::-webkit-slider-runnable-track{background:transparent}
     </div>
     <div class="ps">
       <div class="sl">Event layers</div>
-      <label class="lr" data-layer="military"><input type="checkbox" checked><span class="ld" style="background:var(--c-mil)"></span>Military / Conflict</label>
-      <label class="lr" data-layer="native"><input type="checkbox" checked><span class="ld" style="background:var(--c-nat)"></span>Native Nations</label>
-      <label class="lr" data-layer="trade"><input type="checkbox" checked><span class="ld" style="background:var(--c-trd)"></span>Trade / Routes</label>
-      <label class="lr" data-layer="settlement"><input type="checkbox" checked><span class="ld" style="background:var(--c-set)"></span>Settlements</label>
-      <label class="lr" data-layer="natural"><input type="checkbox" checked><span class="ld" style="background:var(--c-geo)"></span>Geography / Resources</label>
+      <label class="lr" data-layer="military"><input type="checkbox" checked><span class="ld" style="background:var(--c-mil)"></span><span class="lr-label">Military / Conflict</span><span class="lr-check">&#10003;</span></label>
+      <label class="lr" data-layer="native"><input type="checkbox" checked><span class="ld" style="background:var(--c-nat)"></span><span class="lr-label">Native Nations</span><span class="lr-check">&#10003;</span></label>
+      <label class="lr" data-layer="trade"><input type="checkbox" checked><span class="ld" style="background:var(--c-trd)"></span><span class="lr-label">Trade / Routes</span><span class="lr-check">&#10003;</span></label>
+      <label class="lr" data-layer="settlement"><input type="checkbox" checked><span class="ld" style="background:var(--c-set)"></span><span class="lr-label">Settlements</span><span class="lr-check">&#10003;</span></label>
+      <label class="lr" data-layer="natural"><input type="checkbox" checked><span class="ld" style="background:var(--c-geo)"></span><span class="lr-label">Geography / Resources</span><span class="lr-check">&#10003;</span></label>
     </div>
     <div id="lh"><div class="sl" style="margin:0">Events in view</div><div id="lc"></div></div>
     <div id="evl"><div id="le">Adjust the period to see events.</div></div>
