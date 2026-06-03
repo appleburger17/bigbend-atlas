@@ -888,6 +888,345 @@
         "marfa-founded-1882",
         "big-bend-national-park-1944"
       ]
+    },
+    {
+      "id": "ccc-big-bend-1934",
+      "year": 1934,
+      "title": "Civilian Conservation Corps builds Big Bend infrastructure",
+      "description": "CCC crews — many from Texas and recruited from Depression-era unemployment — built roads, trails, and facilities across the nascent Big Bend State Park through the mid-1930s. The work included the road to the Chisos Basin and early structures still in use today. For many young men from East Texas, it was their first encounter with the Chihuahuan Desert.",
+      "category": "settlement",
+      "locationName": "Big Bend State Park / Chisos Basin",
+      "lon": -103.3,
+      "lat": 29.3,
+      "related": [
+        "big-bend-state-park-proposed-1933",
+        "big-bend-national-park-1944",
+        "ewing-thurmond-ranches-1930"
+      ]
+    },
+    {
+      "id": "nps-survey-big-bend-1936",
+      "year": 1936,
+      "title": "NPS scientific survey documents Big Bend ecology",
+      "description": "The National Park Service conducted extensive biological and geological surveys of the proposed park area in the mid-1930s, documenting species, landforms, and archaeological sites. The surveys confirmed extraordinary biodiversity — over 1,200 plant species, 450 bird species — and built the scientific case for federal protection of the region.",
+      "category": "natural",
+      "locationName": "Big Bend / Trans-Pecos",
+      "lon": -103.25,
+      "lat": 29.4,
+      "related": [
+        "big-bend-state-park-proposed-1933",
+        "big-bend-national-park-1944",
+        "grizzly-chihuahua-1930"
+      ]
+    },
+    {
+      "id": "first-park-visitors-1944",
+      "year": 1944,
+      "title": "First visitors arrive at Big Bend National Park",
+      "description": "With the park's formal establishment in 1944, the NPS began managing visitor access to the remote Chisos Basin and river canyons. Early visitation was sparse — fewer than 20,000 visitors in the first full year — due to wartime fuel rationing and the park's extreme remoteness. The nearest substantial town, Alpine, was 80 miles away on a two-lane road.",
+      "category": "natural",
+      "locationName": "Big Bend National Park",
+      "lon": -103.2,
+      "lat": 29.3,
+      "related": [
+        "big-bend-national-park-1944",
+        "ccc-big-bend-1934",
+        "rio-grande-village-1952"
+      ]
+    },
+    {
+      "id": "santa-elena-canyon-exploration-1899",
+      "year": 1899,
+      "title": "Early Anglo exploration of Santa Elena Canyon",
+      "description": "The sheer limestone walls of Santa Elena Canyon — rising 1,500 feet above the Rio Grande — were documented by early surveyors and geologists in the late 19th century. The canyon's inaccessibility had protected it from settlement; its first systematic exploration revealed geological formations spanning 500 million years and confirmed the Big Bend's scientific significance.",
+      "category": "natural",
+      "locationName": "Santa Elena Canyon, Big Bend",
+      "lon": -103.61,
+      "lat": 29.17,
+      "related": [
+        "boundary-survey-1852",
+        "nps-survey-big-bend-1936",
+        "big-bend-national-park-1944"
+      ]
+    },
+    {
+      "id": "overgrazing-collapse-1900",
+      "year": 1900,
+      "title": "Overgrazing degrades Trans-Pecos range",
+      "description": "By 1900 the open ranges of Brewster and Presidio counties had been severely overgrazed by the cattle boom of the 1880s and 1890s. Native grasses that had sustained the herds were replaced by scrub brush and bare caliche. Ranch sizes grew as productivity per acre fell, consolidating land into fewer hands and driving off smaller operators.",
+      "category": "natural",
+      "locationName": "Trans-Pecos rangelands",
+      "lon": -103.8,
+      "lat": 30.2,
+      "related": [
+        "big-bend-ranching-1885",
+        "drought-trans-pecos-1918",
+        "ewing-thurmond-ranches-1930"
+      ]
+    },
+    {
+      "id": "drought-trans-pecos-1918",
+      "year": 1918,
+      "title": "Prolonged drought devastates Trans-Pecos ranching",
+      "description": "A severe multi-year drought beginning around 1916 and peaking in 1918 killed tens of thousands of cattle across the Trans-Pecos. Many ranching families who had survived the overgrazing of the 1890s were forced out entirely. The drought accelerated land consolidation and pushed the region's population lower than it had been since the 1880s.",
+      "category": "natural",
+      "locationName": "Trans-Pecos / Brewster County",
+      "lon": -103.5,
+      "lat": 29.8,
+      "related": [
+        "overgrazing-collapse-1900",
+        "ewing-thurmond-ranches-1930",
+        "big-bend-state-park-proposed-1933"
+      ]
+    },
+    {
+      "id": "screwworm-eradication-1962",
+      "year": 1962,
+      "title": "Screwworm eradication saves Trans-Pecos livestock industry",
+      "description": "The screwworm fly — whose larvae infested open wounds on livestock and wildlife — had plagued Trans-Pecos ranching for decades, killing thousands of animals annually. A USDA sterile-insect release program eradicated screwworm from Texas by 1962, one of the first successful applications of biological pest control and a turning point for the economic viability of desert ranching.",
+      "category": "natural",
+      "locationName": "Trans-Pecos / Southwest Texas",
+      "lon": -104.0,
+      "lat": 30.0,
+      "related": [
+        "overgrazing-collapse-1900",
+        "drought-trans-pecos-1918"
+      ]
+    },
+    {
+      "id": "trans-pecos-water-rights-1950",
+      "year": 1950,
+      "title": "Water rights disputes intensify across the Trans-Pecos",
+      "description": "Post-war agricultural development in the Pecos Valley drew heavily on the Pecos River and underlying aquifers, creating conflicts between upstream New Mexico and downstream Texas users. The Pecos River Compact of 1949 attempted to allocate flows but did little to halt aquifer depletion. The disputes foreshadowed the water scarcity that would define the region's 21st-century challenges.",
+      "category": "natural",
+      "locationName": "Pecos River / Trans-Pecos",
+      "lon": -103.5,
+      "lat": 31.0,
+      "related": [
+        "cattle-drives-pecos-1875",
+        "rio-grande-drying-2001"
+      ]
+    },
+    {
+      "id": "bracero-program-1942",
+      "year": 1942,
+      "title": "Bracero Program brings Mexican laborers to Trans-Pecos agriculture",
+      "description": "The US-Mexico Bracero Program, launched in 1942 to address wartime agricultural labor shortages, brought hundreds of thousands of Mexican workers to Texas farms and ranches over its 22-year run. In the Trans-Pecos the program shaped the labor force of Presidio Valley cotton farming and reinforced the deep economic interdependence of the border communities.",
+      "category": "trade",
+      "locationName": "Presidio Valley / Trans-Pecos",
+      "lon": -104.3,
+      "lat": 29.6,
+      "related": [
+        "us-mexico-war-boundary-1848",
+        "operation-wetback-1954",
+        "boquillas-crossing-closed-2002"
+      ]
+    },
+    {
+      "id": "operation-wetback-1954",
+      "year": 1954,
+      "title": "Operation Wetback sweeps the border",
+      "description": "The INS campaign known as Operation Wetback deployed military-style sweeps along the Texas-Mexico border in 1954, deporting over a million undocumented workers — many of them longtime residents — in a matter of months. The operation disrupted communities throughout the Trans-Pecos and Rio Grande Valley and marked a hardening of federal attitudes toward the border that would intensify in subsequent decades.",
+      "category": "military",
+      "locationName": "Texas-Mexico border / Trans-Pecos",
+      "lon": -104.0,
+      "lat": 29.5,
+      "related": [
+        "bracero-program-1942",
+        "us-mexico-war-boundary-1848",
+        "boquillas-crossing-closed-2002"
+      ]
+    },
+    {
+      "id": "rio-grande-drying-2001",
+      "year": 2001,
+      "title": "Rio Grande runs dry — reaches no longer flow to the Gulf",
+      "description": "By 2001 upstream diversions, drought, and population growth had reduced the Rio Grande to a trickle that no longer reached the Gulf of Mexico. The river that defined the borderlands — and had served as the international boundary for 150 years — was effectively severed in its lower reaches. The crisis prompted US-Mexico negotiations over shared water management and highlighted the unsustainable demand on the desert's primary waterway.",
+      "category": "natural",
+      "locationName": "Rio Grande / lower Trans-Pecos",
+      "lon": -102.0,
+      "lat": 29.5,
+      "related": [
+        "trans-pecos-water-rights-1950",
+        "boquillas-crossing-closed-2002",
+        "us-mexico-war-boundary-1848"
+      ]
+    },
+    {
+      "id": "fort-da-russell-marfa-1911",
+      "year": 1911,
+      "title": "Fort D.A. Russell established at Marfa",
+      "description": "The Army established Fort D.A. Russell at Marfa in 1911 to monitor the deteriorating situation in Mexico during the Revolution. The fort grew into a significant installation during World War I, housing thousands of troops and becoming the dominant employer in Presidio County. Its presence transformed Marfa from a small railroad stop into a military town.",
+      "category": "military",
+      "locationName": "Marfa, Texas",
+      "lon": -104.02,
+      "lat": 30.31,
+      "related": [
+        "mexican-revolution-border-1910",
+        "marfa-pow-camp-1942",
+        "marfa-founded-1882"
+      ]
+    },
+    {
+      "id": "marfa-pow-camp-1942",
+      "year": 1942,
+      "title": "Marfa prisoner of war camp holds German and Italian POWs",
+      "description": "During World War II the Marfa Army Air Field complex housed hundreds of German and Italian prisoners of war, who were put to work on area farms and ranches under the Geneva Convention's labor provisions. Some POWs expressed surprise at the landscape's resemblance to North Africa. A handful chose to remain in the area after the war.",
+      "category": "military",
+      "locationName": "Marfa Army Air Field, Texas",
+      "lon": -104.0,
+      "lat": 30.35,
+      "related": [
+        "fort-da-russell-marfa-1911",
+        "big-bend-national-park-1944"
+      ]
+    },
+    {
+      "id": "marfa-lights-1957",
+      "year": 1957,
+      "title": "Marfa Lights attract scientific and popular attention",
+      "description": "Unexplained lights seen hovering over the Chihuahuan Desert south of Marfa had been reported since the 1880s, but a 1957 article in a regional publication brought them national attention. The lights — still unexplained to scientific consensus — became a fixture of Trans-Pecos lore and eventually a modest tourism draw, with an official viewing platform established by the Texas Department of Transportation.",
+      "category": "natural",
+      "locationName": "Mitchell Flat, south of Marfa",
+      "lon": -103.9,
+      "lat": 30.1,
+      "related": [
+        "marfa-founded-1882",
+        "marfa-arts-2000s"
+      ]
+    },
+    {
+      "id": "grizzly-chihuahua-1930",
+      "year": 1930,
+      "title": "Last grizzly bears killed in Chihuahua",
+      "description": "The last verified grizzly bears in the Sierra Madre Occidental of Chihuahua were killed by ranchers and hunters in the late 1920s and early 1930s, ending a presence that had lasted tens of thousands of years. The extirpation followed decades of poisoning campaigns, habitat loss, and conflict with the expanding cattle industry. A small population may have persisted in remote Sonora until the 1960s.",
+      "category": "natural",
+      "locationName": "Sierra Madre Occidental, Chihuahua",
+      "lon": -107.5,
+      "lat": 28.5,
+      "related": [
+        "nps-survey-big-bend-1936",
+        "bighorn-reintroduction-1987",
+        "overgrazing-collapse-1900"
+      ]
+    },
+    {
+      "id": "bighorn-reintroduction-1987",
+      "year": 1987,
+      "title": "Desert bighorn sheep reintroduced to Big Bend",
+      "description": "Desert bighorn sheep — extirpated from the Big Bend region by 1960 through hunting and disease from domestic livestock — were reintroduced to the park in 1987 and 2000 using animals transplanted from the Black Gap Wildlife Management Area. The herd has grown slowly and now numbers in the hundreds, a rare conservation success in the Chihuahuan Desert.",
+      "category": "natural",
+      "locationName": "Big Bend National Park",
+      "lon": -103.15,
+      "lat": 29.4,
+      "related": [
+        "grizzly-chihuahua-1930",
+        "big-bend-national-park-1944",
+        "nps-survey-big-bend-1936"
+      ]
+    },
+    {
+      "id": "black-bear-recovery-1980s",
+      "year": 1985,
+      "title": "Black bears recolonize the Chisos Mountains",
+      "description": "Black bears, absent from the Chisos Mountains for most of the 20th century, began recolonizing the range in the 1980s as populations in the Sierra del Carmen across the river in Mexico recovered. The bears crossed the Rio Grande and established a breeding population in the park — one of the few cases of natural recolonization of a large predator in the American Southwest.",
+      "category": "natural",
+      "locationName": "Chisos Mountains / Big Bend NP",
+      "lon": -103.3,
+      "lat": 29.35,
+      "related": [
+        "big-bend-national-park-1944",
+        "bighorn-reintroduction-1987",
+        "grizzly-chihuahua-1930"
+      ]
+    },
+    {
+      "id": "peregrine-falcon-recovery-1990",
+      "year": 1990,
+      "title": "Peregrine falcon recovery in the Rio Grande canyons",
+      "description": "Following the banning of DDT in 1972, peregrine falcons began recovering in the Rio Grande canyon country. Big Bend National Park became one of the most important peregrine nesting areas in North America, with pairs nesting in Santa Elena, Mariscal, and Boquillas canyons. The recovery was one of the landmark successes of the Endangered Species Act.",
+      "category": "natural",
+      "locationName": "Rio Grande canyon complex, Big Bend",
+      "lon": -103.4,
+      "lat": 29.2,
+      "related": [
+        "big-bend-national-park-1944",
+        "nps-survey-big-bend-1936",
+        "bighorn-reintroduction-1987"
+      ]
+    },
+    {
+      "id": "presidio-onion-farming-1920",
+      "year": 1920,
+      "title": "Presidio Valley onion farming transforms the floodplain",
+      "description": "The fertile alluvial soils of the Presidio Valley, irrigated from the Rio Grande and Río Conchos, became one of the most productive onion-growing regions in Texas through the 1920s. Mexican and Mexican-American farmworkers, many crossing daily from Ojinaga, provided the labor. The industry created an unusual pocket of intensive agriculture in an otherwise arid landscape.",
+      "category": "settlement",
+      "locationName": "Presidio Valley, Texas",
+      "lon": -104.35,
+      "lat": 29.6,
+      "related": [
+        "bracero-program-1942",
+        "ojinaga-trade-1890",
+        "rio-grande-drying-2001"
+      ]
+    },
+    {
+      "id": "chinati-foundation-1986",
+      "year": 1986,
+      "title": "Donald Judd establishes the Chinati Foundation",
+      "description": "Minimalist sculptor Donald Judd purchased and converted the former Fort D.A. Russell complex into a permanent installation of large-scale artwork, founding the Chinati Foundation in 1986. Judd's vision — that art should be experienced in a permanent relationship with its architectural and geographic setting — made Marfa an unlikely international arts destination and planted the seed for the town's cultural transformation.",
+      "category": "settlement",
+      "locationName": "Marfa, Texas",
+      "lon": -104.02,
+      "lat": 30.31,
+      "related": [
+        "fort-da-russell-marfa-1911",
+        "marfa-arts-2000s",
+        "marfa-founded-1882"
+      ]
+    },
+    {
+      "id": "lajitas-resort-1970s",
+      "year": 1978,
+      "title": "Lajitas developed as a resort on the river",
+      "description": "The site of an old trading post and Army camp at Lajitas was developed into a resort complex beginning in the late 1970s, capitalizing on proximity to Big Bend National Park and the Rio Grande. The development brought tourist infrastructure to one of the most remote stretches of the river but also raised questions about private development in the borderlands.",
+      "category": "settlement",
+      "locationName": "Lajitas, Texas",
+      "lon": -103.77,
+      "lat": 29.25,
+      "related": [
+        "big-bend-national-park-1944",
+        "terlingua-ghost-town-revival-1967"
+      ]
+    },
+    {
+      "id": "alpine-sul-ross-1920",
+      "year": 1920,
+      "title": "Sul Ross State Normal College founded in Alpine",
+      "description": "Sul Ross State Normal College — now Sul Ross State University — was established in Alpine in 1920, anchoring the town as the educational and cultural center of the Trans-Pecos. The university's Center for Big Bend Studies became an important repository of regional history and archaeology, producing much of the scholarly literature on the borderlands.",
+      "category": "settlement",
+      "locationName": "Alpine, Texas",
+      "lon": -103.66,
+      "lat": 30.36,
+      "related": [
+        "alpine-founded-1882",
+        "big-bend-national-park-1944"
+      ]
+    },
+    {
+      "id": "us-mexico-1848-border-monuments-1850s",
+      "year": 1855,
+      "title": "International boundary monuments placed along the Rio Grande",
+      "description": "Following the boundary survey, the joint US-Mexico commission placed stone obelisk monuments at intervals along the Rio Grande to mark the international line. The monuments — many still standing — became reference points for border communities and symbols of the abstract political division of a landscape that had long ignored such distinctions.",
+      "category": "military",
+      "locationName": "Rio Grande boundary corridor",
+      "lon": -104.1,
+      "lat": 29.55,
+      "related": [
+        "boundary-survey-1852",
+        "us-mexico-war-boundary-1848",
+        "boquillas-crossing-closed-2002"
+      ]
     }
   ]
 }
