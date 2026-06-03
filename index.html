@@ -593,7 +593,8 @@ function draw(){
 
 
 
-  // Event markers
+  // Event markers — two passes: dots first, then labels on top
+  // Pass 1: all dots
   VE.forEach(function(ev){
     var c=ll2cv(ev.lon,ev.lat),col=CC[ev.category]||'#aaa';
     var iH=HE&&HE.id===ev.id,iS=SE&&SE.id===ev.id;
@@ -612,32 +613,43 @@ function draw(){
     // Inner fill
     CX.beginPath();CX.arc(c.x,c.y,r-2,0,Math.PI*2);
     CX.fillStyle=col;CX.globalAlpha=(iH||iS)?0.9:0.55;CX.fill();
-    // Hover label: year + first 4 words of title (desktop only via HE check)
-    if(iH||iS){
-      CX.globalAlpha=1;
-      var words=ev.title.split(' ').slice(0,4).join(' ')+(ev.title.split(' ').length>4?'…':'');
-      var label=ev.year+' · '+words;
-      CX.font='bold 11px Courier Prime,monospace';
-      var tw=CX.measureText(label).width;
-      var lx=c.x, ly=c.y-r-8;
-      // Background pill
-      CX.fillStyle='rgba(248,243,236,0.95)';
-      CX.strokeStyle=CC[ev.category]||'#aaa';
-      CX.lineWidth=1;
-      var pad=6,ph=16,pw=tw+pad*2;
-      var rx=lx-pw/2,ry2=ly-ph,rr2=3;
-      CX.beginPath();
-      CX.moveTo(rx+rr2,ry2);CX.lineTo(rx+pw-rr2,ry2);CX.arcTo(rx+pw,ry2,rx+pw,ry2+rr2,rr2);
-      CX.lineTo(rx+pw,ry2+ph-rr2);CX.arcTo(rx+pw,ry2+ph,rx+pw-rr2,ry2+ph,rr2);
-      CX.lineTo(rx+rr2,ry2+ph);CX.arcTo(rx,ry2+ph,rx,ry2+ph-rr2,rr2);
-      CX.lineTo(rx,ry2+rr2);CX.arcTo(rx,ry2,rx+rr2,ry2,rr2);
-      CX.closePath();
-      CX.fill();CX.stroke();
-      // Label text
-      CX.fillStyle='#2a2018';
-      CX.textAlign='center';
-      CX.fillText(label,lx,ly-4);
-    }
+    CX.restore();
+  });
+
+  // Pass 2: hover/selected labels on top of all dots
+  VE.forEach(function(ev){
+    var iH=HE&&HE.id===ev.id,iS=SE&&SE.id===ev.id;
+    if(!(iH||iS))return;
+    var c=ll2cv(ev.lon,ev.lat),col=CC[ev.category]||'#aaa';
+    var r=7*1.5;
+    CX.save();
+    CX.globalAlpha=1;
+    var words=ev.title.split(' ').slice(0,4).join(' ')+(ev.title.split(' ').length>4?'…':'');
+    var label=ev.year+' · '+words;
+    CX.font='bold 11px "Courier Prime",Courier,monospace';
+    var tw=CX.measureText(label).width;
+    // Snap to integer pixels to avoid blur
+    var lx=Math.round(c.x);
+    var ly=Math.round(c.y-r-10);
+    var pad=6,ph=18,pw=Math.ceil(tw)+pad*2;
+    var bx=Math.round(lx-pw/2),by=ly-ph,rr=3;
+    // Background pill
+    CX.fillStyle='rgba(248,243,236,0.97)';
+    CX.strokeStyle=col;
+    CX.lineWidth=1.5;
+    CX.beginPath();
+    CX.moveTo(bx+rr,by);CX.lineTo(bx+pw-rr,by);CX.arcTo(bx+pw,by,bx+pw,by+rr,rr);
+    CX.lineTo(bx+pw,by+ph-rr);CX.arcTo(bx+pw,by+ph,bx+pw-rr,by+ph,rr);
+    CX.lineTo(bx+rr,by+ph);CX.arcTo(bx,by+ph,bx,by+ph-rr,rr);
+    CX.lineTo(bx,by+rr);CX.arcTo(bx,by,bx+rr,by,rr);
+    CX.closePath();
+    CX.fill();CX.stroke();
+    // Label text — integer y position
+    CX.fillStyle='#2a2018';
+    CX.textAlign='center';
+    CX.textBaseline='middle';
+    CX.fillText(label,lx,Math.round(by+ph/2));
+    CX.textBaseline='alphabetic';
     CX.restore();
   });
 }
