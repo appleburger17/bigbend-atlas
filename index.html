@@ -446,8 +446,9 @@ function cv2ll(cx,cy){
 
 // ── FIT MAP TO CANVAS ─────────────────────────────────────────
 function fitMap(){
-  // Pick zoom level and offset so the BOUNDS fit the canvas
-  var w=CV.width,h=CV.height;
+  // Use CSS pixel dimensions for coordinate math (canvas is scaled by dpr)
+  var dpr=window.devicePixelRatio||1;
+  var w=CV.width/dpr,h=CV.height/dpr;
   // Try zoom levels 7-11 and pick best fit
   var bestZ=7;
   for(var z=7;z<=12;z++){
@@ -479,7 +480,12 @@ function ll2worldZ(lon,lat,z){
 // ── RESIZE ────────────────────────────────────────────────────
 function rsz(){
   var r=MW.getBoundingClientRect();
-  CV.width=r.width;CV.height=r.height;
+  var dpr=window.devicePixelRatio||1;
+  CV.width=Math.round(r.width*dpr);
+  CV.height=Math.round(r.height*dpr);
+  CV.style.width=r.width+'px';
+  CV.style.height=r.height+'px';
+  CX.setTransform(dpr,0,0,dpr,0,0);
   fitMap();draw();
 }
 
@@ -547,8 +553,9 @@ function drawTiles(){
   var tSizeCv=tSize*VS; // tile size in canvas pixels
 
   var w=worldPx(tileZ);
-  // Canvas corners in world space
-  var topLeft=cv2world(0,0), botRight=cv2world(CV.width,CV.height);
+  var dpr2=window.devicePixelRatio||1;
+  // Canvas corners in world space (CSS pixels)
+  var topLeft=cv2world(0,0), botRight=cv2world(CV.width/dpr2,CV.height/dpr2);
 
   // Tile coords at effectiveZ
   var zDiff=Math.pow(2,effectiveZ-tileZ);
@@ -584,7 +591,8 @@ function cv2world(cx,cy){return{x:(cx-VX)/VS,y:(cy-VY)/VS};}
 
 // ── DRAW ──────────────────────────────────────────────────────
 function draw(){
-  var W=CV.width,H=CV.height;
+  var dpr=window.devicePixelRatio||1;
+  var W=CV.width/dpr,H=CV.height/dpr;
   CX.clearRect(0,0,W,H);
   CX.fillStyle='#1a1208';CX.fillRect(0,0,W,H);
 
